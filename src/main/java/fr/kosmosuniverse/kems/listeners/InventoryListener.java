@@ -16,6 +16,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.PotionMeta;
 
 import java.util.List;
+import java.util.Objects;
 
 /**
  * @author KosmosUniverse
@@ -35,12 +36,13 @@ public class InventoryListener implements Listener {
 
         ItemStack item = currentItem.clone();
 
-        boolean kemsShopItem = item.hasItemMeta() && item.getItemMeta().getPersistentDataContainer().has(NamespacedKey.minecraft("kemsshopitem"));
-        String itemName = item.hasItemMeta() ? (item.getItemMeta().hasDisplayName() ? item.getItemMeta().getDisplayName() : null) : null;
+        boolean kemsShopItem = item.hasItemMeta() && Objects.requireNonNull(item.getItemMeta()).getPersistentDataContainer().has(NamespacedKey.minecraft("kemsshopitem"));
+        boolean hasMeta = item.hasItemMeta();
+        String itemName = hasMeta && Objects.requireNonNull(item.getItemMeta()).hasDisplayName() ? item.getItemMeta().getDisplayName() : null;
 
         event.setCancelled(true);
 
-        if (current.getHolder() != null) {
+        if (Objects.requireNonNull(current).getHolder() != null) {
             return ;
         }
 
@@ -48,19 +50,19 @@ public class InventoryListener implements Listener {
             player.openInventory(Shop.getInstance().getInventory(itemName));
         } else if (kemsShopItem && item.getItemMeta().getDisplayName().equals("<- Back")) {
             ItemMeta itM = item.getItemMeta();
-            String prevInvName = itM.getLore().get(0);
+            String prevInvName = Objects.requireNonNull(itM.getLore()).get(0);
 
             if (Shop.getInstance().hasInv(prevInvName)) {
                 player.openInventory(Shop.getInstance().getInventory(prevInvName));
             }
-        } else if (item.hasItemMeta() && item.getItemMeta().hasLore()) {
+        } else if (item.hasItemMeta() && Objects.requireNonNull(item.getItemMeta()).hasLore()) {
             if (GameManager.getInstance().getGameStatus() == Status.NOT_LAUNCHED ||
                     !PlayersList.getInstance().hasPlayer(player.getName())) {
                 return ;
             }
 
             ItemMeta itM = item.getItemMeta();
-            int price = Integer.parseInt(itM.getLore().getLast().split(" ")[1]);
+            int price = Integer.parseInt(Objects.requireNonNull(itM.getLore()).getLast().split(" ")[1]);
 
             if (PlayersList.getInstance().canPlayerBuy(player, price)) {
                 if (item.getType() == Material.POTION) {

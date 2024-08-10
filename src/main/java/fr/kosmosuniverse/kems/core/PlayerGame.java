@@ -1,19 +1,16 @@
 package fr.kosmosuniverse.kems.core;
 
 import fr.kosmosuniverse.kems.Kems;
-import fr.kosmosuniverse.kems.utils.ItemUtils;
+import fr.kosmosuniverse.kems.utils.ItemMaker;
 import net.md_5.bungee.api.ChatColor;
-import org.bukkit.Bukkit;
-import org.bukkit.Location;
+import org.bukkit.*;
 import org.bukkit.block.ShulkerBox;
 import org.bukkit.boss.BarColor;
 import org.bukkit.boss.BarStyle;
 import org.bukkit.boss.BossBar;
 import org.bukkit.entity.Entity;
-import org.bukkit.entity.Player;
-import org.bukkit.Material;
-import org.bukkit.Sound;
 import org.bukkit.entity.EntityType;
+import org.bukkit.entity.Player;
 import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
@@ -39,7 +36,7 @@ public class PlayerGame {
     private BossBar progress;
     private boolean connected;
     private List<ItemStack> futureReward;
-    private EnumMap<EntityType, Integer> mobStats;
+    private final EnumMap<EntityType, Integer> mobStats;
     private int pointBoost = -1;
 
     public PlayerGame(Player player) {
@@ -208,13 +205,10 @@ public class PlayerGame {
             updateListName();
         }
 
-        if (GameManager.getInstance().getMode() == Mode.FIRST_TO_LIMIT &&
-                currentPoints >= Config.getInstance().getConfigValues().getPointLimit()) {
-            GameManager.getInstance().triggerGameEnd();
-
-            return ;
-        } else if (GameManager.getInstance().getMode() == Mode.FIRST_TO_RANK &&
-                rank.getPoints() >= Config.getInstance().getConfigValues().getRankLimit().getPoints()) {
+        if ((GameManager.getInstance().getMode() == Mode.FIRST_TO_LIMIT &&
+                currentPoints >= Config.getInstance().getConfigValues().getPointLimit()) ||
+                (GameManager.getInstance().getMode() == Mode.FIRST_TO_RANK &&
+                rank.getPoints() >= Config.getInstance().getConfigValues().getRankLimit().getPoints())) {
             GameManager.getInstance().triggerGameEnd();
 
             return ;
@@ -226,9 +220,9 @@ public class PlayerGame {
     }
 
     private void giveReward() {
-        ItemStack container = ItemUtils.itemMaker(Material.SHULKER_BOX, 1, "NEW RANK !");
+        ItemStack container = new ItemMaker(Material.SHULKER_BOX, NamespacedKey.minecraft("kemsreward")).addQuantity(1).addName("NEW RANK !").getItem();
         BlockStateMeta containerMeta = (BlockStateMeta) container.getItemMeta();
-        ShulkerBox box = (ShulkerBox) containerMeta.getBlockState();
+        ShulkerBox box = (ShulkerBox) Objects.requireNonNull(containerMeta).getBlockState();
         Inventory inv = box.getInventory();
 
         futureReward.forEach(inv::addItem);
@@ -337,7 +331,7 @@ public class PlayerGame {
 
         if (rank != Ranks.HEROBRINE && totalPoints >= rank.getNext().getPoints()) {
             rank = rank.getNext();
-            futureReward.add(ItemUtils.itemMaker(Material.COOKED_BEEF, 5));
+            futureReward.add(new ItemMaker(Material.COOKED_BEEF, NamespacedKey.minecraft("kemsrewardfood")).addQuantity(5).getItem());
             player.playSound(player.getLocation(), Sound.BLOCK_BELL_USE, 1f, 1f);
 
             return true;

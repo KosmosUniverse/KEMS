@@ -3,16 +3,14 @@ package fr.kosmosuniverse.kems;
 import fr.kosmosuniverse.kems.commands.*;
 import fr.kosmosuniverse.kems.core.*;
 import fr.kosmosuniverse.kems.core.shop.Shop;
-import fr.kosmosuniverse.kems.listeners.*;
+import fr.kosmosuniverse.kems.listeners.InventoryListener;
+import fr.kosmosuniverse.kems.listeners.PlayerEvents;
+import fr.kosmosuniverse.kems.listeners.PlayerInteractions;
+import fr.kosmosuniverse.kems.listeners.PlayerKill;
 import fr.kosmosuniverse.kems.tabcompleters.KemsAdminPointsTabCompleter;
 import fr.kosmosuniverse.kems.tabcompleters.KemsConfigTabCompleter;
 import fr.kosmosuniverse.kems.tabcompleters.KemsListTabCompleter;
 import fr.kosmosuniverse.kems.tabcompleters.KemsSimpleTabCompleter;
-import org.bukkit.Material;
-import org.bukkit.NamespacedKey;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.Objects;
@@ -59,13 +57,6 @@ public final class Kems extends JavaPlugin {
         Objects.requireNonNull(getCommand("kems-resume")).setTabCompleter(new KemsSimpleTabCompleter());
         Objects.requireNonNull(getCommand("kems-shop")).setTabCompleter(new KemsSimpleTabCompleter());
         Objects.requireNonNull(getCommand("kems-admin-points")).setTabCompleter(new KemsAdminPointsTabCompleter());
-
-
-        ItemStack item = new ItemStack(Material.DIAMOND_SWORD);
-        ItemMeta itM = item.getItemMeta();
-
-        itM.getPersistentDataContainer().set(new NamespacedKey("namespaced", "key"), PersistentDataType.STRING, "it's me mario");
-
     }
 
     @Override

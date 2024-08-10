@@ -1,12 +1,11 @@
 package fr.kosmosuniverse.kems.tabcompleters;
 
-import fr.kosmosuniverse.kems.core.PlayerGame;
 import fr.kosmosuniverse.kems.core.PlayersList;
-import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,7 +22,7 @@ public class KemsAdminPointsTabCompleter implements TabCompleter {
         list.add("set");
     }
     @Override
-    public List<String> onTabComplete(CommandSender sender, Command cmd, String msg, String[] args) {
+    public List<String> onTabComplete(@NotNull CommandSender sender, @NotNull Command cmd, @NotNull String msg, String[] args) {
         List<String> ret = new ArrayList<>();
 
         if (!(sender instanceof Player)) {

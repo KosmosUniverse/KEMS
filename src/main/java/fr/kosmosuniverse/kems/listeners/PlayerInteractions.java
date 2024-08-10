@@ -5,7 +5,6 @@ import fr.kosmosuniverse.kems.core.PlayersList;
 import fr.kosmosuniverse.kems.core.Status;
 import org.bukkit.block.Block;
 import org.bukkit.block.ShulkerBox;
-import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -44,7 +43,7 @@ public class PlayerInteractions implements Listener {
 
         Block block = event.getClickedBlock();
 
-        if (block.getType() != Material.SHULKER_BOX) {
+        if (Objects.requireNonNull(block).getType() != Material.SHULKER_BOX) {
             return ;
         }
 
@@ -69,7 +68,7 @@ public class PlayerInteractions implements Listener {
             return ;
         }
 
-        List<Player> viewers =  event.getViewers().stream().filter(entity -> entity instanceof Player).map(entity -> (Player) entity).collect(Collectors.toList());
+        List<Player> viewers =  event.getViewers().stream().filter(Player.class::isInstance).map(Player.class::cast).collect(Collectors.toList());
 
         if (viewers.isEmpty() || viewers.stream().noneMatch(player -> PlayersList.getInstance().hasPlayer(player.getName()))) {
             return ;
@@ -86,7 +85,7 @@ public class PlayerInteractions implements Listener {
             return ;
         }
 
-        List<Player> viewers =  event.getViewers().stream().filter(entity -> entity instanceof Player).map(entity -> (Player) entity).collect(Collectors.toList());
+        List<Player> viewers =  event.getViewers().stream().filter(Player.class::isInstance).map(Player.class::cast).collect(Collectors.toList());
 
         if (viewers.isEmpty() || viewers.stream().noneMatch(player -> PlayersList.getInstance().hasPlayer(player.getName()))) {
             return ;

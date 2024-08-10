@@ -6,6 +6,8 @@ import org.bukkit.scoreboard.DisplaySlot;
 import org.bukkit.scoreboard.Objective;
 import org.bukkit.scoreboard.Scoreboard;
 
+import java.util.Objects;
+
 /**
  * @author KosmosUniverse
  */
@@ -15,7 +17,7 @@ public class ScoreManager {
     private Objective points;
 
     public ScoreManager() {
-        scoreboard = Bukkit.getScoreboardManager().getNewScoreboard();
+        scoreboard = Objects.requireNonNull(Bukkit.getScoreboardManager()).getNewScoreboard();
     }
 
     public static synchronized ScoreManager getInstance() {

@@ -14,7 +14,7 @@ public class SpreadPlayer {
 	/**
 	 * Private SpreadPlayer constructor
 	 *
-	 * @throws IllegalStateException
+	 * @throws IllegalStateException if tried to create this static class
 	 */
 	private SpreadPlayer() {
 		throw new IllegalStateException("Utility class");
@@ -69,7 +69,7 @@ public class SpreadPlayer {
     /**
      * Gets the spread locations list
      * 
-     * @param radius	The distance between center and every players
+     * @param radius	The distance between center and every player
      * @param angleInc	The angle between two players
      * @param size		The amount of players (or locations to calculate)
      * @param center	The center of the circle as Location

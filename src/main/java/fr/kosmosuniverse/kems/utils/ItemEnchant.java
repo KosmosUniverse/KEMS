@@ -6,8 +6,8 @@ import org.bukkit.enchantments.Enchantment;
  * @author KosmosUniverse
  */
 public class ItemEnchant {
-    private Enchantment enchant;
-    private int level;
+    private final Enchantment enchant;
+    private final int level;
 
     public ItemEnchant(Enchantment enchant, int level) {
         this.enchant = enchant;

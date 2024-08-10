@@ -22,6 +22,7 @@ public class ItemMaker {
         item = new ItemStack(material);
 
         ItemMeta itM = item.getItemMeta();
+        assert itM != null;
         itM.getPersistentDataContainer().set(key, PersistentDataType.BOOLEAN, true);
         item.setItemMeta(itM);
     }
@@ -43,6 +44,7 @@ public class ItemMaker {
 
         ItemMeta itM = item.getItemMeta();
 
+        assert itM != null;
         itM.setDisplayName(name);
         item.setItemMeta(itM);
 
@@ -52,6 +54,7 @@ public class ItemMaker {
     public ItemMaker setLore(String lore) {
         ItemMeta itM = item.getItemMeta();
 
+        assert itM != null;
         itM.setLore(new ArrayList<>());
         item.setItemMeta(itM);
         return addLore(lore);
@@ -60,6 +63,7 @@ public class ItemMaker {
     public ItemMaker setLores(List<String> lores) {
         ItemMeta itM = item.getItemMeta();
 
+        assert itM != null;
         itM.setLore(new ArrayList<>());
         item.setItemMeta(itM);
         return addLores(lores);
@@ -72,6 +76,7 @@ public class ItemMaker {
 
         ItemMeta itM = item.getItemMeta();
 
+        assert itM != null;
         if (itM.getLore() == null) {
             itM.setLore(Collections.singletonList(lore));
         } else {
@@ -93,6 +98,7 @@ public class ItemMaker {
 
         ItemMeta itM = item.getItemMeta();
 
+        assert itM != null;
         if (itM.getLore() == null) {
             itM.setLore(lores);
         } else {
@@ -131,6 +137,7 @@ public class ItemMaker {
         if (durability != -1) {
             Damageable itM = (Damageable) item.getItemMeta();
 
+            assert itM != null;
             itM.setDamage(item.getType().getMaxDurability() - durability);
             item.setItemMeta(itM);
         }
@@ -147,6 +154,7 @@ public class ItemMaker {
 
         tags.forEach(tag -> {
             if ("INTEGER".equals(tag.getType())) {
+                assert itM != null;
                 itM.getPersistentDataContainer().set(tag.getKey(), PersistentDataType.INTEGER, (Integer) tag.getValue());
             }
         });

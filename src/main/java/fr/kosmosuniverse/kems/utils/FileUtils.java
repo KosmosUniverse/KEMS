@@ -19,7 +19,7 @@ public class FileUtils {
 
         String line;
         while ((line = br.readLine()) != null) {
-            sb.append(line + System.lineSeparator());
+            sb.append(line).append(System.lineSeparator());
         }
 
         return sb.toString();

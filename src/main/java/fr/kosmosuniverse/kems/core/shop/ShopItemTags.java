@@ -1,7 +1,6 @@
 package fr.kosmosuniverse.kems.core.shop;
 
 import org.bukkit.NamespacedKey;
-import org.bukkit.persistence.PersistentDataType;
 
 /**
  * @author KosmosUniverse

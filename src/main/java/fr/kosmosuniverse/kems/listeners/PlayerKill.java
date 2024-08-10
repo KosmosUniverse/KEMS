@@ -13,11 +13,11 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.metadata.MetadataValue;
 import org.bukkit.persistence.PersistentDataType;
 
 import java.util.List;
+import java.util.Objects;
 
 /**
  * @author KosmosUniverse
@@ -43,7 +43,7 @@ public class PlayerKill implements Listener {
             }
 
             ItemStack item = player.getInventory().getItem(EquipmentSlot.HAND);
-            boolean kemsItemPointBoost = item.hasItemMeta() && item.getItemMeta().getPersistentDataContainer().has(NamespacedKey.minecraft("kemsitempointboost"));
+            boolean kemsItemPointBoost = Objects.requireNonNull(item).hasItemMeta() && Objects.requireNonNull(item.getItemMeta()).getPersistentDataContainer().has(NamespacedKey.minecraft("kemsitempointboost"));
 
             if (kemsItemPointBoost) {
                 int pointBoost = item.getItemMeta().getPersistentDataContainer().get(NamespacedKey.minecraft("kemsitempointboost"), PersistentDataType.INTEGER);

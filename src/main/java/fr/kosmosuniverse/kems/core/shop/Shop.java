@@ -3,7 +3,6 @@ package fr.kosmosuniverse.kems.core.shop;
 import fr.kosmosuniverse.kems.Kems;
 import fr.kosmosuniverse.kems.utils.FileUtils;
 import fr.kosmosuniverse.kems.utils.ItemMaker;
-import fr.kosmosuniverse.kems.utils.ItemUtils;
 import org.bukkit.*;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
@@ -24,9 +23,11 @@ public class Shop {
     private static Shop instance;
     private IShop shop;
     private Map<String, Inventory> invs;
-    private static final ItemStack limePane = ItemUtils.itemMaker(Material.LIME_STAINED_GLASS_PANE, 1, " ");
-    private static final ItemStack redPane = ItemUtils.itemMaker(Material.RED_STAINED_GLASS_PANE, 1, "<- Back");
-    private static final String mainInv = "K.E.M.S Shop";
+    private static final ItemStack limePane = new ItemMaker(Material.LIME_STAINED_GLASS_PANE, NamespacedKey.minecraft("kemsshoplimepane")).addQuantity(1).addName(" ").getItem();
+    private static final ItemStack redPane = new ItemMaker(Material.RED_STAINED_GLASS_PANE, NamespacedKey.minecraft("kemsshopredpane")).addQuantity(1).addName("<- Back").getItem();
+    private static final String MAIN_INV = "K.E.M.S Shop";
+    private static final String PRICE = "price";
+    private static final String KEMS_SHOP_ITEM = "kemsshopitem";
 
     public static synchronized Shop getInstance() {
         if (instance == null) {
@@ -41,13 +42,17 @@ public class Shop {
             String rawValues = FileUtils.readFileContent(Kems.getInstance().getResource("shop.json"));
             JSONTokener tokenizer = new JSONTokener(rawValues);
             JSONObject menuObject = new JSONObject(tokenizer);
-            shop = processMenu(mainInv, menuObject);
+            shop = processMenu(MAIN_INV, menuObject);
         } catch (IOException e) {
-            System.err.println(e.getMessage());
+            // TODO
         }
 
         invs = new HashMap<>();
         setupMenuInvs((ShopMenu) shop, null);
+    }
+
+    public IShop getShop() {
+        return shop;
     }
 
     public boolean hasInv(String invName) {
@@ -55,7 +60,7 @@ public class Shop {
     }
 
     public Inventory getMainInventory() {
-        return getInventory(mainInv);
+        return getInventory(MAIN_INV);
     }
 
     public Inventory getInventory(String invName) {
@@ -108,10 +113,10 @@ public class Shop {
         Material mat = Material.getMaterial(material.toUpperCase());
         String name = itemObject.has("name") ? itemObject.getString("name") : null;
         String lore = itemObject.has("lore") ? itemObject.getString("lore") : null;
-        if (!itemObject.has("price")) {
+        if (!itemObject.has(PRICE)) {
             throw new IllegalArgumentException("No price tag");
         }
-        int price = itemObject.getInt("price");
+        int price = itemObject.getInt(PRICE);
         int quantity = itemObject.has("quantity") ? itemObject.getInt("quantity") : 1;
         int durability = itemObject.has("durability") ? itemObject.getInt("durability") : 0;
         String enchants = itemObject.has("enchants") ? itemObject.getString("enchants") : null;
@@ -140,10 +145,10 @@ public class Shop {
 
         String name = effectObject.has("name") ? effectObject.getString("name") : null;
         String lore = effectObject.has("lore") ? effectObject.getString("lore") : null;
-        if (!effectObject.has("price")) {
+        if (!effectObject.has(PRICE)) {
             throw new IllegalArgumentException("No price tag");
         }
-        int price = effectObject.getInt("price");
+        int price = effectObject.getInt(PRICE);
         int level = effectObject.has("level") ? effectObject.getInt("level") : 1;
         int duration = effectObject.has("duration") ? effectObject.getInt("duration") : 1;
 
@@ -184,18 +189,18 @@ public class Shop {
         ItemStack item = redPane.clone();
         ItemMeta itM = item.getItemMeta();
 
-        itM.setLore(Collections.singletonList(name));
+        Objects.requireNonNull(itM).setLore(Collections.singletonList(name));
         item.setItemMeta(itM);
 
         return item;
     }
 
     private ItemStack createMenuItem(ShopMenu menu) {
-        return new ItemMaker(menu.getItem(), NamespacedKey.minecraft("kemsshopitem")).addQuantity(1).addName((menu.getColor() == null ? ChatColor.BLACK : menu.getColor()) + menu.getName()).getItem();
+        return new ItemMaker(menu.getItem(), NamespacedKey.minecraft(KEMS_SHOP_ITEM)).addQuantity(1).addName((menu.getColor() == null ? ChatColor.BLACK : menu.getColor()) + menu.getName()).getItem();
     }
 
     private ItemStack createItem(ShopItem item) {
-        ItemStack i = new ItemMaker(item.getMaterial(), NamespacedKey.minecraft("kemsshopitem")).addQuantity(item.getQuantity()).addName(item.getName()).setLores(item.getLore()).addLore("Price: " + item.getPrice() + " points").addDurability(item.getDurability()).addEnchants(item.getEnchants()).addTags(item.getTags()).getItem();
+        ItemStack i = new ItemMaker(item.getMaterial(), NamespacedKey.minecraft(KEMS_SHOP_ITEM)).addQuantity(item.getQuantity()).addName(item.getName()).setLores(item.getLore()).addLore("Price: " + item.getPrice() + " points").addDurability(item.getDurability()).addEnchants(item.getEnchants()).addTags(item.getTags()).getItem();
 
         if (item.getOptions() != null) {
             processItemEffects(i, item.getOptions());
@@ -210,17 +215,17 @@ public class Shop {
         for (int i = 1; i < options.length; i++) {
             String[] effect = options[i].split("-");
 
-            meta.addCustomEffect(new PotionEffect(Registry.EFFECT.match(effect[0]), Integer.parseInt(effect[2]), Integer.parseInt(effect[1]), false, true, true), true);
+            Objects.requireNonNull(meta).addCustomEffect(new PotionEffect(Objects.requireNonNull(Registry.EFFECT.match(effect[0])), Integer.parseInt(effect[2]), Integer.parseInt(effect[1]), false, true, true), true);
         }
 
         item.setItemMeta(meta);
     }
 
     private ItemStack createEffect(ShopEffect effect) {
-        ItemStack potion = new ItemMaker(Material.POTION, NamespacedKey.minecraft("kemsshopitem")).addQuantity(1).addName(effect.getName()).setLores(effect.getLore()).addLore("Price: " + effect.getPrice() + " points").getItem();
+        ItemStack potion = new ItemMaker(Material.POTION, NamespacedKey.minecraft(KEMS_SHOP_ITEM)).addQuantity(1).addName(effect.getName()).setLores(effect.getLore()).addLore("Price: " + effect.getPrice() + " points").getItem();
         PotionMeta potionMeta = (PotionMeta) potion.getItemMeta();
 
-        potionMeta.addCustomEffect(new PotionEffect(effect.getEffect(), effect.getDuration(), effect.getLevel(), false, true, true), true);
+        Objects.requireNonNull(potionMeta).addCustomEffect(new PotionEffect(effect.getEffect(), effect.getDuration(), effect.getLevel(), false, true, true), true);
         potion.setItemMeta(potionMeta);
 
         return potion;

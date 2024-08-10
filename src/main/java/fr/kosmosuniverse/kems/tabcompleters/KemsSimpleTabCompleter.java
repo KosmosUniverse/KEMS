@@ -3,6 +3,7 @@ package fr.kosmosuniverse.kems.tabcompleters;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,7 +13,7 @@ import java.util.List;
  */
 public class KemsSimpleTabCompleter implements TabCompleter {
     @Override
-    public List<String> onTabComplete(CommandSender sender, Command cmd, String msg, String[] args) {
+    public List<String> onTabComplete(@NotNull CommandSender sender, @NotNull Command cmd, @NotNull String msg, String[] args) {
         return new ArrayList<>();
     }
 }

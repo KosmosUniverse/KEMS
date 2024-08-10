@@ -34,7 +34,7 @@ public class Mobs {
             String rawValues = FileUtils.readFileContent(Kems.getInstance().getResource("mobs.json"));
             processRawJSON(rawValues);
         } catch (IOException e) {
-            System.err.println(e.getMessage());
+            // TODO
         }
     }
 
@@ -48,7 +48,7 @@ public class Mobs {
             try {
                 mobList.add(new Mob(mobObj.getString("type").toUpperCase(), mobObj.getInt("points")));
             } catch (IllegalArgumentException e) {
-                System.err.println("Mob " + mobObj.getString("type").toUpperCase() + " does not exist.");
+                // TODO
             }
         });
     }
