@@ -1,0 +1,16 @@
+game_settings:
+  spreadplayers:
+    enable: false # True: when start the game, spread players., Default: False
+    minimum_distance: 500 # for spreadplayer command, minimum distance between player, Default: 500
+    minimum_radius: 1000 # for spreadplayer command, minimum radius must be > minimum_distance parameter, Default: 1000
+  shop: false # True: shop is available, Default: False
+  time_limit_mode:
+    time_limit: 45 # minutes, Default: 45
+  point_limit_mode:
+    point_limit: 10000 # points, Default: 10000
+  rank_limit_mode:
+    rank_limit: "HEROBRINE" # rank, Default: HEROBRINE
+  base_special_spawn_delay: 4 # minutes, Default: 4
+  mode: "NO_MODE" # Game Mode, Default: NO_MODE
+  level: "EASY" # level that affects points, Default: EASY
+  death_penalty: 50 # point amount lost for each death, -1 to disable, Default: 50

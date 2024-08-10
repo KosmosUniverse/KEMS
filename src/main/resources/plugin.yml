@@ -1,0 +1,64 @@
+name: KEMS
+version: '${project.version}'
+main: fr.kosmosuniverse.kems.Kems
+api-version: '1.20'
+
+commands:
+  kems-config:
+    usage: /<command> [<key> <value>]*
+    description: command to see or change game configuration
+  kems-list:
+    usage: /<command> [reset | remove <Player name> | add <@a | Player name>]
+    description: command to add/remove players to the list and view/reset the list
+    permission: inferno.flagrate
+  kems-start:
+    usage: /<command>
+    description: command to start the game
+    permission: inferno.flagrate
+  kems-pause:
+    usage: /<command>
+    description: command to pause the game
+    permission: inferno.flagrate
+  kems-resume:
+    usage: /<command>
+    description: command to resume the game
+    permission: inferno.flagrate
+  kems-stop:
+    usage: /<command>
+    description: command to stop the game
+    permission: inferno.flagrate
+  kems-admin-points:
+    usage: /<command> <PlayerName> [add <quantity> | remove <quantity> | set <quantity>]
+    description: command to see, modify or set player in-game points
+    permission: inferno.flagrate
+  kems-shop:
+    usage: /<command>
+    description: command to access the in-game shop
+permissions:
+  kems-op:
+    default: op
+    description: default op permission
+  kems-list:
+    description: command to add players to the list and view the list
+    default: op
+  kems-start:
+    description: command to start the game
+    default: op
+  kems-stop:
+    description: command to stop the game
+    default: op
+  kems-pause:
+    description: command to pause the game
+    default: op
+  kems-resume:
+    description: command to resume the game
+    default: op
+  kems-admin-points:
+    description: command to see, modify or set player in-game points
+    default: op
+  kems-config:
+    default: true
+    description: command to see or change game configuration
+  kems-shop:
+    default: true
+    description: command to access the in-game shop

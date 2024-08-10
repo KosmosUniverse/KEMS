@@ -1,0 +1,314 @@
+[
+	{
+		"type" : "chicken",
+		"points" : "2"
+	},
+	{
+		"type" : "salmon",
+		"points" : "3"
+	},
+	{
+		"type" : "sheep",
+		"points" : "4"
+	},
+	{
+		"type" : "cod",
+		"points" : "4"
+	},
+	{
+		"type" : "cow",
+		"points" : "5"
+	},
+	{
+		"type" : "pig",
+		"points" : "5"
+	},
+	{
+		"type" : "snow_golem",
+		"points" : "6"
+	},
+	{
+		"type" : "bat",
+		"points" : "6"
+	},
+	{
+		"type" : "rabbit",
+		"points" : "9"
+	},
+	{
+		"type" : "pufferfish",
+		"points" : "10"
+	},
+	{
+		"type" : "squid",
+		"points" : "10"
+	},
+	{
+		"type" : "dolphin",
+		"points" : "35"
+	},
+	{
+		"type" : "tropical_fish",
+		"points" : "10"
+	},
+	{
+		"type" : "glow_squid",
+		"points" : "15"
+	},
+	{
+		"type" : "tadpole",
+		"points" : "18"
+	},
+	{
+		"type" : "slime",
+		"points" : "20"
+	},
+	{
+		"type" : "parrot",
+		"points" : "21"
+	},
+	{
+		"type" : "armadillo",
+		"points" : "24"
+	},
+	{
+		"type" : "frog",
+		"points" : "25"
+	},
+	{
+		"type" : "cat",
+		"points" : "30"
+	},
+	{
+		"type" : "ocelot",
+		"points" : "30"
+	},
+	{
+		"type" : "villager",
+		"points" : "30"
+	},
+	{
+		"type" : "strider",
+		"points" : "30"
+	},
+	{
+		"type" : "horse",
+		"points" : "30"
+	},
+	{
+		"type" : "zombified_piglin",
+		"points" : "33"
+	},
+	{
+		"type" : "spider",
+		"points" : "34"
+	},
+	{
+		"type" : "bee",
+		"points" : "39"
+	},
+	{
+		"type" : "fox",
+		"points" : "40"
+	},
+	{
+		"type" : "wandering_trader",
+		"points" : "40"
+	},
+	{
+		"type" : "zombie",
+		"points" : "43"
+	},
+	{
+		"type" : "ghast",
+		"points" : "43"
+	},
+	{
+		"type" : "skeleton",
+		"points" : "45"
+	},
+	{
+		"type" : "donkey",
+		"points" : "45"
+	},
+	{
+		"type" : "mooshroom",
+		"points" : "50"
+	},
+	{
+		"type" : "wolf",
+		"points" : "52"
+	},
+	{
+		"type" : "axolotl",
+		"points" : "56"
+	},
+	{
+		"type" : "sniffer",
+		"points" : "56"
+	},
+	{
+		"type" : "turtle",
+		"points" : "60"
+	},
+	{
+		"type" : "silverfish",
+		"points" : "97"
+	},
+	{
+		"type" : "goat",
+		"points" : "72"
+	},
+	{
+		"type" : "skeleton_horse",
+		"points" : "75"
+	},
+	{
+		"type" : "piglin",
+		"points" : "79"
+	},
+	{
+		"type" : "allay",
+		"points" : "80"
+	},
+	{
+		"type" : "creeper",
+		"points" : "83"
+	},
+	{
+		"type" : "husk",
+		"points" : "83"
+	},
+	{
+		"type" : "camel",
+		"points" : "96"
+	},
+	{
+		"type" : "magma_cube",
+		"points" : "102"
+	},
+	{
+		"type" : "cave_spider",
+		"points" : "104"
+	},
+	{
+		"type" : "mule",
+		"points" : "120"
+	},
+	{
+		"type" : "zombie_villager",
+		"points" : "123"
+	},
+	{
+		"type" : "stray",
+		"points" : "125"
+	},
+	{
+		"type" : "enderman",
+		"points" : "127"
+	},
+	{
+		"type" : "drowned",
+		"points" : "63"
+	},
+	{
+		"type" : "panda",
+		"points" : "146"
+	},
+	{
+		"type" : "endermite",
+		"points" : "162"
+	},
+	{
+		"type" : "llama",
+		"points" : "181"
+	},
+	{
+		"type" : "phantom",
+		"points" : "202"
+	},
+	{
+		"type" : "polar_bear",
+		"points" : "66"
+	},
+	{
+		"type" : "hoglin",
+		"points" : "243"
+	},
+	{
+		"type" : "guardian",
+		"points" : "248"
+	},
+	{
+		"type" : "witch",
+		"points" : "250"
+	},
+	{
+		"type" : "vex",
+		"points" : "293"
+	},
+	{
+		"type" : "blaze",
+		"points" : "296"
+	},
+	{
+		"type" : "iron_golem",
+		"points" : "307"
+	},
+	{
+		"type" : "wither_skeleton",
+		"points" : "330"
+	},
+	{
+		"type" : "pillager",
+		"points" : "343"
+	},
+	{
+		"type" : "shulker",
+		"points" : "364"
+	},
+	{
+		"type" : "piglin_brute",
+		"points" : "420"
+	},
+	{
+		"type" : "evoker",
+		"points" : "486"
+	},
+	{
+		"type" : "vindicator",
+		"points" : "498"
+	},
+	{
+		"type" : "zoglin",
+		"points" : "803"
+	},
+	{
+		"type" : "elder_guardian",
+		"points" : "970"
+	},
+	{
+		"type" : "ravager",
+		"points" : "2018"
+	},
+	{
+		"type" : "ender_dragon",
+		"points" : "4028"
+	},
+	{
+		"type" : "wither",
+		"points" : "6008"
+	},
+	{
+		"type" : "bogged",
+		"points" : "107"
+	},
+	{
+		"type" : "breeze",
+		"points" : "301"
+	},
+	{
+		"type" : "warden",
+		"points" : "8040"
+	}
+]

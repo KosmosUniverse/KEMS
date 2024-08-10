@@ -1,0 +1,425 @@
+{
+  "content" : {
+    "Weapons": {
+      "color": "",
+      "item": "diamond_sword",
+      "size": 27,
+      "type": "Menu",
+      "content": {
+        "Swords": {
+          "color": "",
+          "item": "diamond_sword",
+          "size": 27,
+          "type": "Menu",
+          "content": {
+            "iron_sword/1": {
+              "price": 200,
+              "type": "Item",
+              "quantity": 1,
+              "enchants": "",
+              "durability": -1,
+              "name": "Excaliouuups",
+              "lore": "Famous sword from Arthur, the Turtle and Frog king !"
+            },
+            "iron_sword/2": {
+              "price": 500,
+              "type": "Item",
+              "quantity": 1,
+              "enchants": "sharpness-2/fire_aspect-1",
+              "durability": 150,
+              "name": "Fire Stick",
+              "lore": "Light a pizza oven like nothing else"
+            },
+            "diamond_sword": {
+              "price": 1000,
+              "type": "Item",
+              "quantity": 1,
+              "enchants": "sharpness-4/fire_aspect-2",
+              "durability": 100,
+              "name": "Vampire",
+              "lore": "Suck point from their soul as much as possible.-20% more points",
+              "customs": [
+                {
+                  "key": "kemsitempointboost",
+                  "type": "INTEGER",
+                  "value": 20
+                }
+              ]
+            },
+            "netherite_sword": {
+              "price": 2000,
+              "type": "Item",
+              "quantity": 1,
+              "enchants": "sharpness-10/fire_aspect-2",
+              "durability": 100,
+              "name": "Vorpale",
+              "lore": "This sword drink the enemy's soul"
+            }
+          }
+        },
+        "Bows": {
+          "color": "",
+          "item": "bow",
+          "size": 27,
+          "type": "Menu",
+          "content": {
+            "bow/1": {
+              "price": 300,
+              "type": "Item",
+              "quantity": 1,
+              "enchants": "infinity-1",
+              "durability": -1,
+              "name": "Bow-nus",
+              "lore": "That's a freaking good bonus !"
+            },
+            "bow/2": {
+              "price": 500,
+              "type": "Item",
+              "quantity": 1,
+              "enchants": "power-2/flame-1",
+              "durability": 150,
+              "name": "Bow-ling",
+              "lore": "A power strike from the Heaven !"
+            },
+            "bow/3": {
+              "price": 2000,
+              "type": "Item",
+              "quantity": 1,
+              "enchants": "power-10/flame-1/infinity-1",
+              "durability": 100,
+              "name": "Low-Bow-Tomy",
+              "lore": "Enter your mind by the easiest way !"
+            }
+          }
+        },
+        "Arrows": {
+          "color": "",
+          "item": "arrow",
+          "size": 27,
+          "type": "Menu",
+          "content": {
+            "arrow": {
+              "price": 50,
+              "type": "Item",
+              "quantity": 64,
+              "enchants": "",
+              "durability": -1,
+              "name": "Vault Pierce",
+              "lore": "Can pierce your heart like an arrow"
+            },
+            "tipped_arrow!slowness-4-10": {
+              "price": 50,
+              "type": "Item",
+              "quantity": 10,
+              "enchants": "",
+              "durability": -1,
+              "name": "Aaaaarrrrooooowwww",
+              "lore": "Eaaasssyyyy toooo shoooooot. . ."
+            },
+            "tipped_arrow!instant_damage-2-1": {
+              "price": 100,
+              "type": "Item",
+              "quantity": 32,
+              "enchants": "",
+              "durability": -1,
+              "name": "One Shot.",
+              "lore": "A sniper doesn't need more than one bullet."
+            },
+            "tipped_arrow!poison-2-10!invisibility-1-10": {
+              "price": 100,
+              "type": "Item",
+              "quantity": 32,
+              "enchants": "",
+              "durability": -1,
+              "name": "Black Widow",
+              "lore": "1 sting and its dying as much as you can't see them anymore."
+            },
+            "tipped_arrow!instant_damage-2-1!poison-2-10!weakness-2-10": {
+              "price": 100,
+              "type": "Item",
+              "quantity": 10,
+              "enchants": "",
+              "durability": -1,
+              "name": "Cursed Arrow",
+              "lore": "A shot and they're cursed on 20 generations"
+            }
+          }
+        }
+      }
+    },
+    "Protections": {
+      "color": "",
+      "item": "netherite_chestplate",
+      "size": 27,
+      "type": "Menu",
+      "content": {
+        "Armors": {
+          "color": "",
+          "item": "netherite_chestplate",
+          "size": 27,
+          "type": "Menu",
+          "content": {
+            "iron_chestplate": {
+              "price": 200,
+              "type": "Item",
+              "quantity": 1,
+              "enchants": "protection-2/binding_curse-1",
+              "durability": -1,
+              "name": "Bound For Eveeeerr",
+              "lore": "Even love can't reach you !"
+            },
+            "diamond_chestplate": {
+              "price": 500,
+              "type": "Item",
+              "quantity": 1,
+              "enchants": "thorns-3",
+              "durability": -1,
+              "name": "Hedgehog",
+              "lore": "Go Spike their ass !"
+            },
+            "netherite_chestplate": {
+              "price": 1500,
+              "type": "Item",
+              "quantity": 1,
+              "enchants": "protection-4",
+              "durability": -1,
+              "name": "Armouur Proof",
+              "lore": "Even love can't reach you !"
+            }
+          }
+        },
+        "Shields": {
+          "color": "",
+          "item": "shield",
+          "size": 27,
+          "type": "Menu",
+          "content": {
+            "shield": {
+              "price": 100,
+              "type": "Item",
+              "quantity": 1,
+              "enchants": "",
+              "durability": -1,
+              "name": "Great Wall of China",
+              "lore": "Even Godzilla, stopped here"
+            }
+          }
+        }
+      }
+    },
+    "Effects": {
+      "color": "",
+      "item": "potion",
+      "size": 27,
+      "type": "Menu",
+      "content": {
+        "speed": {
+          "price": 200,
+          "type": "Effect",
+          "level": 2,
+          "duration": 30,
+          "name": "Faster Than Light",
+          "lore": "Say 'HI !' when leaving The Flash away !"
+        },
+        "saturation": {
+          "price": 300,
+          "type": "Effect",
+          "level": 2,
+          "duration": 30,
+          "name": "Grandma soup",
+          "lore": "After that Hunger will never come to you again"
+        },
+        "instant_health": {
+          "price": 300,
+          "type": "Effect",
+          "level": 2,
+          "duration": 1,
+          "name": "Grandma Little Kiss",
+          "lore": "Pain is far away"
+        },
+        "strength": {
+          "price": 500,
+          "type": "Effect",
+          "level": 2,
+          "duration": 60,
+          "name": "Spinach",
+          "lore": "Popeye is proud of you !"
+        },
+        "resistance": {
+          "price": 500,
+          "type": "Effect",
+          "level": 2,
+          "duration": 60,
+          "name": "Wallify",
+          "lore": "You're now a brick wall"
+        }
+      }
+    },
+    "Tools": {
+      "color": "",
+      "item": "diamond_pickaxe",
+      "size": 27,
+      "type": "Menu",
+      "content": {
+        "Pickaxe": {
+          "color": "",
+          "item": "diamond_pickaxe",
+          "size": 27,
+          "type": "Menu",
+          "content": {
+            "iron_pickaxe": {
+              "price": 200,
+              "type": "Item",
+              "quantity": 1,
+              "enchants": "",
+              "durability": -1,
+              "name": "Sand Toy",
+              "lore": "Go find some shitty rocks and stay in that mine..."
+            },
+            "diamond_pickaxe": {
+              "price": 500,
+              "type": "Item",
+              "quantity": 1,
+              "enchants": "efficiency-2",
+              "durability": 500,
+              "name": "Miner tool",
+              "lore": "Can dig a hole better than an asshole"
+            },
+            "netherite_pickaxe/1": {
+              "price": 1000,
+              "type": "Item",
+              "quantity": 1,
+              "enchants": "efficiency-5/fortune-3",
+              "durability": 500,
+              "name": "Jackpot digger",
+              "lore": "This will give you diamond faster than a sugar daddy"
+            },
+            "netherite_pickaxe/2": {
+              "price": 1000,
+              "type": "Item",
+              "quantity": 1,
+              "enchants": "efficiency-5/silk_touch-1",
+              "durability": 500,
+              "name": "Archeology tool",
+              "lore": "No changes, no damages to the products"
+            }
+          }
+        },
+        "Shovels": {
+          "color": "",
+          "item": "iron_shovel",
+          "size": 27,
+          "type": "Menu",
+          "content": {
+            "iron_shovel": {
+              "price": 200,
+              "type": "Item",
+              "quantity": 1,
+              "enchants": "",
+              "durability": -1,
+              "name": "Sand Toy",
+              "lore": "Go build a sand castle and give me break..."
+            },
+            "diamond_shovel": {
+              "price": 500,
+              "type": "Item",
+              "quantity": 1,
+              "enchants": "efficiency-2",
+              "durability": 500,
+              "name": "Miner tool",
+              "lore": "Dig your pool better than your hands"
+            },
+            "netherite_shovel/1": {
+              "price": 1000,
+              "type": "Item",
+              "quantity": 1,
+              "enchants": "efficiency-5/fortune-3",
+              "durability": 500,
+              "name": "Jackpot digger",
+              "lore": "Free flint"
+            },
+            "netherite_shovel/2": {
+              "price": 1000,
+              "type": "Item",
+              "quantity": 1,
+              "enchants": "efficiency-5/silk_touch-1",
+              "durability": 500,
+              "name": "Archeology tool",
+              "lore": "Perfect to unearth some treasure"
+            }
+          }
+        },
+        "Axe": {
+          "color": "",
+          "item": "stone_axe",
+          "size": 27,
+          "type": "Menu",
+          "content": {
+            "iron_axe": {
+              "price": 200,
+              "type": "Item",
+              "quantity": 1,
+              "enchants": "",
+              "durability": -1,
+              "name": "Sand Toy",
+              "lore": "Go chop some branches and stay in the forest..."
+            },
+            "diamond_axe": {
+              "price": 500,
+              "type": "Item",
+              "quantity": 1,
+              "enchants": "efficiency-2",
+              "durability": 500,
+              "name": "Miner tool",
+              "lore": "Cut your winter wood like anyone else"
+            },
+            "netherite_axe/1": {
+              "price": 1000,
+              "type": "Item",
+              "quantity": 1,
+              "enchants": "efficiency-5",
+              "durability": 500,
+              "name": "Jackpot digger",
+              "lore": "Even the Amazon forest will not be enough"
+            },
+            "netherite_axe/2": {
+              "price": 1500,
+              "type": "Item",
+              "quantity": 1,
+              "enchants": "sharpness-5",
+              "durability": 100,
+              "name": "Battle Axe",
+              "lore": "Hidden with the tools, it will chop your enemy's head"
+            }
+          }
+        },
+        "Miscellaneous": {
+          "color": "",
+          "item": "iron_ingot",
+          "size": 27,
+          "type": "Menu",
+          "content": {
+            "flint_and_steel": {
+              "price": 500,
+              "type": "Item",
+              "quantity": 1,
+              "enchants": "",
+              "durability": 2,
+              "name": "And there was light.",
+              "lore": "Light the shit of this freaking Hell."
+            },
+            "obsidian": {
+              "price": 500,
+              "type": "Item",
+              "quantity": 10,
+              "enchants": "",
+              "durability": -1,
+              "name": "To Make a Valve Game",
+              "lore": "Federal regulations require me to warn you that this next test chamber... is looking pretty good."
+            }
+          }
+        }
+      }
+    }
+  }
+}
