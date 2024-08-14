@@ -20,6 +20,7 @@ import java.util.stream.Collectors;
 public class PlayersList {
     private static PlayersList instance = null;
     private List<PlayerGame> players = null;
+    private static final String KEMS = "[K.E.M.S] : ";
     private static final String KEMS_PLAYER = "[K.E.M.S] : Player ";
     private static final String POINTS = " points.";
 
@@ -60,18 +61,20 @@ public class PlayersList {
         return players.stream().anyMatch(p -> p.isConnected() && p.getPlayer().getName().equals(playerName));
     }
 
-    public void add(Player sender, String p) {
+    public boolean add(Player sender, String p) {
         if (players == null) {
             players = new ArrayList<>();
         }
 
         if ("@a".equals(p)) {
             Bukkit.getOnlinePlayers().forEach(player -> this.players.add(new PlayerGame(player)));
-            sender.sendMessage("[K.E.M.S] : " + Bukkit.getOnlinePlayers().size() + " players have been added to the list.");
+            sender.sendMessage(KEMS + Bukkit.getOnlinePlayers().size() + " players have been added to the list.");
         } else {
             players.add(new PlayerGame(searchPlayerByName(p)));
-            sender.sendMessage("[K.E.M.S] : " + p + " added to the list.");
+            sender.sendMessage(KEMS + p + " added to the list.");
         }
+
+        return true;
     }
 
     /**
@@ -79,11 +82,13 @@ public class PlayersList {
      *
      * @param player    the name of the player to remove
      */
-    public void removePlayer(Player sender, String player) {
+    public boolean removePlayer(Player sender, String player) {
         if (players != null) {
             players.removeIf(p -> p.getPlayer().getName().equals(player));
-            sender.sendMessage("[K.E.M.S] : " + player + " have been removed from the list.");
+            sender.sendMessage(KEMS + player + " have been removed from the list.");
         }
+
+        return true;
     }
 
     /**
@@ -227,31 +232,37 @@ public class PlayersList {
         return pg == null ? -1 : pg.getCurrentPoints();
     }
 
-    public void addPlayerPoints(String playerName, int points, boolean needAck) {
+    public boolean addPlayerPoints(String playerName, int points, boolean needAck) {
         players.stream().filter(p -> p.isConnected() && p.getPlayer().getName().equals(playerName)).findFirst().ifPresent(p -> {
             p.addPoints(points);
             if (needAck) {
                 p.getPlayer().sendMessage(KEMS_PLAYER + p.getPlayerName() + " received " + points + POINTS);
             }
         });
+
+        return true;
     }
 
-    public void removePlayerPoints(String playerName, int points, boolean needAck) {
+    public boolean removePlayerPoints(String playerName, int points, boolean needAck) {
         players.stream().filter(p -> p.isConnected() && p.getPlayer().getName().equals(playerName)).findFirst().ifPresent(p -> {
             p.removePoints(points);
             if (needAck) {
                 p.getPlayer().sendMessage(KEMS_PLAYER + p.getPlayerName() + " lost " + points + POINTS);
             }
         });
+
+        return true;
     }
 
-    public void setPlayerPoints(String playerName, int points, boolean needAck) {
+    public boolean setPlayerPoints(String playerName, int points, boolean needAck) {
         players.stream().filter(p -> p.isConnected() && p.getPlayer().getName().equals(playerName)).findFirst().ifPresent(p -> {
             p.setPoints(points);
             if (needAck) {
                 p.getPlayer().sendMessage(KEMS_PLAYER + p.getPlayerName() + " have now " + points + POINTS);
             }
         });
+
+        return true;
     }
 
     public void setPlayerPointBoost(String playerName, int pointBoost) {

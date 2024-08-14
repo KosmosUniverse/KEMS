@@ -15,6 +15,8 @@ import org.jetbrains.annotations.NotNull;
  * @author KosmosUniverse
  */
 public class KemsGenericCommand implements CommandExecutor {
+    private static final String NO_ACCESS = "You don't have access to this command.";
+    private static final String NOT_LAUNCHED = "[K.E.M.S] : Game is not launched.";
     private static final String KEMS_PLAYER = "[K.E.M.S] : Player ";
     private static final String POINTS = " points.";
 
@@ -98,17 +100,16 @@ public class KemsGenericCommand implements CommandExecutor {
             return false;
         }
 
-        switch (args[0]) {
+        return switch (args[0]) {
             case "add" -> PlayersList.getInstance().add(player, args[1]);
             case "remove" -> PlayersList.getInstance().removePlayer(player, args[1]);
-        }
-
-        return true;
+            default -> false;
+        };
     }
 
     private boolean executeStart(Player player) {
         if (!player.hasPermission("kems-start")) {
-            player.sendMessage("You don't have access to this command.");
+            player.sendMessage(NO_ACCESS);
             return false;
         }
 
@@ -165,7 +166,7 @@ public class KemsGenericCommand implements CommandExecutor {
 
     private boolean executeStop(Player player) {
         if (!player.hasPermission("kems-stop")) {
-            player.sendMessage("You don't have access to this command.");
+            player.sendMessage(NO_ACCESS);
             return false;
         }
 
@@ -182,12 +183,12 @@ public class KemsGenericCommand implements CommandExecutor {
 
     private boolean executePause(Player player) {
         if (!player.hasPermission("kems-pause")) {
-            player.sendMessage("You don't have access to this command.");
+            player.sendMessage(NO_ACCESS);
             return false;
         }
 
         if (GameManager.getInstance().getStatus() == Status.NOT_LAUNCHED) {
-            player.sendMessage("[K.E.M.S] : Game is not launched");
+            player.sendMessage(NOT_LAUNCHED);
             return true;
         }
 
@@ -202,12 +203,12 @@ public class KemsGenericCommand implements CommandExecutor {
 
     private boolean executeResume(Player player) {
         if (!player.hasPermission("kems-resume")) {
-            player.sendMessage("You don't have access to this command.");
+            player.sendMessage(NO_ACCESS);
             return false;
         }
 
         if (GameManager.getInstance().getStatus() == Status.NOT_LAUNCHED) {
-            player.sendMessage("[K.E.M.S] : Game is not launched");
+            player.sendMessage(NOT_LAUNCHED);
             return true;
         }
 
@@ -241,7 +242,7 @@ public class KemsGenericCommand implements CommandExecutor {
         }
 
         if (GameManager.getInstance().getStatus() == Status.NOT_LAUNCHED) {
-            player.sendMessage("[K.E.M.S] : Game is not launched");
+            player.sendMessage(NOT_LAUNCHED);
             return true;
         }
 
@@ -261,12 +262,11 @@ public class KemsGenericCommand implements CommandExecutor {
 
         int points = Integer.parseInt(args[2]);
 
-        switch (args[1]) {
+        return switch (args[1]) {
             case "add" -> PlayersList.getInstance().addPlayerPoints(args[0], points, true);
             case "remove" -> PlayersList.getInstance().removePlayerPoints(args[0], points, true);
             case "set" -> PlayersList.getInstance().setPlayerPoints(args[0], points, true);
-        }
-
-        return true;
+            default -> false;
+        };
     }
 }
