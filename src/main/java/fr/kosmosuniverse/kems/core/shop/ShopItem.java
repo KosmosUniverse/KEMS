@@ -1,6 +1,8 @@
 package fr.kosmosuniverse.kems.core.shop;
 
 import fr.kosmosuniverse.kems.utils.ItemEnchant;
+import lombok.Getter;
+import lombok.Setter;
 import org.bukkit.Material;
 import org.bukkit.Registry;
 
@@ -12,6 +14,8 @@ import java.util.List;
 /**
  * @author KosmosUniverse
  */
+@Getter
+@Setter
 public class ShopItem implements IShop {
     private final Material material;
     private final String name;
@@ -22,22 +26,6 @@ public class ShopItem implements IShop {
     private List<ItemEnchant> enchants = null;
     private final String[] options;
     private final List<ShopItemTags> tags;
-
-
-    public ShopItem(Material material, String name, String lore, int price, int quantity, int durability, String enchants, List<ShopItemTags> tags) {
-        this.material = material;
-        this.name = (name == null || name.equals("")) ? null : name;
-        this.lore = (lore == null || lore.equals("")) ? null : Arrays.asList(lore.split("-"));
-        this.price = price;
-        this.quantity = quantity;
-        this.durability = durability;
-        this.options = null;
-        this.tags = tags.isEmpty() ? null : tags;
-
-        if (enchants != null && !enchants.equals("")) {
-            processEnchants(enchants);
-        }
-    }
 
     public ShopItem(Material material, String name, String lore, int price, int quantity, int durability, String enchants, String[] options, List<ShopItemTags> tags) {
         this.material = material;
@@ -68,41 +56,5 @@ public class ShopItem implements IShop {
     @Override
     public EShopType getType() {
         return EShopType.ITEM;
-    }
-
-    public Material getMaterial() {
-        return material;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public List<String> getLore() {
-        return lore;
-    }
-
-    public int getPrice() {
-        return price;
-    }
-
-    public int getQuantity() {
-        return quantity;
-    }
-
-    public int getDurability() {
-        return durability;
-    }
-
-    public List<ItemEnchant> getEnchants() {
-        return enchants;
-    }
-
-    public String[] getOptions() {
-        return options;
-    }
-
-    public List<ShopItemTags> getTags() {
-        return tags;
     }
 }

@@ -199,7 +199,7 @@ public class Config {
                 ChatColor.BLUE + "Spreadplayers: " + ChatColor.GOLD + configValues.isSpread() + "\n" +
                 ChatColor.BLUE + "  - Distance: " + ChatColor.GOLD + configValues.getSpreadDistance() + "\n" +
                 ChatColor.BLUE + "  - Radius: " + ChatColor.GOLD + configValues.getSpreadRadius() + "\n" +
-                ChatColor.BLUE + "Shop: " + ChatColor.GOLD + configValues.hasShop() + "\n" +
+                ChatColor.BLUE + "Shop: " + ChatColor.GOLD + configValues.isShop() + "\n" +
                 ChatColor.BLUE + "Time Limit Mode: " + ChatColor.GOLD + "\n" +
                 ChatColor.BLUE + "  - Time Limit: " + ChatColor.GOLD + configValues.getTimeLimit() + "\n" +
                 ChatColor.BLUE + "Point Limit Mode: " + ChatColor.GOLD + "\n" +

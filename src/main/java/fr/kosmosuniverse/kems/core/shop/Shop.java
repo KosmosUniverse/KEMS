@@ -131,6 +131,8 @@ public class Shop {
 
                 if ("INTEGER".equals(tag.getString("type"))) {
                     tags.add(new ShopItemTags(tag.getString("key"), tag.getString("type"), tag.get("value")));
+                } else if ("BOOLEAN".equals(tag.getString("type"))) {
+                    tags.add(new ShopItemTags(tag.getString("key"), tag.getString("type"), tag.get("value")));
                 }
             });
         }

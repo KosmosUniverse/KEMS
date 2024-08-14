@@ -69,10 +69,6 @@ public class Timer {
         return ret;
     }
 
-    public long getTimeZero() {
-        return timeZero;
-    }
-
     public long getTimeElapsed() {
         return System.currentTimeMillis() - timeZero;
     }

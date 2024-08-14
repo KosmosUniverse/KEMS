@@ -1,6 +1,7 @@
 package fr.kosmosuniverse.kems.utils;
 
 import fr.kosmosuniverse.kems.core.shop.ShopItemTags;
+import lombok.Getter;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
@@ -16,7 +17,8 @@ import java.util.List;
  * @author KosmosUniverse
  */
 public class ItemMaker {
-    private final ItemStack item;
+    @Getter
+    final ItemStack item;
 
     public ItemMaker(Material material, NamespacedKey key) {
         item = new ItemStack(material);
@@ -25,10 +27,6 @@ public class ItemMaker {
         assert itM != null;
         itM.getPersistentDataContainer().set(key, PersistentDataType.BOOLEAN, true);
         item.setItemMeta(itM);
-    }
-
-    public ItemStack getItem() {
-        return item;
     }
 
     public ItemMaker addQuantity(int quantity) {
@@ -49,15 +47,6 @@ public class ItemMaker {
         item.setItemMeta(itM);
 
         return this;
-    }
-
-    public ItemMaker setLore(String lore) {
-        ItemMeta itM = item.getItemMeta();
-
-        assert itM != null;
-        itM.setLore(new ArrayList<>());
-        item.setItemMeta(itM);
-        return addLore(lore);
     }
 
     public ItemMaker setLores(List<String> lores) {
@@ -113,16 +102,6 @@ public class ItemMaker {
         return this;
     }
 
-    public ItemMaker addEnchant(ItemEnchant enchant) {
-        if (enchant == null) {
-            return this;
-        }
-
-        item.addUnsafeEnchantment(enchant.getEnchant(), enchant.getLevel());
-
-        return this;
-    }
-
     public ItemMaker addEnchants(List<ItemEnchant> enchants) {
         if (enchants == null) {
             return this;
@@ -156,6 +135,9 @@ public class ItemMaker {
             if ("INTEGER".equals(tag.getType())) {
                 assert itM != null;
                 itM.getPersistentDataContainer().set(tag.getKey(), PersistentDataType.INTEGER, (Integer) tag.getValue());
+            } else if ("BOOLEAN".equals(tag.getType())) {
+                assert itM != null;
+                itM.getPersistentDataContainer().set(tag.getKey(), PersistentDataType.BOOLEAN, (Boolean) tag.getValue());
             }
         });
 

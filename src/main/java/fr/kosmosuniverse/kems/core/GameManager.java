@@ -1,11 +1,16 @@
 package fr.kosmosuniverse.kems.core;
 
+import lombok.Getter;
+
 /**
  * @author KosmosUniverse
  */
 public class GameManager {
     private static GameManager instance = null;
+
+    @Getter
     private Status status = Status.NOT_LAUNCHED;
+    @Getter
     private Mode mode = Mode.NO_MODE;
     private final Timer timer;
 
@@ -25,14 +30,6 @@ public class GameManager {
         }
 
         return instance;
-    }
-
-    public Status getGameStatus() {
-        return status;
-    }
-
-    public Mode getMode() {
-        return mode;
     }
 
     public void chooseMode(Mode mode) {

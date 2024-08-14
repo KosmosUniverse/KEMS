@@ -25,15 +25,14 @@ import java.util.Objects;
 public class PlayerKill implements Listener {
     @EventHandler
     protected void onPlayerKillMob(EntityDeathEvent event) {
-        if (GameManager.getInstance().getGameStatus() != Status.LAUNCHED) {
+        if (GameManager.getInstance().getStatus() != Status.LAUNCHED) {
             return ;
         }
 
         EntityType deadType = event.getEntity().getType();
         DamageSource source = event.getDamageSource();
 
-        if (source.getCausingEntity() instanceof Player) {
-            Player player = (Player) source.getCausingEntity();
+        if (source.getCausingEntity() instanceof Player player) {
             Entity entity = event.getEntity();
             List<MetadataValue> metadatas = entity.getMetadata("SpecialMob");
             boolean isSpecial = false;
@@ -44,11 +43,18 @@ public class PlayerKill implements Listener {
 
             ItemStack item = player.getInventory().getItem(EquipmentSlot.HAND);
             boolean kemsItemPointBoost = Objects.requireNonNull(item).hasItemMeta() && Objects.requireNonNull(item.getItemMeta()).getPersistentDataContainer().has(NamespacedKey.minecraft("kemsitempointboost"));
+            boolean kemsItemNoPointPenalty = Objects.requireNonNull(item).hasItemMeta() && Objects.requireNonNull(item.getItemMeta()).getPersistentDataContainer().has(NamespacedKey.minecraft("kemsitemnopointpenalty"));
 
             if (kemsItemPointBoost) {
                 int pointBoost = item.getItemMeta().getPersistentDataContainer().get(NamespacedKey.minecraft("kemsitempointboost"), PersistentDataType.INTEGER);
 
                 PlayersList.getInstance().setPlayerPointBoost(player.getName(), pointBoost);
+            }
+
+            if (kemsItemNoPointPenalty) {
+                boolean noPointPenalty = item.getItemMeta().getPersistentDataContainer().get(NamespacedKey.minecraft("kemsitemnopointpenalty"), PersistentDataType.BOOLEAN);
+
+                PlayersList.getInstance().setPlayerNoPointPointPenalty(player.getName(), noPointPenalty);
             }
 
             if (isSpecial) {

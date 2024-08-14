@@ -56,7 +56,7 @@ public class InventoryListener implements Listener {
                 player.openInventory(Shop.getInstance().getInventory(prevInvName));
             }
         } else if (item.hasItemMeta() && Objects.requireNonNull(item.getItemMeta()).hasLore()) {
-            if (GameManager.getInstance().getGameStatus() == Status.NOT_LAUNCHED ||
+            if (GameManager.getInstance().getStatus() == Status.NOT_LAUNCHED ||
                     !PlayersList.getInstance().hasPlayer(player.getName())) {
                 return ;
             }

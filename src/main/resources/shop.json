@@ -28,21 +28,37 @@
               "enchants": "sharpness-2/fire_aspect-1",
               "durability": 150,
               "name": "Fire Stick",
-              "lore": "Light a pizza oven like nothing else"
+              "lore": "Light a pizza oven like nothing else.-150 use"
             },
-            "diamond_sword": {
+            "diamond_sword/1": {
               "price": 1000,
               "type": "Item",
               "quantity": 1,
               "enchants": "sharpness-4/fire_aspect-2",
               "durability": 100,
               "name": "Vampire",
-              "lore": "Suck point from their soul as much as possible.-20% more points",
+              "lore": "Suck point from their soul as much as possible.-100 use-20% more points",
               "customs": [
                 {
                   "key": "kemsitempointboost",
                   "type": "INTEGER",
                   "value": 20
+                }
+              ]
+            },
+            "diamond_sword/2": {
+              "price": 1000,
+              "type": "Item",
+              "quantity": 1,
+              "enchants": "sharpness-4/fire_aspect-2",
+              "durability": 50,
+              "name": "Point Maker",
+              "lore": "You're above any penalty.-50 use-No penalty for mobs killed.",
+              "customs": [
+                {
+                  "key": "kemsitemnopointpenalty",
+                  "type": "BOOLEAN",
+                  "value": true
                 }
               ]
             },
@@ -53,7 +69,7 @@
               "enchants": "sharpness-10/fire_aspect-2",
               "durability": 100,
               "name": "Vorpale",
-              "lore": "This sword drink the enemy's soul"
+              "lore": "This sword drink the enemy's soul-100 use"
             }
           }
         },
@@ -79,7 +95,7 @@
               "enchants": "power-2/flame-1",
               "durability": 150,
               "name": "Bow-ling",
-              "lore": "A power strike from the Heaven !"
+              "lore": "A power strike from the Heaven !-150 use"
             },
             "bow/3": {
               "price": 2000,
@@ -88,7 +104,7 @@
               "enchants": "power-10/flame-1/infinity-1",
               "durability": 100,
               "name": "Low-Bow-Tomy",
-              "lore": "Enter your mind by the easiest way !"
+              "lore": "Enter your mind by the easiest way !-100 use"
             }
           }
         },
@@ -283,7 +299,7 @@
               "enchants": "efficiency-2",
               "durability": 500,
               "name": "Miner tool",
-              "lore": "Can dig a hole better than an asshole"
+              "lore": "Can dig a hole better than an asshole-500 use"
             },
             "netherite_pickaxe/1": {
               "price": 1000,
@@ -292,7 +308,7 @@
               "enchants": "efficiency-5/fortune-3",
               "durability": 500,
               "name": "Jackpot digger",
-              "lore": "This will give you diamond faster than a sugar daddy"
+              "lore": "This will give you diamond faster than a sugar daddy-500 use"
             },
             "netherite_pickaxe/2": {
               "price": 1000,
@@ -301,7 +317,7 @@
               "enchants": "efficiency-5/silk_touch-1",
               "durability": 500,
               "name": "Archeology tool",
-              "lore": "No changes, no damages to the products"
+              "lore": "No changes, no damages to the products-500 use"
             }
           }
         },
@@ -327,7 +343,7 @@
               "enchants": "efficiency-2",
               "durability": 500,
               "name": "Miner tool",
-              "lore": "Dig your pool better than your hands"
+              "lore": "Dig your pool better than your hands-500 use"
             },
             "netherite_shovel/1": {
               "price": 1000,
@@ -336,7 +352,7 @@
               "enchants": "efficiency-5/fortune-3",
               "durability": 500,
               "name": "Jackpot digger",
-              "lore": "Free flint"
+              "lore": "Free flint-500 use"
             },
             "netherite_shovel/2": {
               "price": 1000,
@@ -345,7 +361,7 @@
               "enchants": "efficiency-5/silk_touch-1",
               "durability": 500,
               "name": "Archeology tool",
-              "lore": "Perfect to unearth some treasure"
+              "lore": "Perfect to unearth some treasure-500 use"
             }
           }
         },
@@ -371,7 +387,7 @@
               "enchants": "efficiency-2",
               "durability": 500,
               "name": "Miner tool",
-              "lore": "Cut your winter wood like anyone else"
+              "lore": "Cut your winter wood like anyone else-500 use"
             },
             "netherite_axe/1": {
               "price": 1000,
@@ -380,7 +396,7 @@
               "enchants": "efficiency-5",
               "durability": 500,
               "name": "Jackpot digger",
-              "lore": "Even the Amazon forest will not be enough"
+              "lore": "Even the Amazon forest will not be enough-500 use"
             },
             "netherite_axe/2": {
               "price": 1500,
@@ -389,7 +405,7 @@
               "enchants": "sharpness-5",
               "durability": 100,
               "name": "Battle Axe",
-              "lore": "Hidden with the tools, it will chop your enemy's head"
+              "lore": "Hidden with the tools, it will chop your enemy's head-100 use"
             }
           }
         },

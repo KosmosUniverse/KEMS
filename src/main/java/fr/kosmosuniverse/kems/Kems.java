@@ -38,14 +38,14 @@ public final class Kems extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new PlayerInteractions(), this);
         getServer().getPluginManager().registerEvents(new InventoryListener(), this);
 
-        Objects.requireNonNull(getCommand("kems-config")).setExecutor(new KemsConfig());
-        Objects.requireNonNull(getCommand("kems-list")).setExecutor(new KemsList());
-        Objects.requireNonNull(getCommand("kems-start")).setExecutor(new KemsStart());
-        Objects.requireNonNull(getCommand("kems-stop")).setExecutor(new KemsStop());
-        Objects.requireNonNull(getCommand("kems-pause")).setExecutor(new KemsPause());
-        Objects.requireNonNull(getCommand("kems-resume")).setExecutor(new KemsResume());
-        Objects.requireNonNull(getCommand("kems-shop")).setExecutor(new KemsShop());
-        Objects.requireNonNull(getCommand("kems-admin-points")).setExecutor(new KemsAdminPoints());
+        Objects.requireNonNull(getCommand("kems-config")).setExecutor(new KemsGenericCommand());
+        Objects.requireNonNull(getCommand("kems-list")).setExecutor(new KemsGenericCommand());
+        Objects.requireNonNull(getCommand("kems-start")).setExecutor(new KemsGenericCommand());
+        Objects.requireNonNull(getCommand("kems-stop")).setExecutor(new KemsGenericCommand());
+        Objects.requireNonNull(getCommand("kems-pause")).setExecutor(new KemsGenericCommand());
+        Objects.requireNonNull(getCommand("kems-resume")).setExecutor(new KemsGenericCommand());
+        Objects.requireNonNull(getCommand("kems-shop")).setExecutor(new KemsGenericCommand());
+        Objects.requireNonNull(getCommand("kems-admin-points")).setExecutor(new KemsGenericCommand());
 
         configTab = new KemsConfigTabCompleter();
 
@@ -61,7 +61,7 @@ public final class Kems extends JavaPlugin {
 
     @Override
     public void onDisable() {
-        if (GameManager.getInstance().getGameStatus() != Status.NOT_LAUNCHED) {
+        if (GameManager.getInstance().getStatus() != Status.NOT_LAUNCHED) {
             GameManager.getInstance().stop();
         }
 

@@ -3,6 +3,7 @@ package fr.kosmosuniverse.kems.listeners;
 import fr.kosmosuniverse.kems.core.GameManager;
 import fr.kosmosuniverse.kems.core.PlayersList;
 import fr.kosmosuniverse.kems.core.Status;
+import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.ShulkerBox;
 import org.bukkit.entity.Player;
@@ -13,11 +14,9 @@ import org.bukkit.event.inventory.PrepareAnvilEvent;
 import org.bukkit.event.inventory.PrepareItemCraftEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.Material;
 
 import java.util.List;
 import java.util.Objects;
-import java.util.stream.Collectors;
 
 /**
  * @author KosmosUniverse
@@ -25,7 +24,7 @@ import java.util.stream.Collectors;
 public class PlayerInteractions implements Listener {
     @EventHandler
     public void onShulkerBoxOpen(PlayerInteractEvent event) {
-        if (GameManager.getInstance().getGameStatus() == Status.NOT_LAUNCHED) {
+        if (GameManager.getInstance().getStatus() == Status.NOT_LAUNCHED) {
             return ;
         }
 
@@ -64,11 +63,11 @@ public class PlayerInteractions implements Listener {
 
     @EventHandler
     public void onPlayerRepair(PrepareItemCraftEvent event) {
-        if (GameManager.getInstance().getGameStatus() == Status.NOT_LAUNCHED) {
+        if (GameManager.getInstance().getStatus() == Status.NOT_LAUNCHED) {
             return ;
         }
 
-        List<Player> viewers =  event.getViewers().stream().filter(Player.class::isInstance).map(Player.class::cast).collect(Collectors.toList());
+        List<Player> viewers =  event.getViewers().stream().filter(Player.class::isInstance).map(Player.class::cast).toList();
 
         if (viewers.isEmpty() || viewers.stream().noneMatch(player -> PlayersList.getInstance().hasPlayer(player.getName()))) {
             return ;
@@ -81,11 +80,11 @@ public class PlayerInteractions implements Listener {
 
     @EventHandler
     public void onPlayerUseAnvil(PrepareAnvilEvent event) {
-        if (GameManager.getInstance().getGameStatus() == Status.NOT_LAUNCHED) {
+        if (GameManager.getInstance().getStatus() == Status.NOT_LAUNCHED) {
             return ;
         }
 
-        List<Player> viewers =  event.getViewers().stream().filter(Player.class::isInstance).map(Player.class::cast).collect(Collectors.toList());
+        List<Player> viewers =  event.getViewers().stream().filter(Player.class::isInstance).map(Player.class::cast).toList();
 
         if (viewers.isEmpty() || viewers.stream().noneMatch(player -> PlayersList.getInstance().hasPlayer(player.getName()))) {
             return ;

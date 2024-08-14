@@ -1,10 +1,14 @@
 package fr.kosmosuniverse.kems.core.shop;
 
+import lombok.Getter;
+import lombok.Setter;
 import org.bukkit.NamespacedKey;
 
 /**
  * @author KosmosUniverse
  */
+@Getter
+@Setter
 public class ShopItemTags {
     private final NamespacedKey key;
     private final String type;
@@ -14,17 +18,5 @@ public class ShopItemTags {
         this.key = NamespacedKey.minecraft(key);
         this.type = type;
         this.value = value;
-    }
-
-    public NamespacedKey getKey() {
-        return key;
-    }
-
-    public String getType() {
-        return type;
-    }
-
-    public Object getValue() {
-        return value;
     }
 }

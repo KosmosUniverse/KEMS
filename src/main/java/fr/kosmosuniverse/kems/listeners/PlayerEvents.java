@@ -18,7 +18,7 @@ import org.bukkit.event.player.PlayerRespawnEvent;
 public class PlayerEvents implements Listener {
     @EventHandler
     public void onPlayerDeathEvent(PlayerDeathEvent event) {
-        if (GameManager.getInstance().getGameStatus() == Status.NOT_LAUNCHED) {
+        if (GameManager.getInstance().getStatus() == Status.NOT_LAUNCHED) {
             return ;
         }
 
@@ -41,7 +41,7 @@ public class PlayerEvents implements Listener {
 
     @EventHandler
     public void onPlayerRespawn(PlayerRespawnEvent event) {
-        if (GameManager.getInstance().getGameStatus() == Status.NOT_LAUNCHED) {
+        if (GameManager.getInstance().getStatus() == Status.NOT_LAUNCHED) {
             return ;
         }
 
@@ -58,7 +58,7 @@ public class PlayerEvents implements Listener {
     public void onPlayerDisconnect(PlayerQuitEvent event) {
         Player player = event.getPlayer();
 
-        if (GameManager.getInstance().getGameStatus() == Status.NOT_LAUNCHED || !PlayersList.getInstance().hasPlayer(player.getName())) {
+        if (GameManager.getInstance().getStatus() == Status.NOT_LAUNCHED || !PlayersList.getInstance().hasPlayer(player.getName())) {
             return ;
         }
 
@@ -69,7 +69,7 @@ public class PlayerEvents implements Listener {
     public void onPlayerReconnect(PlayerJoinEvent event) {
         Player player = event.getPlayer();
 
-        if (GameManager.getInstance().getGameStatus() == Status.NOT_LAUNCHED) {
+        if (GameManager.getInstance().getStatus() == Status.NOT_LAUNCHED) {
             return ;
         }
 

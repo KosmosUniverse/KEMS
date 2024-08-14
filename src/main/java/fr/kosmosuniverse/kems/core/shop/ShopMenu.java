@@ -1,5 +1,7 @@
 package fr.kosmosuniverse.kems.core.shop;
 
+import lombok.Getter;
+import lombok.Setter;
 import org.bukkit.Material;
 
 import java.util.ArrayList;
@@ -8,6 +10,8 @@ import java.util.List;
 /**
  * @author KosmosUniverse
  */
+@Getter
+@Setter
 public class ShopMenu implements IShop {
     private final String name;
     private final String color;
@@ -26,26 +30,6 @@ public class ShopMenu implements IShop {
     @Override
     public EShopType getType() {
         return EShopType.MENU;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public String getColor() {
-        return color;
-    }
-
-    public Material getItem() {
-        return item;
-    }
-
-    public int getSize() {
-        return size;
-    }
-
-    public List<IShop> getContent() {
-        return content;
     }
 
     public void addContent(IShop contentItem) {

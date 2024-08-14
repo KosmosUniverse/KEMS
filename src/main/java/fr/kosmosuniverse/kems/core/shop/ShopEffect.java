@@ -1,5 +1,7 @@
 package fr.kosmosuniverse.kems.core.shop;
 
+import lombok.Getter;
+import lombok.Setter;
 import org.bukkit.Registry;
 import org.bukkit.potion.PotionEffectType;
 
@@ -9,6 +11,8 @@ import java.util.List;
 /**
  * @author KosmosUniverse
  */
+@Getter
+@Setter
 public class ShopEffect implements IShop {
     private final PotionEffectType effect;
     private final String name;
@@ -29,29 +33,5 @@ public class ShopEffect implements IShop {
     @Override
     public EShopType getType() {
         return EShopType.EFFECT;
-    }
-
-    public PotionEffectType getEffect() {
-        return effect;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public List<String> getLore() {
-        return lore;
-    }
-
-    public int getPrice() {
-        return price;
-    }
-
-    public int getLevel() {
-        return level;
-    }
-
-    public int getDuration() {
-        return duration;
     }
 }

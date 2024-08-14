@@ -2,6 +2,8 @@ package fr.kosmosuniverse.kems.core;
 
 import fr.kosmosuniverse.kems.Kems;
 import fr.kosmosuniverse.kems.utils.ItemMaker;
+import lombok.Getter;
+import lombok.Setter;
 import net.md_5.bungee.api.ChatColor;
 import org.bukkit.*;
 import org.bukkit.block.ShulkerBox;
@@ -22,6 +24,8 @@ import java.util.*;
 /**
  * @author KosmosUniverse
  */
+@Getter
+@Setter
 public class PlayerGame {
     private Player player;
     private final String playerName;
@@ -38,6 +42,7 @@ public class PlayerGame {
     private List<ItemStack> futureReward;
     private final EnumMap<EntityType, Integer> mobStats;
     private int pointBoost = -1;
+    private boolean noPointPenalty = false;
 
     public PlayerGame(Player player) {
         this.player = player;
@@ -92,53 +97,9 @@ public class PlayerGame {
                 ChatColor.BLUE + "  - Death: " + deathCount + "\n" + ChatColor.RESET;
     }
 
-    public Player getPlayer() {
-        return player;
-    }
-
-    public String getPlayerName() {
-        return playerName;
-    }
-
-    public void setPlayer(Player player) {
-        this.player = player;
-    }
-
-    public int getTotalPoints() {
-        return totalPoints;
-    }
-
-    public void setTotalPoints(int totalPoints) {
-        this.totalPoints = totalPoints;
-    }
-
-    public int getCurrentPoints() {
-        return currentPoints;
-    }
-
     private void setCurrentPoints(int points) {
         this.currentPoints = points;
         ScoreManager.getInstance().setPlayerPoints(playerName, currentPoints);
-    }
-
-    public Ranks getRank() {
-        return rank;
-    }
-
-    public void setRank(Ranks rank) {
-        this.rank = rank;
-    }
-
-    public int getKillCount() {
-        return killCount;
-    }
-
-    public int getPointBoost() {
-        return pointBoost;
-    }
-
-    public void setPointBoost(int pointBoost) {
-        this.pointBoost = pointBoost;
     }
 
     private void updateListName() {
@@ -171,7 +132,7 @@ public class PlayerGame {
         int percentage = (mobStats.get(type) * 100) / totalMobStat();
         int points = Mobs.getInstance().getMobPoints(type);
 
-        if (mobStats.get(type) > 10) {
+        if (mobStats.get(type) > 10 && !noPointPenalty) {
             if (percentage > 50) {
                 points = 0;
             } else if (percentage > 25) {
@@ -179,6 +140,8 @@ public class PlayerGame {
             } else if (percentage > 10) {
                 points = points / 2;
             }
+        } else if (noPointPenalty) {
+            noPointPenalty = false;
         }
 
         addPointsAndRank(points);
@@ -239,18 +202,6 @@ public class PlayerGame {
         }
     }
 
-    public Location getSpawnLoc() {
-        return spawnLoc;
-    }
-
-    public void setSpawnLoc(Location spawnLoc) {
-        this.spawnLoc = spawnLoc;
-    }
-
-    public Location getDeathLoc() {
-        return deathLoc;
-    }
-
     public void death(Location loc) {
         deathCount++;
         deathLoc = loc;
@@ -292,10 +243,6 @@ public class PlayerGame {
         if (dp != -1) {
             setCurrentPoints(dp > currentPoints ? 0 : currentPoints - dp);
         }
-    }
-
-    public boolean isConnected() {
-        return connected;
     }
 
     public void reconnect() {
