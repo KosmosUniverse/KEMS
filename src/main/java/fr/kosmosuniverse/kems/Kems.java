@@ -74,6 +74,7 @@ public final class Kems extends JavaPlugin {
         }
     }
 
+    // TODO ici tu peux lombok
     public static Kems getInstance() {
         return instance;
     }
