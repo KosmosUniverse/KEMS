@@ -54,6 +54,11 @@ public class KemsGenericCommand implements CommandExecutor {
 
         String key = "";
 
+
+        // Ici la condi est un peu complexe et pourrait tirer profit des streeams
+        // par exemple on pourrait utiliser InStream.range.boxed sur args puis collecter le tout dans une map pour avoir une map d'args
+        // tu evites ainsi une boucle for et les ifs et tu tires partis des stream :)
+        // si tu vois pas trop j'ai une version fonctionnelle sur le cote ;)
         for (int i = 0; i < args.length; i++) {
             if (i % 2 == 0) {
                 key = args[i].toUpperCase();
@@ -84,6 +89,10 @@ public class KemsGenericCommand implements CommandExecutor {
 
     private boolean executeList(Player player, String[] args) {
         if (!player.hasPermission("kems-list")) {
+            // 1 - ici pour les autres check de perm tu ajoutes un msg de no acces mais pas ici
+            // 2 - overall tu as ce check permission qui se repete 8 fois, c'est pas une dupli de code enorme
+            // mais tu peux l'ajouter dans ton pattern matching à la base sous forme de ternaire,
+            // tu evites le return et la duplication et tu alleges tes fcts un peu costaud pour certaines
             return false;
         }
 
