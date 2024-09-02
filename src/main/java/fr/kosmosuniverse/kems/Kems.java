@@ -11,6 +11,7 @@ import fr.kosmosuniverse.kems.tabcompleters.KemsAdminPointsTabCompleter;
 import fr.kosmosuniverse.kems.tabcompleters.KemsConfigTabCompleter;
 import fr.kosmosuniverse.kems.tabcompleters.KemsListTabCompleter;
 import fr.kosmosuniverse.kems.tabcompleters.KemsSimpleTabCompleter;
+import lombok.Getter;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.Objects;
@@ -22,6 +23,7 @@ import java.util.Objects;
  * Kosmos Encounter Mobs Survival
  */
 public final class Kems extends JavaPlugin {
+    @Getter
     private static Kems instance;
     private KemsConfigTabCompleter configTab = null;
 
@@ -30,6 +32,11 @@ public final class Kems extends JavaPlugin {
         instance = this;
 
         Config.getInstance().setupConfig(this.getConfig());
+
+        if (!Langs.getInstance().loadLangs(Config.getInstance().getConfigValues().getLang())) {
+             this.onDisable();
+        }
+
         Mobs.getInstance().loadMobs();
         Shop.getInstance().loadShops();
 
@@ -72,9 +79,5 @@ public final class Kems extends JavaPlugin {
         if (configTab != null) {
             configTab.clear();
         }
-    }
-
-    public static Kems getInstance() {
-        return instance;
     }
 }

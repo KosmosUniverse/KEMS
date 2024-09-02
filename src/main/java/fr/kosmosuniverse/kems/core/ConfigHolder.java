@@ -20,4 +20,5 @@ public class ConfigHolder {
     private Mode mode;
     private long specialSpawnDelay;
     private Level level;
+    private String lang;
 }

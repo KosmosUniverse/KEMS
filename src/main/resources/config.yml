@@ -14,3 +14,5 @@ game_settings:
   mode: "NO_MODE" # Game Mode, Default: NO_MODE
   level: "EASY" # level that affects points, Default: EASY
   death_penalty: 50 # point amount lost for each death, -1 to disable, Default: 50
+other_settings:
+  lang: "en" # lang by the plugin, Default: en, can only be changed here and by restarting server

@@ -44,7 +44,7 @@ public class Shop {
             JSONObject menuObject = new JSONObject(tokenizer);
             shop = processMenu(MAIN_INV, menuObject);
         } catch (IOException e) {
-            // TODO
+            Bukkit.getLogger().severe("[K.E.M.S] : Couldn't read shop.json resource, please contact K.E.M.S developer.");
         }
 
         invs = new HashMap<>();

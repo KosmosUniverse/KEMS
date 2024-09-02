@@ -18,6 +18,8 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.BlockStateMeta;
 import org.bukkit.metadata.FixedMetadataValue;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 
 import java.util.*;
 
@@ -227,6 +229,7 @@ public class PlayerGame {
             changeLocForEnd(loc);
         }
 
+        player.addPotionEffect(new PotionEffect(PotionEffectType.INVISIBILITY, 60, 1));
         player.teleport(loc);
 
         for (ItemStack item : deathInv.getStorageContents()) {

@@ -11,6 +11,10 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Map;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+
 /**
  * @author KosmosUniverse
  */
@@ -24,6 +28,11 @@ public class KemsGenericCommand implements CommandExecutor {
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command cmd, @NotNull String msg, @NotNull String[] args) {
         if (!(sender instanceof Player player)) {
             return false;
+        }
+
+        if (!player.hasPermission(cmd.getName())) {
+            player.sendMessage(NO_ACCESS);
+            return true;
         }
 
         return switch (cmd.getName()) {
@@ -48,45 +57,32 @@ public class KemsGenericCommand implements CommandExecutor {
         }
 
         if (!player.hasPermission("kems-op")) {
-            player.sendMessage("You don't have access to this command, please contact an administrator.");
+            player.sendMessage(Langs.getInstance().getMessage("noAccessToCmd"));
             return true;
         }
 
-        String key = "";
+        Map<String, String> mappedArgs = IntStream
+                .range(0, args.length - 1)
+                .boxed()
+                .filter(idx -> Config.getInstance().hasKey(args[idx]))
+                .collect(Collectors.toMap(i -> args[i], i -> args[i + 1]));
 
-        for (int i = 0; i < args.length; i++) {
-            if (i % 2 == 0) {
-                key = args[i].toUpperCase();
-            } else {
-                if (!checkAndSetConfigValue(player, key, args[i])) {
-                    return false;
-                }
-            }
-        }
+        mappedArgs.forEach((k, v) -> checkAndSetConfigValue(player, k, v));
 
         return true;
     }
 
     private boolean checkAndSetConfigValue(Player player, String key, String value) {
-        if (!Config.getInstance().hasKey(key)) {
-            player.sendMessage("Config key \"" + key + "\" does not exists.");
-            return false;
+        if (Config.getInstance().setConfigValue(key, value)) {
+            player.sendMessage("Config value for \"" + key + "\" has been set.");
         } else {
-            if (Config.getInstance().setConfigValue(key, value)) {
-                player.sendMessage("Config value for \"" + key + "\" has been set.");
-            } else {
-                player.sendMessage("Config value for \"" + key + "\" has not been set.");
-            }
+            player.sendMessage("Config value for \"" + key + "\" has not been set.");
         }
 
         return true;
     }
 
     private boolean executeList(Player player, String[] args) {
-        if (!player.hasPermission("kems-list")) {
-            return false;
-        }
-
         if (args.length == 0) {
             PlayersList.getInstance().displayList(player);
 
@@ -108,12 +104,7 @@ public class KemsGenericCommand implements CommandExecutor {
     }
 
     private boolean executeStart(Player player) {
-        if (!player.hasPermission("kems-start")) {
-            player.sendMessage(NO_ACCESS);
-            return false;
-        }
-
-        if (PlayersList.getInstance().getPlayers().size() == 0) {
+        if (PlayersList.getInstance().getPlayers().isEmpty()) {
             player.sendMessage("Players list is empty.");
             return true;
         }
@@ -165,11 +156,6 @@ public class KemsGenericCommand implements CommandExecutor {
     }
 
     private boolean executeStop(Player player) {
-        if (!player.hasPermission("kems-stop")) {
-            player.sendMessage(NO_ACCESS);
-            return false;
-        }
-
         if (GameManager.getInstance().getStatus() == Status.NOT_LAUNCHED) {
             player.sendMessage("Game is not launched");
             return true;
@@ -182,11 +168,6 @@ public class KemsGenericCommand implements CommandExecutor {
     }
 
     private boolean executePause(Player player) {
-        if (!player.hasPermission("kems-pause")) {
-            player.sendMessage(NO_ACCESS);
-            return false;
-        }
-
         if (GameManager.getInstance().getStatus() == Status.NOT_LAUNCHED) {
             player.sendMessage(NOT_LAUNCHED);
             return true;
@@ -202,11 +183,6 @@ public class KemsGenericCommand implements CommandExecutor {
     }
 
     private boolean executeResume(Player player) {
-        if (!player.hasPermission("kems-resume")) {
-            player.sendMessage(NO_ACCESS);
-            return false;
-        }
-
         if (GameManager.getInstance().getStatus() == Status.NOT_LAUNCHED) {
             player.sendMessage(NOT_LAUNCHED);
             return true;
@@ -222,10 +198,6 @@ public class KemsGenericCommand implements CommandExecutor {
     }
 
     private boolean executeShop(Player player) {
-        if (!player.hasPermission("kems-shop")) {
-            return false;
-        }
-
         if (!Config.getInstance().getConfigValues().isShop()) {
             player.sendMessage("[K.E.M.S] : Shop is disable for this game.");
             return true;
@@ -237,10 +209,6 @@ public class KemsGenericCommand implements CommandExecutor {
     }
 
     private boolean executeAdminPoints(Player player, String[] args) {
-        if (!player.hasPermission("kems-admin-points")) {
-            return false;
-        }
-
         if (GameManager.getInstance().getStatus() == Status.NOT_LAUNCHED) {
             player.sendMessage(NOT_LAUNCHED);
             return true;
