@@ -5,6 +5,7 @@ import fr.kosmosuniverse.kems.core.Level;
 import fr.kosmosuniverse.kems.core.Mode;
 import fr.kosmosuniverse.kems.core.Ranks;
 import fr.kosmosuniverse.kems.utils.FileUtils;
+import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
@@ -27,7 +28,7 @@ public class KemsConfigTabCompleter implements TabCompleter {
             String rawValues = FileUtils.readFileContent(Kems.getInstance().getResource("configValues.json"));
             processRawToList(rawValues);
         } catch (IOException e) {
-            // TODO
+            Bukkit.getLogger().severe("[K.E.M.S] : Couldn't read configValues.json resource, please contact K.E.M.S developer.");
         }
 
         addEnums();

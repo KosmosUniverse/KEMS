@@ -1,6 +1,7 @@
 package fr.kosmosuniverse.kems.core;
 
 import net.md_5.bungee.api.ChatColor;
+import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
 
 import java.util.HashMap;
@@ -22,7 +23,7 @@ public class Config {
     private static final String RANK_LIMIT = "game_settings.rank_limit_mode.rank_limit";
     private static final String MODE = "game_settings.mode";
     private static final String LEVEL = "game_settings.level";
-
+    private static final String LANG = "other_settings.lang";
     private static Config instance;
     private ConfigHolder configValues;
     private Map<String, Consumer<String>> configElems = null;
@@ -44,7 +45,9 @@ public class Config {
      * Clear Config Elements
      */
     public void clear() {
-        configElems.clear();
+        if (configElems != null) {
+            configElems.clear();
+        }
     }
 
     /**
@@ -135,6 +138,11 @@ public class Config {
             configFile.set(LEVEL, Level.EASY.toString());
         }
 
+        if (!configFile.contains(LANG) ||
+                !Langs.availableLangs.contains(configFile.getString(LANG))) {
+            configFile.set(LANG, "en");
+        }
+
         setValues(configFile);
     }
 
@@ -155,6 +163,7 @@ public class Config {
         configValues.setRankLimit(Ranks.valueOf(configFile.getString(RANK_LIMIT)));
         configValues.setMode(Mode.valueOf(configFile.getString(MODE)));
         configValues.setLevel(Level.valueOf(configFile.getString(LEVEL)));
+        configValues.setLang(configFile.getString(LANG));
     }
 
     /**
@@ -209,7 +218,8 @@ public class Config {
                 ChatColor.BLUE + "  - Rank Limit: " + ChatColor.GOLD + configValues.getRankLimit() + "\n" +
                 ChatColor.BLUE + "Mode: " + ChatColor.GOLD + configValues.getMode().getdisplayString() + "\n" +
                 ChatColor.BLUE + "Base Special Spawn Delay: " + ChatColor.GOLD + configValues.getSpecialSpawnDelay() + "\n" +
-                ChatColor.BLUE + "Level: " + ChatColor.GOLD + configValues.getLevel() + "\n" ;
+                ChatColor.BLUE + "Level: " + ChatColor.GOLD + configValues.getLevel() + "\n" +
+                ChatColor.BLUE + "Lang: " + ChatColor.GOLD + configValues.getLang() + "\n" ;
     }
 
     /**
@@ -236,7 +246,11 @@ public class Config {
      * @param distance  The new distance to set
      */
     private void setSpreadPlayersDistance(int distance) {
-        configValues.setSpreadDistance(distance);
+        if (distance < 1) {
+            Bukkit.getLogger().severe(Langs.getInstance().getMessage("spreadDistanceTooShort"));
+        } else {
+            configValues.setSpreadDistance(distance);
+        }
     }
 
     /**
@@ -269,7 +283,7 @@ public class Config {
         try {
             configValues.setRankLimit(Ranks.valueOf(rankLimit));
         } catch (IllegalArgumentException e) {
-            // TODO
+            Bukkit.getLogger().severe(Langs.getInstance().getMessage("rankNotExist").replace("%s", rankLimit));
         }
     }
 
@@ -277,7 +291,7 @@ public class Config {
         try {
             configValues.setMode(Mode.valueOf(mode));
         } catch (IllegalArgumentException e) {
-            // TODO
+            Bukkit.getLogger().severe(Langs.getInstance().getMessage("modeNotExist").replace("%s", mode));
         }
     }
 
@@ -289,7 +303,7 @@ public class Config {
         try {
             configValues.setLevel(Level.valueOf(level));
         } catch (IllegalArgumentException e) {
-            // TODO
+            Bukkit.getLogger().severe(Langs.getInstance().getMessage("levelNotExist").replace("%s", level));
         }
     }
 }

@@ -2,6 +2,7 @@ package fr.kosmosuniverse.kems.core;
 
 import fr.kosmosuniverse.kems.Kems;
 import fr.kosmosuniverse.kems.utils.FileUtils;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.EntityType;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -34,7 +35,7 @@ public class Mobs {
             String rawValues = FileUtils.readFileContent(Kems.getInstance().getResource("mobs.json"));
             processRawJSON(rawValues);
         } catch (IOException e) {
-            // TODO
+            Bukkit.getLogger().severe("[K.E.M.S] : Couldn't read mobs.json resource, please contact K.E.M.S developer.");
         }
     }
 
@@ -48,13 +49,15 @@ public class Mobs {
             try {
                 mobList.add(new Mob(mobObj.getString("type").toUpperCase(), mobObj.getInt("points")));
             } catch (IllegalArgumentException e) {
-                // TODO
+                Bukkit.getLogger().warning("[K.E.M.S] : Couldn't load {" + mobObj.getString("type").toUpperCase() + "} mob because it isn't found in game.");
             }
         });
     }
 
     public void clear() {
-        mobList.clear();
+        if (mobList != null) {
+            mobList.clear();
+        }
     }
 
     public int getMobPoints(EntityType type) {

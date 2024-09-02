@@ -107,7 +107,7 @@ public class PlayersList {
      * @param toSend    The player to send the list
      */
     public void displayList(Player toSend) {
-        if (players == null || players.size() == 0) {
+        if (players == null || players.isEmpty()) {
             toSend.sendMessage("No players in the list.");
             return ;
         }

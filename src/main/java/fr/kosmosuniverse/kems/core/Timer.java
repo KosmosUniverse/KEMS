@@ -1,6 +1,7 @@
 package fr.kosmosuniverse.kems.core;
 
 import fr.kosmosuniverse.kems.Kems;
+import org.bukkit.ChatColor;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
 
@@ -25,13 +26,15 @@ public class Timer {
             public void run() {
                 if (GameManager.getInstance().getMode() == Mode.MOST_POINTS_DURATION && checkDuration(getTimeElapsed() / 1000)) {
                     GameManager.getInstance().triggerGameEnd();
+                } else if (GameManager.getInstance().getMode() == Mode.MOST_POINTS_DURATION) {
+                    PlayersList.getInstance().sendPlayerActionBar(getTimeFromSec(((Config.getInstance().getConfigValues().getTimeLimit() * 60000L) - getTimeElapsed()) / 1000));
+                } else {
+                    PlayersList.getInstance().sendPlayerActionBar(getTimeFromSec(getTimeElapsed() / 1000));
                 }
 
                 if (checkSpecialSpawn()) {
                     PlayersList.getInstance().triggerSpecialMobSpawn();
                 }
-
-                PlayersList.getInstance().sendPlayerActionBar(getTimeFromSec(getTimeElapsed() / 1000));
             }
         }.runTaskTimer(Kems.getInstance(), 0, 20);
     }
@@ -80,8 +83,20 @@ public class Timer {
      *
      * @return a String that represent time like "xxhxxmxxs"
      */
-    public static String getTimeFromSec(long sec) {
+    private String getTimeFromSec(long sec) {
         StringBuilder sb = new StringBuilder();
+
+        if (GameManager.getInstance().getMode() == Mode.MOST_POINTS_DURATION) {
+            long maxDuration = Config.getInstance().getConfigValues().getTimeLimit() * 60000L;
+
+            if (getTimeElapsed() <= maxDuration / 2) {
+                sb.append(ChatColor.GREEN);
+            } else if (getTimeElapsed() > (maxDuration - (maxDuration / 4))) {
+                sb.append(ChatColor.RED);
+            } else if (getTimeElapsed() > maxDuration / 2) {
+                sb.append(ChatColor.YELLOW);
+            }
+        }
 
         if (sec >= 3600) {
             sb.append(sec / 3600);
