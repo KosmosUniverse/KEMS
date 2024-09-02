@@ -1,6 +1,7 @@
 package fr.kosmosuniverse.kems.core.shop;
 
 import fr.kosmosuniverse.kems.Kems;
+import fr.kosmosuniverse.kems.core.Langs;
 import fr.kosmosuniverse.kems.utils.FileUtils;
 import fr.kosmosuniverse.kems.utils.ItemMaker;
 import org.bukkit.*;
@@ -44,7 +45,7 @@ public class Shop {
             JSONObject menuObject = new JSONObject(tokenizer);
             shop = processMenu(MAIN_INV, menuObject);
         } catch (IOException e) {
-            Bukkit.getLogger().severe("[K.E.M.S] : Couldn't read shop.json resource, please contact K.E.M.S developer.");
+            Bukkit.getLogger().severe(Langs.getInstance().getMessage("cannotLoadShop"));
         }
 
         invs = new HashMap<>();

@@ -1,6 +1,7 @@
 package fr.kosmosuniverse.kems.listeners;
 
 import fr.kosmosuniverse.kems.core.GameManager;
+import fr.kosmosuniverse.kems.core.Langs;
 import fr.kosmosuniverse.kems.core.PlayersList;
 import fr.kosmosuniverse.kems.core.Status;
 import fr.kosmosuniverse.kems.core.shop.Shop;
@@ -79,7 +80,7 @@ public class InventoryListener implements Listener {
 
                 PlayersList.getInstance().playerBought(player, price);
             } else {
-                player.sendMessage("[K.E.M.S] : You don't have enough points, come back later.");
+                player.sendMessage(Langs.getInstance().getMessage("notEnoughPoints"));
             }
         }
     }

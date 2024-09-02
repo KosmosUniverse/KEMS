@@ -35,7 +35,7 @@ public class Mobs {
             String rawValues = FileUtils.readFileContent(Kems.getInstance().getResource("mobs.json"));
             processRawJSON(rawValues);
         } catch (IOException e) {
-            Bukkit.getLogger().severe("[K.E.M.S] : Couldn't read mobs.json resource, please contact K.E.M.S developer.");
+            Bukkit.getLogger().severe(Langs.getInstance().getMessage("cannotLoadMobs"));
         }
     }
 
@@ -49,7 +49,7 @@ public class Mobs {
             try {
                 mobList.add(new Mob(mobObj.getString("type").toUpperCase(), mobObj.getInt("points")));
             } catch (IllegalArgumentException e) {
-                Bukkit.getLogger().warning("[K.E.M.S] : Couldn't load {" + mobObj.getString("type").toUpperCase() + "} mob because it isn't found in game.");
+                Bukkit.getLogger().warning(Langs.getInstance().getMessage("mobNotInGame").replace("%s", mobObj.getString("type").toUpperCase()));
             }
         });
     }

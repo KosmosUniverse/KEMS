@@ -1,6 +1,7 @@
 package fr.kosmosuniverse.kems.listeners;
 
 import fr.kosmosuniverse.kems.core.GameManager;
+import fr.kosmosuniverse.kems.core.Langs;
 import fr.kosmosuniverse.kems.core.PlayersList;
 import fr.kosmosuniverse.kems.core.Status;
 import org.bukkit.Material;
@@ -48,7 +49,7 @@ public class PlayerInteractions implements Listener {
 
         ShulkerBox data = (ShulkerBox) block.getState();
 
-        if ("NEW RANK !".equals(Objects.requireNonNull(data.getCustomName()))) {
+        if (Langs.getInstance().getMessage("newRank").equals(Objects.requireNonNull(data.getCustomName()))) {
             event.setCancelled(true);
 
             for (ItemStack item : data.getInventory().getContents()) {

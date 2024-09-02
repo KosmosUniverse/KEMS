@@ -27,7 +27,7 @@ public class SpreadPlayer {
 	 */
     public static void spreadPlayers(Player sender) {
 		 if (Config.getInstance().getConfigValues().getSpreadDistance() < 0) {
-            sender.sendMessage(ChatColor.RED + " Spread Distance too short");
+            sender.sendMessage(ChatColor.RED + Langs.getInstance().getMessage("spreadDistanceTooShort"));
             return ;
         }
 

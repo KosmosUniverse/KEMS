@@ -185,7 +185,7 @@ public class PlayerGame {
     }
 
     private void giveReward() {
-        ItemStack container = new ItemMaker(Material.SHULKER_BOX, NamespacedKey.minecraft("kemsreward")).addQuantity(1).addName("NEW RANK !").getItem();
+        ItemStack container = new ItemMaker(Material.SHULKER_BOX, NamespacedKey.minecraft("kemsreward")).addQuantity(1).addName(Langs.getInstance().getMessage("newRank")).getItem();
         BlockStateMeta containerMeta = (BlockStateMeta) container.getItemMeta();
         ShulkerBox box = (ShulkerBox) Objects.requireNonNull(containerMeta).getBlockState();
         Inventory inv = box.getInventory();
@@ -318,9 +318,9 @@ public class PlayerGame {
     }
 
     public void triggerSpecialMob() {
-        Bukkit.getScheduler().scheduleSyncDelayedTask(Kems.getInstance(), () -> player.sendMessage("Special mob will spawn in 3..."), 20);
-        Bukkit.getScheduler().scheduleSyncDelayedTask(Kems.getInstance(), () -> player.sendMessage("Special mob will spawn in 2..."), 40);
-        Bukkit.getScheduler().scheduleSyncDelayedTask(Kems.getInstance(), () -> player.sendMessage("Special mob will spawn in 1..."), 60);
+        Bukkit.getScheduler().scheduleSyncDelayedTask(Kems.getInstance(), () -> player.sendMessage(Langs.getInstance().getMessage("specialMobSpawn").replace("%i", "3")), 20);
+        Bukkit.getScheduler().scheduleSyncDelayedTask(Kems.getInstance(), () -> player.sendMessage(Langs.getInstance().getMessage("specialMobSpawn").replace("%i", "2")), 40);
+        Bukkit.getScheduler().scheduleSyncDelayedTask(Kems.getInstance(), () -> player.sendMessage(Langs.getInstance().getMessage("specialMobSpawn").replace("%i", "1")), 60);
         Bukkit.getScheduler().scheduleSyncDelayedTask(Kems.getInstance(), () -> {
             player.sendMessage("Run.");
             player.getWorld().spawn(player.getLocation(), rank.getMobClass(), CreatureSpawnEvent.SpawnReason.CUSTOM, false, e -> {

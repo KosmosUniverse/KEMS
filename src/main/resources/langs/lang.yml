@@ -1,6 +1,7 @@
-cannotLoadMobs: "[K.E.M.S] : Couldn't read mobs.json resource, please contact K.E.M.S developer."
+cannotLoadMobs: "[K.E.M.S] : Couldn't load mobs.json resource, please contact K.E.M.S developer."
 mobNotInGame: "[K.E.M.S] : Couldn't load {%s} mob because it isn't found in game."
 cannotLoadConfigKeys: "[K.E.M.S] : Couldn't read configValues.json resource, please contact K.E.M.S developer."
+cannotLoadShop: "[K.E.M.S] : Couldn't read shop.json resource, please contact K.E.M.S developer."
 
 rankNotExist: "[K.E.M.S] : Couldn't set Rank Limit value because rank {%s} doesn't exist."
 modeNotExist: "[K.E.M.S] : Couldn't set Mode because mode {%s} doesn't exist."
@@ -29,3 +30,4 @@ givePointsToPlayer: "[K.E.M.S] : %s received %i points."
 takePointsFromPlayer: "[K.E.M.S] : %s lost %i points."
 setPlayerPoints: "[K.E.M.S] : %s have now %i points."
 notEnoughPoints: "[K.E.M.S] : You don't have enough points, come back later."
+newRank: "NEW RANK !"

@@ -3,8 +3,8 @@ package fr.kosmosuniverse.kems.commands;
 import fr.kosmosuniverse.kems.Kems;
 import fr.kosmosuniverse.kems.core.*;
 import fr.kosmosuniverse.kems.core.shop.Shop;
+import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -19,11 +19,6 @@ import java.util.stream.IntStream;
  * @author KosmosUniverse
  */
 public class KemsGenericCommand implements CommandExecutor {
-    private static final String NO_ACCESS = "You don't have access to this command.";
-    private static final String NOT_LAUNCHED = "[K.E.M.S] : Game is not launched.";
-    private static final String KEMS_PLAYER = "[K.E.M.S] : Player ";
-    private static final String POINTS = " points.";
-
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command cmd, @NotNull String msg, @NotNull String[] args) {
         if (!(sender instanceof Player player)) {
@@ -31,7 +26,7 @@ public class KemsGenericCommand implements CommandExecutor {
         }
 
         if (!player.hasPermission(cmd.getName())) {
-            player.sendMessage(NO_ACCESS);
+            player.sendMessage(Langs.getInstance().getMessage("noAccessToCmd"));
             return true;
         }
 
@@ -74,9 +69,9 @@ public class KemsGenericCommand implements CommandExecutor {
 
     private boolean checkAndSetConfigValue(Player player, String key, String value) {
         if (Config.getInstance().setConfigValue(key, value)) {
-            player.sendMessage("Config value for \"" + key + "\" has been set.");
+            player.sendMessage(Langs.getInstance().getMessage("configValueSet").replace("%s", key));
         } else {
-            player.sendMessage("Config value for \"" + key + "\" has not been set.");
+            player.sendMessage(Langs.getInstance().getMessage("configValueNotSet").replace("%s", key));
         }
 
         return true;
@@ -169,12 +164,12 @@ public class KemsGenericCommand implements CommandExecutor {
 
     private boolean executePause(Player player) {
         if (GameManager.getInstance().getStatus() == Status.NOT_LAUNCHED) {
-            player.sendMessage(NOT_LAUNCHED);
+            player.sendMessage(Langs.getInstance().getMessage("gameIsNotLaunched"));
             return true;
         }
 
         if (GameManager.getInstance().getStatus() == Status.PAUSED) {
-            player.sendMessage("[K.E.M.S] : Game is already paused");
+            player.sendMessage(Langs.getInstance().getMessage("gameAlreadyPaused"));
         } else {
             GameManager.getInstance().pause();
         }
@@ -184,12 +179,12 @@ public class KemsGenericCommand implements CommandExecutor {
 
     private boolean executeResume(Player player) {
         if (GameManager.getInstance().getStatus() == Status.NOT_LAUNCHED) {
-            player.sendMessage(NOT_LAUNCHED);
+            player.sendMessage(Langs.getInstance().getMessage("gameIsNotLaunched"));
             return true;
         }
 
         if (GameManager.getInstance().getStatus() == Status.LAUNCHED) {
-            player.sendMessage("[K.E.M.S] : Game is already running");
+            player.sendMessage(Langs.getInstance().getMessage("gameIsRunning"));
         } else {
             GameManager.getInstance().resume();
         }
@@ -199,7 +194,7 @@ public class KemsGenericCommand implements CommandExecutor {
 
     private boolean executeShop(Player player) {
         if (!Config.getInstance().getConfigValues().isShop()) {
-            player.sendMessage("[K.E.M.S] : Shop is disable for this game.");
+            player.sendMessage(Langs.getInstance().getMessage("shopIsDisabled"));
             return true;
         }
 
@@ -210,18 +205,17 @@ public class KemsGenericCommand implements CommandExecutor {
 
     private boolean executeAdminPoints(Player player, String[] args) {
         if (GameManager.getInstance().getStatus() == Status.NOT_LAUNCHED) {
-            player.sendMessage(NOT_LAUNCHED);
+            player.sendMessage(Langs.getInstance().getMessage("gameIsNotLaunched"));
             return true;
         }
 
         if (!PlayersList.getInstance().hasPlayer(args[0])) {
-            player.sendMessage(KEMS_PLAYER + args[0] + " is not in the game");
 
             return true;
         }
 
         if (args.length == 1) {
-            player.sendMessage(KEMS_PLAYER + args[0] + " currently have " + PlayersList.getInstance().getPlayerPoints(args[0]) + POINTS);
+            player.sendMessage(Langs.getInstance().getMessage("playerPoints").replace("%s", args[0]).replace("%i", "" + PlayersList.getInstance().getPlayerPoints(args[0])));
 
             return true;
         } else if (args.length != 3) {

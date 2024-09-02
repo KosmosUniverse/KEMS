@@ -20,9 +20,6 @@ import java.util.stream.Collectors;
 public class PlayersList {
     private static PlayersList instance = null;
     private List<PlayerGame> players = null;
-    private static final String KEMS = "[K.E.M.S] : ";
-    private static final String KEMS_PLAYER = "[K.E.M.S] : Player ";
-    private static final String POINTS = " points.";
 
     /**
      * Get PlayersList instance
@@ -68,10 +65,10 @@ public class PlayersList {
 
         if ("@a".equals(p)) {
             Bukkit.getOnlinePlayers().forEach(player -> this.players.add(new PlayerGame(player)));
-            sender.sendMessage(KEMS + Bukkit.getOnlinePlayers().size() + " players have been added to the list.");
+            sender.sendMessage(Langs.getInstance().getMessage("playersAddedToList").replace("%i", "" + Bukkit.getOnlinePlayers().size()));
         } else {
             players.add(new PlayerGame(searchPlayerByName(p)));
-            sender.sendMessage(KEMS + p + " added to the list.");
+            sender.sendMessage(Langs.getInstance().getMessage("playerAddedToList").replace("%s", p));
         }
 
         return true;
@@ -85,7 +82,7 @@ public class PlayersList {
     public boolean removePlayer(Player sender, String player) {
         if (players != null) {
             players.removeIf(p -> p.getPlayer().getName().equals(player));
-            sender.sendMessage(KEMS + player + " have been removed from the list.");
+            sender.sendMessage(Langs.getInstance().getMessage("playerRemovedFromList").replace("%s", player));
         }
 
         return true;
@@ -108,13 +105,13 @@ public class PlayersList {
      */
     public void displayList(Player toSend) {
         if (players == null || players.isEmpty()) {
-            toSend.sendMessage("No players in the list.");
+            toSend.sendMessage(Langs.getInstance().getMessage("playerListEmpty"));
             return ;
         }
 
         StringBuilder sb = new StringBuilder();
 
-        sb.append("Player list contains: ");
+        sb.append(Langs.getInstance().getMessage("playerListContent"));
 
         for (PlayerGame player : players) {
             sb.append(player.getPlayer().getName()).append("; ");
@@ -236,7 +233,7 @@ public class PlayersList {
         players.stream().filter(p -> p.isConnected() && p.getPlayer().getName().equals(playerName)).findFirst().ifPresent(p -> {
             p.addPoints(points);
             if (needAck) {
-                p.getPlayer().sendMessage(KEMS_PLAYER + p.getPlayerName() + " received " + points + POINTS);
+                p.getPlayer().sendMessage(Langs.getInstance().getMessage("givePointsToPlayer").replace("%s", p.getPlayerName()).replace("%i", "" + points));
             }
         });
 
@@ -247,7 +244,7 @@ public class PlayersList {
         players.stream().filter(p -> p.isConnected() && p.getPlayer().getName().equals(playerName)).findFirst().ifPresent(p -> {
             p.removePoints(points);
             if (needAck) {
-                p.getPlayer().sendMessage(KEMS_PLAYER + p.getPlayerName() + " lost " + points + POINTS);
+                p.getPlayer().sendMessage(Langs.getInstance().getMessage("takePointsFromPlayer").replace("%s", p.getPlayerName()).replace("%i", "" + points));
             }
         });
 
@@ -258,7 +255,7 @@ public class PlayersList {
         players.stream().filter(p -> p.isConnected() && p.getPlayer().getName().equals(playerName)).findFirst().ifPresent(p -> {
             p.setPoints(points);
             if (needAck) {
-                p.getPlayer().sendMessage(KEMS_PLAYER + p.getPlayerName() + " have now " + points + POINTS);
+                p.getPlayer().sendMessage(Langs.getInstance().getMessage("setPlayerPoints").replace("%s", p.getPlayerName()).replace("%i", "" + points));
             }
         });
 
