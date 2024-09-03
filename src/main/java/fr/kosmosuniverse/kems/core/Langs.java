@@ -22,7 +22,6 @@ public class Langs {
     public boolean loadLangs(String lang) {
         String filename = lang == null ? "lang.yml" : "lang-" + lang + ".yml";
         filename = "langs/" + filename;
-        System.out.println(filename);
 
         try (Reader reader = new InputStreamReader(Kems.getInstance().getResource(filename), StandardCharsets.UTF_8)) {
             YamlConfiguration langConf = YamlConfiguration.loadConfiguration(reader);

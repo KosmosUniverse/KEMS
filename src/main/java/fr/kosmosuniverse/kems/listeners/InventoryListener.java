@@ -38,6 +38,7 @@ public class InventoryListener implements Listener {
         ItemStack item = currentItem.clone();
 
         boolean kemsShopItem = item.hasItemMeta() && Objects.requireNonNull(item.getItemMeta()).getPersistentDataContainer().has(NamespacedKey.minecraft("kemsshopitem"));
+        boolean kemsBackItem = item.hasItemMeta() && Objects.requireNonNull(item.getItemMeta()).getPersistentDataContainer().has(NamespacedKey.minecraft("kemsshopredpane"));
         boolean hasMeta = item.hasItemMeta();
         String itemName = hasMeta && Objects.requireNonNull(item.getItemMeta()).hasDisplayName() ? item.getItemMeta().getDisplayName() : null;
 
@@ -49,7 +50,7 @@ public class InventoryListener implements Listener {
 
         if (kemsShopItem && Shop.getInstance().hasInv(item.getItemMeta().getDisplayName())) {
             player.openInventory(Shop.getInstance().getInventory(itemName));
-        } else if (kemsShopItem && item.getItemMeta().getDisplayName().equals("<- Back")) {
+        } else if (kemsBackItem) {
             ItemMeta itM = item.getItemMeta();
             String prevInvName = Objects.requireNonNull(itM.getLore()).get(0);
 
