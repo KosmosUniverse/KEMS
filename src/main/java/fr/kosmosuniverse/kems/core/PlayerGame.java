@@ -1,6 +1,7 @@
 package fr.kosmosuniverse.kems.core;
 
 import fr.kosmosuniverse.kems.Kems;
+import fr.kosmosuniverse.kems.commands.KemsKits;
 import fr.kosmosuniverse.kems.utils.ItemMaker;
 import lombok.Getter;
 import lombok.Setter;
@@ -42,7 +43,7 @@ public class PlayerGame {
     private BossBar progress;
     private boolean connected;
     private List<ItemStack> futureReward;
-    private final EnumMap<EntityType, Integer> mobStats;
+    private final EnumMap mobStats;
     private int pointBoost = -1;
     private boolean noPointPenalty = false;
 
@@ -329,5 +330,27 @@ public class PlayerGame {
                 rank.applyEntityStats(e);
             });
         }, 80);
+    }
+
+    public void receiveKit(Kit kit) {
+        ItemStack container = new ItemMaker(Material.SHULKER_BOX, NamespacedKey.minecraft("kemskititem")).addQuantity(1).addName(Langs.getInstance().getMessage("starterKit")).getItem();
+        BlockStateMeta containerMeta = (BlockStateMeta) container.getItemMeta();
+        ShulkerBox box = (ShulkerBox) Objects.requireNonNull(containerMeta).getBlockState();
+        Inventory inv = box.getInventory();
+
+        kit.getContent().forEach(inv::addItem);
+
+        box.update();
+        containerMeta.setBlockState(box);
+        container.setItemMeta(containerMeta);
+
+        Map<Integer, ItemStack> ret = player.getInventory().addItem(container);
+
+        if (!ret.isEmpty()) {
+            ret.forEach((key, value) -> player.getWorld().dropItem(player.getLocation(), value));
+        }
+
+        KemsKits.getInstance().kitTaken(player.getUniqueId());
+        player.sendMessage(Langs.getInstance().getMessage("kitTaken"));
     }
 }

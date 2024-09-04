@@ -39,6 +39,7 @@ public class KemsGenericCommand implements CommandExecutor {
             case "kems-resume" -> executeResume(player);
             case "kems-shop" -> executeShop(player);
             case "kems-admin-points" -> executeAdminPoints(player, args);
+            case "kems-kit" -> executekit(player);
             default -> false;
         };
     }
@@ -158,6 +159,7 @@ public class KemsGenericCommand implements CommandExecutor {
 
         GameManager.getInstance().stop();
         PlayersList.getInstance().reset();
+        KemsKits.getInstance().clearKits();
 
         return true;
     }
@@ -230,5 +232,21 @@ public class KemsGenericCommand implements CommandExecutor {
             case "set" -> PlayersList.getInstance().setPlayerPoints(args[0], points, true);
             default -> false;
         };
+    }
+
+    private boolean executekit(Player player) {
+        if (GameManager.getInstance().getStatus() == Status.LAUNCHED && PlayersList.getInstance().hasPlayer(player.getName())) {
+            boolean kitWellDelivered = KemsKits.getInstance().canTakeKit(player.getUniqueId());
+
+            if (kitWellDelivered) {
+                player.openInventory(Kits.getInstance().getKitInv());
+            } else {
+                player.sendMessage(Langs.getInstance().getMessage("kitAlreadyTaken"));
+            }
+        } else {
+            player.openInventory(Kits.getInstance().getKitInv());
+        }
+
+        return true;
     }
 }

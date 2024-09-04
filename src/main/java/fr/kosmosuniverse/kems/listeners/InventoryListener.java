@@ -1,9 +1,6 @@
 package fr.kosmosuniverse.kems.listeners;
 
-import fr.kosmosuniverse.kems.core.GameManager;
-import fr.kosmosuniverse.kems.core.Langs;
-import fr.kosmosuniverse.kems.core.PlayersList;
-import fr.kosmosuniverse.kems.core.Status;
+import fr.kosmosuniverse.kems.core.*;
 import fr.kosmosuniverse.kems.core.shop.Shop;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
@@ -18,6 +15,7 @@ import org.bukkit.inventory.meta.PotionMeta;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 /**
  * @author KosmosUniverse
@@ -31,7 +29,9 @@ public class InventoryListener implements Listener {
         Inventory current = event.getClickedInventory();
         String invName = event.getView().getTitle();
 
-        if (currentItem == null || !Shop.getInstance().hasInv(invName)) {
+        if (currentItem == null ||
+                (!Shop.getInstance().hasInv(invName) &&
+                !Kits.getInvName().equals(invName))) {
             return ;
         }
 
@@ -39,12 +39,28 @@ public class InventoryListener implements Listener {
 
         boolean kemsShopItem = item.hasItemMeta() && Objects.requireNonNull(item.getItemMeta()).getPersistentDataContainer().has(NamespacedKey.minecraft("kemsshopitem"));
         boolean kemsBackItem = item.hasItemMeta() && Objects.requireNonNull(item.getItemMeta()).getPersistentDataContainer().has(NamespacedKey.minecraft("kemsshopredpane"));
+        boolean kemsKitItem = item.hasItemMeta() && Objects.requireNonNull(item.getItemMeta()).getPersistentDataContainer().has(NamespacedKey.minecraft("kemskititem"));
         boolean hasMeta = item.hasItemMeta();
         String itemName = hasMeta && Objects.requireNonNull(item.getItemMeta()).hasDisplayName() ? item.getItemMeta().getDisplayName() : null;
 
         event.setCancelled(true);
 
         if (Objects.requireNonNull(current).getHolder() != null) {
+            return ;
+        }
+
+        if (kemsKitItem) {
+            if (GameManager.getInstance().getStatus() == Status.NOT_LAUNCHED ||
+                    !PlayersList.getInstance().hasPlayer(player.getName()) ||
+                    !Kits.getInstance().hasKit(itemName)) {
+                return ;
+            }
+
+            Optional<Kit> kit = Kits.getInstance().getKit(itemName);
+
+            kit.ifPresent(value -> PlayersList.getInstance().giveKitToPlayer(player.getName(), value));
+            player.closeInventory();
+
             return ;
         }
 

@@ -1,7 +1,11 @@
+# System messages
 cannotLoadMobs: "[K.E.M.S] : Couldn't read mobs.json resource, please contact K.E.M.S developer."
 mobNotInGame: "[K.E.M.S] : Couldn't load {%s} mob because it isn't found in game."
 cannotLoadConfigKeys: "[K.E.M.S] : Couldn't read configValues.json resource, please contact K.E.M.S developer."
+cannotLoadShop: "[K.E.M.S] : Couldn't read shop.json resource, please contact K.E.M.S developer."
+cannotLoadKits: "[K.E.M.S] : Couldn't read kits.json resource, please contact K.E.M.S developer."
 
+# Config and Commands messages
 rankNotExist: "[K.E.M.S] : Couldn't set Rank Limit value because rank {%s} doesn't exist."
 modeNotExist: "[K.E.M.S] : Couldn't set Mode because mode {%s} doesn't exist."
 levelNotExist: "[K.E.M.S] : Couldn't set Level because level {%s} doesn't exist."
@@ -24,9 +28,23 @@ playerRemovedFromList: "[K.E.M.S] : %s have been removed from the list."
 playerListContent: "[K.E.M.S] : Player list contains: %s"
 spreadDistanceTooShort: "Spread distance is too short."
 
+# During game messages
 specialMobSpawn: "[K.E.M.S] : Special mob will spawn in %i..."
 givePointsToPlayer: "[K.E.M.S] : %s received %i points."
 takePointsFromPlayer: "[K.E.M.S] : %s lost %i points."
 setPlayerPoints: "[K.E.M.S] : %s have now %i points."
 notEnoughPoints: "[K.E.M.S] : You don't have enough points, come back later."
 newRank: "NEW RANK !"
+kitTaken: "[K.E.M.S]: Kit well delivered !"
+kitAlreadyTaken: "[K.E.M.S]: You can take only one kit per game !"
+
+# Kits
+starterKit: "Starter Kit"
+workerName: "Worker Kit"
+workerLore: "Worker's tools to ease your life"
+guardName: "Guard Kit"
+guardLore: "Guard's equipment to protect your land"
+sniperName: "Sniper Kit"
+sniperLore: "Sniper's weapon to be sure to aim good"
+minerName: "Miner Kit"
+minerLore: "Miner's bag of deep goodies"

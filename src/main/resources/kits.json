@@ -1,0 +1,56 @@
+{
+  "worker": [
+      {
+       "type": "wooden_axe"
+      },
+      {
+        "type": "wooden_shovel"
+      },
+      {
+        "type": "wooden_pickaxe"
+      },
+      {
+        "type": "wooden_hoe"
+      }
+  ],
+  "guard": [
+      {
+        "type": "stone_sword"
+      },
+      {
+        "type": "leather_helmet"
+      },
+      {
+        "type": "leather_chestplate"
+      },
+      {
+        "type": "leather_leggings"
+      },
+      {
+        "type": "leather_boots"
+      }
+  ],
+  "sniper": [
+      {
+        "type": "bow"
+      },
+      {
+        "type": "arrow",
+        "amount": 32
+      }
+  ],
+  "miner": [
+    {
+      "type": "iron_ore",
+      "amount": 8
+    },
+    {
+      "type": "coal",
+      "amount": 1
+    },
+    {
+      "type": "diamond_ore",
+      "amount": 2
+    }
+  ]
+}

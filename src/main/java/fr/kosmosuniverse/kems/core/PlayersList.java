@@ -269,4 +269,8 @@ public class PlayersList {
     public void setPlayerNoPointPointPenalty(String playerName, boolean noPointPenalty) {
         players.stream().filter(p -> p.isConnected() && p.getPlayer().getName().equals(playerName)).findFirst().ifPresent(p -> p.setNoPointPenalty(noPointPenalty));
     }
+
+    public void giveKitToPlayer(String playerName, Kit kit) {
+        players.stream().filter(p -> p.isConnected() && p.getPlayer().getName().equals(playerName)).findFirst().ifPresent(p -> p.receiveKit(kit));
+    }
 }

@@ -1,7 +1,11 @@
+# Messages Système
 cannotLoadMobs: "[K.E.M.S] : Impossible de charger mobs.json, contactez le developpeur de K.E.M.S."
 mobNotInGame: "[K.E.M.S] : Impossible de charger le mob {%s} car il n'existe pas dans le jeu."
 cannotLoadConfigKeys: "[K.E.M.S] : Impossible de charger configValues.json, contactez le developpeur de K.E.M.S."
+cannotLoadShop: "[K.E.M.S] : Impossible de charger shop.json, contactez le developpeur de K.E.M.S."
+cannotLoadKits: "[K.E.M.S] : Impossible de charger kits.json, contactez le developpeur de K.E.M.S."
 
+# Message de configuration et de commandes
 rankNotExist: "[K.E.M.S] : Le rank {%s} n'existe pas et ne peut donc être défini comme limite."
 modeNotExist: "[K.E.M.S] : Le mode {%s} n'existe pas et ne peut donc être défini comme mode de jeu."
 levelNotExist: "[K.E.M.S] : Le level {%s} n'existe pas et ne peut donc être défini."
@@ -23,9 +27,23 @@ playerRemovedFromList: "[K.E.M.S] : %s a été retiré de la liste de joueurs."
 playerListContent: "[K.E.M.S] : la liste de joueurs contient : %s"
 spreadDistanceTooShort: "La distance d'éparpillement des joueurs est tro petite."
 
+# Messages en jeu
 specialMobSpawn: "[K.E.M.S] : Le mob spécial va apparaître dans %i..."
 givePointsToPlayer: "[K.E.M.S] : %s a reçu %i points."
 takePointsFromPlayer: "[K.E.M.S] : %s a perdu %i points."
 setPlayerPoints: "[K.E.M.S] : %s a maintenant %i points."
 notEnoughPoints: "[K.E.M.S] : Vous n'avez pas assez de points, réessayer plus tard."
 newRank: "RANG SUIVANT !"
+kitTaken: "[K.E.M.S]: Votre kit vous a été remis !"
+kitAlreadyTaken: "[K.E.M.S]: Vous ne pouvez recevoir qu'un seul kit par partie !"
+
+# Kits
+starterKit: "Kit de démarrage"
+workerName: "Kit Ouvrier"
+workerLore: "Outils de l'ouvrier pour vous faciliter la vie"
+guardName: "Kit Garde"
+guardLore: "Equipement du garde pour protéger votre terre"
+sniperName: "Kit Sniper"
+sniperLore: "Armes du sniper pour être sûr de bien viser"
+minerName: "Kit Mineur"
+minerLore: "Sac du mineur avec des objets des profondeurs"
