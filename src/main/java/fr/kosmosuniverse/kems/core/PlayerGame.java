@@ -6,7 +6,11 @@ import fr.kosmosuniverse.kems.utils.ItemMaker;
 import lombok.Getter;
 import lombok.Setter;
 import net.md_5.bungee.api.ChatColor;
-import org.bukkit.*;
+import org.bukkit.Bukkit;
+import org.bukkit.Location;
+import org.bukkit.NamespacedKey;
+import org.bukkit.Material;
+import org.bukkit.Sound;
 import org.bukkit.block.ShulkerBox;
 import org.bukkit.boss.BarColor;
 import org.bukkit.boss.BarStyle;
@@ -34,6 +38,7 @@ public class PlayerGame {
     private final String playerName;
     private int totalPoints;
     private int currentPoints;
+    private int pointsSpent;
     private Ranks rank;
     private int killCount;
     private int deathCount;
@@ -43,9 +48,10 @@ public class PlayerGame {
     private BossBar progress;
     private boolean connected;
     private List<ItemStack> futureReward;
-    private final EnumMap mobStats;
+    private final EnumMap<EntityType, Integer> mobStats;
     private int pointBoost = -1;
     private boolean noPointPenalty = false;
+    private String selectedKit;
 
     public PlayerGame(Player player) {
         this.player = player;
@@ -53,6 +59,7 @@ public class PlayerGame {
         rank = Ranks.SAND;
         totalPoints = 0;
         currentPoints = 0;
+        pointsSpent = 0;
         killCount = 0;
         deathCount = 0;
         deathLoc = null;
@@ -60,6 +67,7 @@ public class PlayerGame {
         deathInv = null;
         progress = null;
         connected = true;
+        selectedKit = null;
         mobStats = new EnumMap<>(EntityType.class);
     }
 
@@ -92,12 +100,14 @@ public class PlayerGame {
     }
 
     private String getInfo(String header) {
-
-        return String.valueOf(ChatColor.GOLD) + ChatColor.BOLD + header + ":\n" + ChatColor.RESET +
-                ChatColor.BLUE + "  - Rank: " + rank.getDisplayString() + "\n" +
-                ChatColor.BLUE + "  - Points: " + totalPoints + "\n" +
-                ChatColor.BLUE + "  - Kills: " + killCount + "\n" +
-                ChatColor.BLUE + "  - Death: " + deathCount + "\n" + ChatColor.RESET;
+        return Langs.getInstance().getMessage("playerRecap")
+                .replace("%header", header)
+                .replace("%rank", rank.getDisplayString())
+                .replace("%points", "" + totalPoints)
+                .replace("%kills", "" + killCount)
+                .replace("%death", "" + deathCount)
+                .replace("%spent", "" + pointsSpent)
+                .replace("%kit", (selectedKit == null ? Langs.getInstance().getMessage("none") : selectedKit));
     }
 
     private void setCurrentPoints(int points) {
@@ -265,6 +275,7 @@ public class PlayerGame {
 
     public void bought(int price) {
         setCurrentPoints(currentPoints - price);
+        pointsSpent += price;
     }
 
     private void changeLocForEnd(Location loc) {
@@ -350,6 +361,7 @@ public class PlayerGame {
             ret.forEach((key, value) -> player.getWorld().dropItem(player.getLocation(), value));
         }
 
+        selectedKit = kit.getName();
         KemsKits.getInstance().kitTaken(player.getUniqueId());
         player.sendMessage(Langs.getInstance().getMessage("kitTaken"));
     }
