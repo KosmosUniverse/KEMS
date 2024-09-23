@@ -13,6 +13,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.PotionMeta;
 
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -80,13 +81,13 @@ public class InventoryListener implements Listener {
             }
 
             ItemMeta itM = item.getItemMeta();
-            int price = Integer.parseInt(Objects.requireNonNull(itM.getLore()).getLast().split(" ")[1]);
+            int price = Integer.parseInt(getLore(itM).getLast().split(" ")[1]);
 
             if (PlayersList.getInstance().canPlayerBuy(player, price)) {
                 if (item.getType() == Material.POTION) {
                     player.addPotionEffect(((PotionMeta) item.getItemMeta()).getCustomEffects().get(0));
                 } else {
-                    List<String> lores = itM.getLore();
+                    LinkedList<String> lores = getLore(itM);
 
                     lores.removeLast();
                     itM.setLore(lores);
@@ -100,5 +101,9 @@ public class InventoryListener implements Listener {
                 player.sendMessage(Langs.getInstance().getMessage("notEnoughPoints"));
             }
         }
+    }
+
+    private LinkedList<String> getLore(ItemMeta itM) {
+        return (LinkedList<String>) itM.getLore();
     }
 }

@@ -9,9 +9,7 @@ import org.bukkit.Location;
 import org.bukkit.entity.*;
 import org.bukkit.event.player.PlayerRespawnEvent;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -272,5 +270,36 @@ public class PlayersList {
 
     public void giveKitToPlayer(String playerName, Kit kit) {
         players.stream().filter(p -> p.isConnected() && p.getPlayer().getName().equals(playerName)).findFirst().ifPresent(p -> p.receiveKit(kit));
+    }
+
+    public void sendGameRanking() {
+        Comparator<PlayerGame> comp;
+
+        if (Config.getInstance().getConfigValues().getMode() == Mode.FIRST_TO_RANK) {
+            comp = Comparator.comparingInt((PlayerGame p) -> p.getRank().getPoints());
+        } else if (Config.getInstance().getConfigValues().getMode() == Mode.FIRST_TO_LIMIT) {
+            comp = Comparator.comparingInt(PlayerGame::getCurrentPoints);
+        } else {
+            comp = Comparator.comparingInt(PlayerGame::getCurrentPoints);
+        }
+
+        players.sort(comp);
+
+        String ranking = buildRanking();
+
+        players.forEach(p -> p.getPlayer().sendMessage(ranking));
+    }
+
+    private String buildRanking() {
+        StringBuilder sb = new StringBuilder();
+
+        sb.append(Langs.getInstance().getMessage("rankingTitle"));
+
+        int i = 0;
+        for (PlayerGame p : players) {
+            sb.append(Langs.getInstance().getMessage("rankingPlayer").replace("%rank", "" + (i + 1)).replace("%name", p.getPlayerName()).replace("%points", "" + (Config.getInstance().getConfigValues().getMode() == Mode.FIRST_TO_RANK ? p.getTotalPoints() : p.getCurrentPoints())));
+        }
+
+        return sb.toString();
     }
 }

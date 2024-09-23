@@ -65,4 +65,8 @@ public class Mobs {
 
         return mob.map(Mob::getPoints).orElse(-1);
     }
+
+    public Integer getEntityAmount() {
+        return mobList.size();
+    }
 }

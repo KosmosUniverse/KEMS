@@ -39,6 +39,8 @@ kitTaken: "[K.E.M.S]: Kit well delivered !"
 kitAlreadyTaken: "[K.E.M.S]: You can take only one kit per game !"
 playerRecap: "§6§l%header:\n§r§9  - Rank: %rank\n  - Points: %points\n  - Kills: %kills\n  - Death: %death\n  - Points spent in shop: %spent\n  - Kit: %kit\n§r"
 none: "None"
+rankingTitle: "§6§lRanking:\n§r"
+rankingPlayer: "§9  #%rank -> %name: %points points.§r"
 
 # Kits
 starterKit: "Starter Kit"

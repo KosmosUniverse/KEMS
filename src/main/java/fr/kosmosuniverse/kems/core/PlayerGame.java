@@ -3,6 +3,7 @@ package fr.kosmosuniverse.kems.core;
 import fr.kosmosuniverse.kems.Kems;
 import fr.kosmosuniverse.kems.commands.KemsKits;
 import fr.kosmosuniverse.kems.utils.ItemMaker;
+import fr.kosmosuniverse.kems.utils.PointsCalculatorUtils;
 import lombok.Getter;
 import lombok.Setter;
 import net.md_5.bungee.api.ChatColor;
@@ -48,7 +49,7 @@ public class PlayerGame {
     private BossBar progress;
     private boolean connected;
     private List<ItemStack> futureReward;
-    private final EnumMap<EntityType, Integer> mobStats;
+    private final SortedMap<EntityType, Integer> mobStats;
     private int pointBoost = -1;
     private boolean noPointPenalty = false;
     private String selectedKit;
@@ -68,7 +69,7 @@ public class PlayerGame {
         progress = null;
         connected = true;
         selectedKit = null;
-        mobStats = new EnumMap<>(EntityType.class);
+        mobStats = new TreeMap<EntityType, Integer>();
     }
 
     public void launch() {
@@ -142,7 +143,13 @@ public class PlayerGame {
             mobStats.put(type, 1);
         }
 
-        int percentage = (mobStats.get(type) * 100) / totalMobStat();
+        int points = PointsCalculatorUtils.calculatePoint(getMobFirstKillStep(type), Mobs.getInstance().getMobPoints(type), mobStats.get(type), totalMobStat());
+
+        if (noPointPenalty && points < Mobs.getInstance().getMobPoints(type)) {
+            points = Mobs.getInstance().getMobPoints(type);
+        }
+
+        /*int percentage = (mobStats.get(type) * 100) / totalMobStat();
         int points = Mobs.getInstance().getMobPoints(type);
 
         if (mobStats.get(type) > 10 && !noPointPenalty) {
@@ -155,9 +162,23 @@ public class PlayerGame {
             }
         } else if (noPointPenalty) {
             noPointPenalty = false;
-        }
+        }*/
 
         addPointsAndRank(points);
+    }
+
+    private int getMobFirstKillStep(EntityType type) {
+        int ret = 0;
+
+        for (EntityType t : mobStats.keySet()) {
+            if (t == type) {
+                return ret;
+            }
+
+            ret++;
+        }
+
+        return -1;
     }
 
     private void addPointsAndRank(int points) {
