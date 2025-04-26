@@ -80,7 +80,9 @@ public class Config {
         configElems.put("MODE", this::setMode);
         configElems.put("LEVEL", this::setLevel);
 
-        checkAndSetConfig(configFile);
+        if (configFile != null) {
+            checkAndSetConfig(configFile);
+        }
     }
 
     /**

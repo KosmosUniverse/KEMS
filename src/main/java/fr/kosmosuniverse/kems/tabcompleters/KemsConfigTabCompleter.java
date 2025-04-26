@@ -1,6 +1,7 @@
 package fr.kosmosuniverse.kems.tabcompleters;
 
 import fr.kosmosuniverse.kems.Kems;
+import fr.kosmosuniverse.kems.core.Langs;
 import fr.kosmosuniverse.kems.core.Level;
 import fr.kosmosuniverse.kems.core.Mode;
 import fr.kosmosuniverse.kems.core.Ranks;
@@ -28,7 +29,7 @@ public class KemsConfigTabCompleter implements TabCompleter {
             String rawValues = FileUtils.readFileContent(Kems.getInstance().getResource("configValues.json"));
             processRawToList(rawValues);
         } catch (IOException e) {
-            Bukkit.getLogger().severe("[K.E.M.S] : Couldn't read configValues.json resource, please contact K.E.M.S developer.");
+            Bukkit.getLogger().severe(Langs.getInstance().getMessage("cannotLoadConfigKeys"));
         }
 
         addEnums();

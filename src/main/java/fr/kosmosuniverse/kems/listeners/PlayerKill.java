@@ -6,7 +6,6 @@ import fr.kosmosuniverse.kems.core.Status;
 import org.bukkit.NamespacedKey;
 import org.bukkit.damage.DamageSource;
 import org.bukkit.entity.Entity;
-import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -29,7 +28,6 @@ public class PlayerKill implements Listener {
             return ;
         }
 
-        EntityType deadType = event.getEntity().getType();
         DamageSource source = event.getDamageSource();
 
         if (source.getCausingEntity() instanceof Player player) {
@@ -60,7 +58,7 @@ public class PlayerKill implements Listener {
             if (isSpecial) {
                 PlayersList.getInstance().reportSpecialKill(player, entity);
             } else {
-                PlayersList.getInstance().reportKill(player, deadType);
+                PlayersList.getInstance().reportKill(player, entity);
             }
         }
     }

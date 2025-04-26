@@ -1,10 +1,11 @@
 package fr.kosmosuniverse.kems.core;
 
 import fr.kosmosuniverse.kems.Kems;
+import fr.kosmosuniverse.kems.commands.KemsKits;
 import fr.kosmosuniverse.kems.utils.ItemMaker;
+import fr.kosmosuniverse.kems.utils.PointsCalculatorUtils;
 import lombok.Getter;
 import lombok.Setter;
-import net.md_5.bungee.api.ChatColor;
 import org.bukkit.*;
 import org.bukkit.block.ShulkerBox;
 import org.bukkit.boss.BarColor;
@@ -33,6 +34,7 @@ public class PlayerGame {
     private final String playerName;
     private int totalPoints;
     private int currentPoints;
+    private int pointsSpent;
     private Ranks rank;
     private int killCount;
     private int deathCount;
@@ -42,9 +44,11 @@ public class PlayerGame {
     private BossBar progress;
     private boolean connected;
     private List<ItemStack> futureReward;
-    private final EnumMap<EntityType, Integer> mobStats;
+    private final ArrayList<EntityType> mobOrder;
+    private final Map<Mob, Integer> mobStats;
     private int pointBoost = -1;
     private boolean noPointPenalty = false;
+    private String selectedKit;
 
     public PlayerGame(Player player) {
         this.player = player;
@@ -52,6 +56,7 @@ public class PlayerGame {
         rank = Ranks.SAND;
         totalPoints = 0;
         currentPoints = 0;
+        pointsSpent = 0;
         killCount = 0;
         deathCount = 0;
         deathLoc = null;
@@ -59,7 +64,9 @@ public class PlayerGame {
         deathInv = null;
         progress = null;
         connected = true;
-        mobStats = new EnumMap<>(EntityType.class);
+        selectedKit = null;
+        mobOrder = new ArrayList<>();
+        mobStats = new HashMap<>();
     }
 
     public void launch() {
@@ -91,12 +98,14 @@ public class PlayerGame {
     }
 
     private String getInfo(String header) {
-
-        return String.valueOf(ChatColor.GOLD) + ChatColor.BOLD + header + ":\n" + ChatColor.RESET +
-                ChatColor.BLUE + "  - Rank: " + rank.getDisplayString() + "\n" +
-                ChatColor.BLUE + "  - Points: " + totalPoints + "\n" +
-                ChatColor.BLUE + "  - Kills: " + killCount + "\n" +
-                ChatColor.BLUE + "  - Death: " + deathCount + "\n" + ChatColor.RESET;
+        return Langs.getInstance().getMessage("playerRecap")
+                .replace("%header", header)
+                .replace("%rank", rank.getDisplayString())
+                .replace("%points", String.valueOf(totalPoints))
+                .replace("%kills", String.valueOf(killCount))
+                .replace("%death", String.valueOf(deathCount))
+                .replace("%spent", String.valueOf(pointsSpent))
+                .replace("%kit", (selectedKit == null ? Langs.getInstance().getMessage("none") : selectedKit));
     }
 
     private void setCurrentPoints(int points) {
@@ -109,7 +118,7 @@ public class PlayerGame {
     }
 
     public void addSpecialKill(Entity entity) {
-        int points = Mobs.getInstance().getMobPoints(entity.getType());
+        int points = Mobs.getInstance().getMob(entity).getPoints();
 
         addPointsAndRank(points + (points / 2));
     }
@@ -124,26 +133,25 @@ public class PlayerGame {
         return total;
     }
 
-    public void addKill(EntityType type) {
-        if (mobStats.containsKey(type)) {
-            mobStats.put(type, mobStats.get(type) + 1);
+    public void addKill(Entity entity) {
+        Mob mob = Mobs.getInstance().getMob(entity);
+
+        if (mobStats.containsKey(mob)) {
+            mobStats.put(mob, mobStats.get(mob) + 1);
         } else {
-            mobStats.put(type, 1);
+            if (!mobOrder.contains(mob.getType())) {
+                mobOrder.add(mob.getType());
+            }
+
+            mobStats.put(mob, 1);
         }
 
-        int percentage = (mobStats.get(type) * 100) / totalMobStat();
-        int points = Mobs.getInstance().getMobPoints(type);
+        int points = PointsCalculatorUtils.calculatePoint((mobOrder.indexOf(mob.getType()) + 1), mob.getPoints(), mobStats.entrySet().stream().filter(m -> m.getKey() == mob).mapToInt(Map.Entry::getValue).sum(), totalMobStat(), totalPoints);
 
-        if (mobStats.get(type) > 10 && !noPointPenalty) {
-            if (percentage > 50) {
-                points = 0;
-            } else if (percentage > 25) {
-                points = points / 4;
-            } else if (percentage > 10) {
-                points = points / 2;
-            }
-        } else if (noPointPenalty) {
-            noPointPenalty = false;
+        Logger.getLogger().log("Player <" + playerName + "> killed <" + entity + "> " + mobStats.entrySet().stream().filter(m -> m.getKey() == mob).mapToInt(Map.Entry::getValue).sum() + " times for " + mob.getPoints() + " points each as his " + mobOrder.indexOf(mob.getType()) + "th mob type and so gets " + points + " points.");
+
+        if (noPointPenalty && points < mob.getPoints()) {
+            points = mob.getPoints();
         }
 
         addPointsAndRank(points);
@@ -185,7 +193,7 @@ public class PlayerGame {
     }
 
     private void giveReward() {
-        ItemStack container = new ItemMaker(Material.SHULKER_BOX, NamespacedKey.minecraft("kemsreward")).addQuantity(1).addName("NEW RANK !").getItem();
+        ItemStack container = ItemMaker.newItem(Material.SHULKER_BOX, NamespacedKey.minecraft("kemsreward")).addQuantity(1).addName(Langs.getInstance().getMessage("newRank")).getItem();
         BlockStateMeta containerMeta = (BlockStateMeta) container.getItemMeta();
         ShulkerBox box = (ShulkerBox) Objects.requireNonNull(containerMeta).getBlockState();
         Inventory inv = box.getInventory();
@@ -264,6 +272,7 @@ public class PlayerGame {
 
     public void bought(int price) {
         setCurrentPoints(currentPoints - price);
+        pointsSpent += price;
     }
 
     private void changeLocForEnd(Location loc) {
@@ -281,7 +290,7 @@ public class PlayerGame {
 
         if (rank != Ranks.HEROBRINE && totalPoints >= rank.getNext().getPoints()) {
             rank = rank.getNext();
-            futureReward.add(new ItemMaker(Material.COOKED_BEEF, NamespacedKey.minecraft("kemsrewardfood")).addQuantity(5).getItem());
+            futureReward.add(ItemMaker.newItem(Material.COOKED_BEEF, NamespacedKey.minecraft("kemsrewardfood")).addQuantity(5).getItem());
             player.playSound(player.getLocation(), Sound.BLOCK_BELL_USE, 1f, 1f);
 
             return true;
@@ -318,9 +327,9 @@ public class PlayerGame {
     }
 
     public void triggerSpecialMob() {
-        Bukkit.getScheduler().scheduleSyncDelayedTask(Kems.getInstance(), () -> player.sendMessage("Special mob will spawn in 3..."), 20);
-        Bukkit.getScheduler().scheduleSyncDelayedTask(Kems.getInstance(), () -> player.sendMessage("Special mob will spawn in 2..."), 40);
-        Bukkit.getScheduler().scheduleSyncDelayedTask(Kems.getInstance(), () -> player.sendMessage("Special mob will spawn in 1..."), 60);
+        Bukkit.getScheduler().scheduleSyncDelayedTask(Kems.getInstance(), () -> player.sendMessage(Langs.getInstance().getMessage("specialMobSpawn").replace("%i", "3")), 20);
+        Bukkit.getScheduler().scheduleSyncDelayedTask(Kems.getInstance(), () -> player.sendMessage(Langs.getInstance().getMessage("specialMobSpawn").replace("%i", "2")), 40);
+        Bukkit.getScheduler().scheduleSyncDelayedTask(Kems.getInstance(), () -> player.sendMessage(Langs.getInstance().getMessage("specialMobSpawn").replace("%i", "1")), 60);
         Bukkit.getScheduler().scheduleSyncDelayedTask(Kems.getInstance(), () -> {
             player.sendMessage("Run.");
             player.getWorld().spawn(player.getLocation(), rank.getMobClass(), CreatureSpawnEvent.SpawnReason.CUSTOM, false, e -> {
@@ -329,5 +338,28 @@ public class PlayerGame {
                 rank.applyEntityStats(e);
             });
         }, 80);
+    }
+
+    public void receiveKit(Kit kit) {
+        ItemStack container = ItemMaker.newItem(Material.SHULKER_BOX, NamespacedKey.minecraft("kemskititem")).addQuantity(1).addName(Langs.getInstance().getMessage("starterKit")).getItem();
+        BlockStateMeta containerMeta = (BlockStateMeta) container.getItemMeta();
+        ShulkerBox box = (ShulkerBox) Objects.requireNonNull(containerMeta).getBlockState();
+        Inventory inv = box.getInventory();
+
+        kit.getContent().forEach(inv::addItem);
+
+        box.update();
+        containerMeta.setBlockState(box);
+        container.setItemMeta(containerMeta);
+
+        Map<Integer, ItemStack> ret = player.getInventory().addItem(container);
+
+        if (!ret.isEmpty()) {
+            ret.forEach((key, value) -> player.getWorld().dropItem(player.getLocation(), value));
+        }
+
+        selectedKit = kit.getName();
+        KemsKits.getInstance().kitTaken(player.getUniqueId());
+        player.sendMessage(Langs.getInstance().getMessage("kitTaken"));
     }
 }

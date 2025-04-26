@@ -18,15 +18,19 @@ import java.util.List;
  */
 public class ItemMaker {
     @Getter
-    final ItemStack item;
+    private final ItemStack item;
 
-    public ItemMaker(Material material, NamespacedKey key) {
+    private ItemMaker(Material material, NamespacedKey key) {
         item = new ItemStack(material);
 
         ItemMeta itM = item.getItemMeta();
         assert itM != null;
         itM.getPersistentDataContainer().set(key, PersistentDataType.BOOLEAN, true);
         item.setItemMeta(itM);
+    }
+
+    public static ItemMaker newItem(Material material, NamespacedKey key) {
+        return new ItemMaker(material, key);
     }
 
     public ItemMaker addQuantity(int quantity) {
