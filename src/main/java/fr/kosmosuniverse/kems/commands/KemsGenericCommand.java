@@ -9,6 +9,7 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.Inventory;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Map;
@@ -40,6 +41,7 @@ public class KemsGenericCommand implements CommandExecutor {
             case "kems-shop" -> executeShop(player);
             case "kems-admin-points" -> executeAdminPoints(player, args);
             case "kems-kit" -> executekit(player);
+            case "kems-mobs-value" -> executeMobValues(player);
             default -> false;
         };
     }
@@ -217,7 +219,7 @@ public class KemsGenericCommand implements CommandExecutor {
         }
 
         if (args.length == 1) {
-            player.sendMessage(Langs.getInstance().getMessage("playerPoints").replace("%s", args[0]).replace("%i", "" + PlayersList.getInstance().getPlayerPoints(args[0])));
+            player.sendMessage(Langs.getInstance().getMessage("playerPoints").replace("%s", args[0]).replace("%i", String.valueOf(PlayersList.getInstance().getPlayerPoints(args[0]))));
 
             return true;
         } else if (args.length != 3) {
@@ -245,6 +247,20 @@ public class KemsGenericCommand implements CommandExecutor {
             }
         } else {
             player.openInventory(Kits.getInstance().getKitInv());
+        }
+
+        return true;
+    }
+
+    private boolean executeMobValues(Player player) {
+        if (GameManager.getInstance().getStatus() == Status.LAUNCHED && PlayersList.getInstance().hasPlayer(player.getName())) {
+            Inventory inv = KemsMobValues.getInstance().getPlayerMobValuesInventory(player);
+
+            if (inv == null) {
+                player.sendMessage("You don't have killed any monsters for now.");
+            } else {
+                player.openInventory(inv);
+            }
         }
 
         return true;

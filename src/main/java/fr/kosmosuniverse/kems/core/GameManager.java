@@ -69,6 +69,7 @@ public class GameManager {
     }
 
     public void triggerGameEnd() {
+        PlayersList.getInstance().sendGameRanking();
         stop();
     }
 }

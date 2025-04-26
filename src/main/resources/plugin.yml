@@ -37,6 +37,10 @@ commands:
   kems-kit:
     usage: /<command>
     description: command to view and take an in-game kit
+  kems-mobs-value:
+    usage: /<command>
+    description: command to viw mobs player killed and their next value
+
 permissions:
   kems-op:
     default: op
@@ -68,3 +72,6 @@ permissions:
   kems-kit:
     default: true
     description: command to view and take an in-game kit
+  kems-mobs-value:
+    default: true
+    description: command to viw mobs player killed and their next value

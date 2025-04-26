@@ -3,14 +3,10 @@ package fr.kosmosuniverse.kems.core;
 import fr.kosmosuniverse.kems.Kems;
 import fr.kosmosuniverse.kems.commands.KemsKits;
 import fr.kosmosuniverse.kems.utils.ItemMaker;
+import fr.kosmosuniverse.kems.utils.PointsCalculatorUtils;
 import lombok.Getter;
 import lombok.Setter;
-import net.md_5.bungee.api.ChatColor;
-import org.bukkit.Bukkit;
-import org.bukkit.Location;
-import org.bukkit.NamespacedKey;
-import org.bukkit.Material;
-import org.bukkit.Sound;
+import org.bukkit.*;
 import org.bukkit.block.ShulkerBox;
 import org.bukkit.boss.BarColor;
 import org.bukkit.boss.BarStyle;
@@ -48,7 +44,8 @@ public class PlayerGame {
     private BossBar progress;
     private boolean connected;
     private List<ItemStack> futureReward;
-    private final EnumMap<EntityType, Integer> mobStats;
+    private final ArrayList<EntityType> mobOrder;
+    private final Map<Mob, Integer> mobStats;
     private int pointBoost = -1;
     private boolean noPointPenalty = false;
     private String selectedKit;
@@ -68,7 +65,8 @@ public class PlayerGame {
         progress = null;
         connected = true;
         selectedKit = null;
-        mobStats = new EnumMap<>(EntityType.class);
+        mobOrder = new ArrayList<>();
+        mobStats = new HashMap<>();
     }
 
     public void launch() {
@@ -103,10 +101,10 @@ public class PlayerGame {
         return Langs.getInstance().getMessage("playerRecap")
                 .replace("%header", header)
                 .replace("%rank", rank.getDisplayString())
-                .replace("%points", "" + totalPoints)
-                .replace("%kills", "" + killCount)
-                .replace("%death", "" + deathCount)
-                .replace("%spent", "" + pointsSpent)
+                .replace("%points", String.valueOf(totalPoints))
+                .replace("%kills", String.valueOf(killCount))
+                .replace("%death", String.valueOf(deathCount))
+                .replace("%spent", String.valueOf(pointsSpent))
                 .replace("%kit", (selectedKit == null ? Langs.getInstance().getMessage("none") : selectedKit));
     }
 
@@ -120,7 +118,7 @@ public class PlayerGame {
     }
 
     public void addSpecialKill(Entity entity) {
-        int points = Mobs.getInstance().getMobPoints(entity.getType());
+        int points = Mobs.getInstance().getMob(entity).getPoints();
 
         addPointsAndRank(points + (points / 2));
     }
@@ -135,26 +133,25 @@ public class PlayerGame {
         return total;
     }
 
-    public void addKill(EntityType type) {
-        if (mobStats.containsKey(type)) {
-            mobStats.put(type, mobStats.get(type) + 1);
+    public void addKill(Entity entity) {
+        Mob mob = Mobs.getInstance().getMob(entity);
+
+        if (mobStats.containsKey(mob)) {
+            mobStats.put(mob, mobStats.get(mob) + 1);
         } else {
-            mobStats.put(type, 1);
+            if (!mobOrder.contains(mob.getType())) {
+                mobOrder.add(mob.getType());
+            }
+
+            mobStats.put(mob, 1);
         }
 
-        int percentage = (mobStats.get(type) * 100) / totalMobStat();
-        int points = Mobs.getInstance().getMobPoints(type);
+        int points = PointsCalculatorUtils.calculatePoint((mobOrder.indexOf(mob.getType()) + 1), mob.getPoints(), mobStats.entrySet().stream().filter(m -> m.getKey() == mob).mapToInt(Map.Entry::getValue).sum(), totalMobStat(), totalPoints);
 
-        if (mobStats.get(type) > 10 && !noPointPenalty) {
-            if (percentage > 50) {
-                points = 0;
-            } else if (percentage > 25) {
-                points = points / 4;
-            } else if (percentage > 10) {
-                points = points / 2;
-            }
-        } else if (noPointPenalty) {
-            noPointPenalty = false;
+        Logger.getLogger().log("Player <" + playerName + "> killed <" + entity + "> " + mobStats.entrySet().stream().filter(m -> m.getKey() == mob).mapToInt(Map.Entry::getValue).sum() + " times for " + mob.getPoints() + " points each as his " + mobOrder.indexOf(mob.getType()) + "th mob type and so gets " + points + " points.");
+
+        if (noPointPenalty && points < mob.getPoints()) {
+            points = mob.getPoints();
         }
 
         addPointsAndRank(points);
@@ -196,7 +193,7 @@ public class PlayerGame {
     }
 
     private void giveReward() {
-        ItemStack container = new ItemMaker(Material.SHULKER_BOX, NamespacedKey.minecraft("kemsreward")).addQuantity(1).addName(Langs.getInstance().getMessage("newRank")).getItem();
+        ItemStack container = ItemMaker.newItem(Material.SHULKER_BOX, NamespacedKey.minecraft("kemsreward")).addQuantity(1).addName(Langs.getInstance().getMessage("newRank")).getItem();
         BlockStateMeta containerMeta = (BlockStateMeta) container.getItemMeta();
         ShulkerBox box = (ShulkerBox) Objects.requireNonNull(containerMeta).getBlockState();
         Inventory inv = box.getInventory();
@@ -293,7 +290,7 @@ public class PlayerGame {
 
         if (rank != Ranks.HEROBRINE && totalPoints >= rank.getNext().getPoints()) {
             rank = rank.getNext();
-            futureReward.add(new ItemMaker(Material.COOKED_BEEF, NamespacedKey.minecraft("kemsrewardfood")).addQuantity(5).getItem());
+            futureReward.add(ItemMaker.newItem(Material.COOKED_BEEF, NamespacedKey.minecraft("kemsrewardfood")).addQuantity(5).getItem());
             player.playSound(player.getLocation(), Sound.BLOCK_BELL_USE, 1f, 1f);
 
             return true;
@@ -344,7 +341,7 @@ public class PlayerGame {
     }
 
     public void receiveKit(Kit kit) {
-        ItemStack container = new ItemMaker(Material.SHULKER_BOX, NamespacedKey.minecraft("kemskititem")).addQuantity(1).addName(Langs.getInstance().getMessage("starterKit")).getItem();
+        ItemStack container = ItemMaker.newItem(Material.SHULKER_BOX, NamespacedKey.minecraft("kemskititem")).addQuantity(1).addName(Langs.getInstance().getMessage("starterKit")).getItem();
         BlockStateMeta containerMeta = (BlockStateMeta) container.getItemMeta();
         ShulkerBox box = (ShulkerBox) Objects.requireNonNull(containerMeta).getBlockState();
         Inventory inv = box.getInventory();
