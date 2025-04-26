@@ -37,13 +37,13 @@ public class TestPointsCalculationUtils {
                     mob1Step = (mob2Step == -1) ? 1 : 2;
                 }
                 mob1KillCount++;
-                System.out.println("Zombie -> " + PointsCalculatorUtils.calculatePoint(mob1Step, mob1Points, mob1KillCount, i) + " points.");
+                //System.out.println("Zombie -> " + PointsCalculatorUtils.calculatePoint(mob1Step, mob1Points, mob1KillCount, i) + " points.");
             } else {
                 if (mob2Step == -1) {
                     mob2Step = (mob1Step == -1) ? 1 : 2;
                 }
                 mob2KillCount++;
-                System.out.println("Vache -> " + PointsCalculatorUtils.calculatePoint(mob2Step, mob2Points, mob2KillCount, i) + " points.");
+                //System.out.println("Vache -> " + PointsCalculatorUtils.calculatePoint(mob2Step, mob2Points, mob2KillCount, i) + " points.");
             }
         }
 

@@ -39,7 +39,7 @@ kitAlreadyTaken: "[K.E.M.S]: Vous ne pouvez recevoir qu'un seul kit par partie !
 playerRecap: "§6§l%header :\n§r§9  - Rang : %rank\n  - Points : %points\n  - Tués : %kills\n  - Morts : %death\n  - Points dépensés : %spent\n  - Kit : %kit\n§r"
 none: "Aucun"
 rankingTitle: "§6§lClassement:\n§r"
-rankingPlayer: "§9  #%rank -> %name: %points points.§r"
+rankingPlayer: "§9  #%rank -> %name: %points points.\n§r"
 
 # Kits
 starterKit: "Kit de démarrage"

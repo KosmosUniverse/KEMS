@@ -1,5 +1,6 @@
 package fr.kosmosuniverse.kems.listeners;
 
+import fr.kosmosuniverse.kems.commands.KemsMobValues;
 import fr.kosmosuniverse.kems.core.*;
 import fr.kosmosuniverse.kems.core.shop.Shop;
 import org.bukkit.Material;
@@ -14,7 +15,6 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.PotionMeta;
 
 import java.util.LinkedList;
-import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -23,7 +23,7 @@ import java.util.Optional;
  */
 public class InventoryListener implements Listener {
     @EventHandler
-    public void onInventoryClick(InventoryClickEvent event) {
+    public void onShopInvClick(InventoryClickEvent event) {
         Player player = (Player) event.getWhoClicked();
 
         ItemStack currentItem = event.getCurrentItem();
@@ -40,28 +40,12 @@ public class InventoryListener implements Listener {
 
         boolean kemsShopItem = item.hasItemMeta() && Objects.requireNonNull(item.getItemMeta()).getPersistentDataContainer().has(NamespacedKey.minecraft("kemsshopitem"));
         boolean kemsBackItem = item.hasItemMeta() && Objects.requireNonNull(item.getItemMeta()).getPersistentDataContainer().has(NamespacedKey.minecraft("kemsshopredpane"));
-        boolean kemsKitItem = item.hasItemMeta() && Objects.requireNonNull(item.getItemMeta()).getPersistentDataContainer().has(NamespacedKey.minecraft("kemskititem"));
         boolean hasMeta = item.hasItemMeta();
         String itemName = hasMeta && Objects.requireNonNull(item.getItemMeta()).hasDisplayName() ? item.getItemMeta().getDisplayName() : null;
 
         event.setCancelled(true);
 
         if (Objects.requireNonNull(current).getHolder() != null) {
-            return ;
-        }
-
-        if (kemsKitItem) {
-            if (GameManager.getInstance().getStatus() == Status.NOT_LAUNCHED ||
-                    !PlayersList.getInstance().hasPlayer(player.getName()) ||
-                    !Kits.getInstance().hasKit(itemName)) {
-                return ;
-            }
-
-            Optional<Kit> kit = Kits.getInstance().getKit(itemName);
-
-            kit.ifPresent(value -> PlayersList.getInstance().giveKitToPlayer(player.getName(), value));
-            player.closeInventory();
-
             return ;
         }
 
@@ -103,7 +87,76 @@ public class InventoryListener implements Listener {
         }
     }
 
+    @EventHandler
+    public void onKitInvClick(InventoryClickEvent event) {
+        Player player = (Player) event.getWhoClicked();
+        Inventory current = event.getClickedInventory();
+        ItemStack currentItem = event.getCurrentItem();
+        String invName = event.getView().getTitle();
+
+        if (currentItem == null || !Kits.getInvName().equals(invName)) {
+            return ;
+        }
+
+        ItemStack item = currentItem.clone();
+
+        boolean kemsKitItem = item.hasItemMeta() && Objects.requireNonNull(item.getItemMeta()).getPersistentDataContainer().has(NamespacedKey.minecraft("kemskititem"));
+        boolean hasMeta = item.hasItemMeta();
+        String itemName = hasMeta && Objects.requireNonNull(item.getItemMeta()).hasDisplayName() ? item.getItemMeta().getDisplayName() : null;
+
+        event.setCancelled(true);
+
+        if (Objects.requireNonNull(current).getHolder() != null) {
+            return ;
+        }
+
+        if (kemsKitItem) {
+            if (GameManager.getInstance().getStatus() == Status.NOT_LAUNCHED ||
+                    !PlayersList.getInstance().hasPlayer(player.getName()) ||
+                    !Kits.getInstance().hasKit(itemName)) {
+                return ;
+            }
+
+            Optional<Kit> kit = Kits.getInstance().getKit(itemName);
+
+            kit.ifPresent(value -> PlayersList.getInstance().giveKitToPlayer(player.getName(), value));
+            player.closeInventory();
+        }
+    }
+
+    @EventHandler
+    public void onMobValueInvClick(InventoryClickEvent event) {
+        Player player = (Player) event.getWhoClicked();
+        Inventory current = event.getClickedInventory();
+        ItemStack currentItem = event.getCurrentItem();
+        String invName = event.getView().getTitle();
+
+        if (currentItem == null || !KemsMobValues.getInvName().equals(invName)) {
+            return;
+        }
+
+        ItemStack item = currentItem.clone();
+
+        boolean kemsBackItem = item.hasItemMeta() && Objects.requireNonNull(item.getItemMeta()).getPersistentDataContainer().has(NamespacedKey.minecraft("kemsmobvaluebackpane"));
+        boolean kemsQuitItem = item.hasItemMeta() && Objects.requireNonNull(item.getItemMeta()).getPersistentDataContainer().has(NamespacedKey.minecraft("kemsmobvaluequitpane"));
+        boolean kemsNextItem = item.hasItemMeta() && Objects.requireNonNull(item.getItemMeta()).getPersistentDataContainer().has(NamespacedKey.minecraft("kemsmobvaluenextpane"));
+
+        event.setCancelled(true);
+
+        if (Objects.requireNonNull(current).getHolder() != null) {
+            return;
+        }
+
+        if (kemsQuitItem) {
+            player.closeInventory();
+        } else if (kemsBackItem) {
+            player.openInventory(KemsMobValues.getInstance().getPrevInv(player));
+        } else if (kemsNextItem) {
+            player.openInventory(KemsMobValues.getInstance().getNextInv(player));
+        }
+    }
+
     private LinkedList<String> getLore(ItemMeta itM) {
-        return (LinkedList<String>) itM.getLore();
+        return new LinkedList<>(Objects.requireNonNull(itM.getLore()));
     }
 }

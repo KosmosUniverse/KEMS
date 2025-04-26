@@ -1,6 +1,6 @@
 package fr.kosmosuniverse.kems;
 
-import fr.kosmosuniverse.kems.commands.*;
+import fr.kosmosuniverse.kems.commands.KemsGenericCommand;
 import fr.kosmosuniverse.kems.core.*;
 import fr.kosmosuniverse.kems.core.shop.Shop;
 import fr.kosmosuniverse.kems.listeners.InventoryListener;
@@ -55,6 +55,7 @@ public final class Kems extends JavaPlugin {
         Objects.requireNonNull(getCommand("kems-shop")).setExecutor(new KemsGenericCommand());
         Objects.requireNonNull(getCommand("kems-admin-points")).setExecutor(new KemsGenericCommand());
         Objects.requireNonNull(getCommand("kems-kit")).setExecutor(new KemsGenericCommand());
+        Objects.requireNonNull(getCommand("kems-mobs-value")).setExecutor(new KemsGenericCommand());
 
         configTab = new KemsConfigTabCompleter();
 
@@ -67,6 +68,7 @@ public final class Kems extends JavaPlugin {
         Objects.requireNonNull(getCommand("kems-shop")).setTabCompleter(new KemsSimpleTabCompleter());
         Objects.requireNonNull(getCommand("kems-admin-points")).setTabCompleter(new KemsAdminPointsTabCompleter());
         Objects.requireNonNull(getCommand("kems-kit")).setTabCompleter(new KemsSimpleTabCompleter());
+        Objects.requireNonNull(getCommand("kems-mobs-value")).setTabCompleter(new KemsSimpleTabCompleter());
     }
 
     @Override

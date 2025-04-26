@@ -28,8 +28,8 @@ public class Shop {
     private static Shop instance;
     private IShop shop;
     private Map<String, Inventory> invs;
-    private static final ItemStack limePane = new ItemMaker(Material.LIME_STAINED_GLASS_PANE, NamespacedKey.minecraft("kemsshoplimepane")).addQuantity(1).addName(" ").getItem();
-    private static final ItemStack redPane = new ItemMaker(Material.RED_STAINED_GLASS_PANE, NamespacedKey.minecraft("kemsshopredpane")).addQuantity(1).addName("<- Back").getItem();
+    private static final ItemStack limePane = ItemMaker.newItem(Material.LIME_STAINED_GLASS_PANE, NamespacedKey.minecraft("kemsshoplimepane")).addQuantity(1).addName(" ").getItem();
+    private static final ItemStack redPane = ItemMaker.newItem(Material.RED_STAINED_GLASS_PANE, NamespacedKey.minecraft("kemsshopredpane")).addQuantity(1).addName("<- Back").getItem();
     private static final String MAIN_INV = "K.E.M.S Shop";
     private static final String PRICE = "price";
     private static final String KEMS_SHOP_ITEM = "kemsshopitem";
@@ -202,11 +202,11 @@ public class Shop {
     }
 
     private ItemStack createMenuItem(ShopMenu menu) {
-        return new ItemMaker(menu.getItem(), NamespacedKey.minecraft(KEMS_SHOP_ITEM)).addQuantity(1).addName((menu.getColor() == null ? ChatColor.BLACK : menu.getColor()) + menu.getName()).getItem();
+        return ItemMaker.newItem(menu.getItem(), NamespacedKey.minecraft(KEMS_SHOP_ITEM)).addQuantity(1).addName((menu.getColor() == null ? ChatColor.BLACK : menu.getColor()) + menu.getName()).getItem();
     }
 
     private ItemStack createItem(ShopItem item) {
-        ItemStack i = new ItemMaker(item.getMaterial(), NamespacedKey.minecraft(KEMS_SHOP_ITEM)).addQuantity(item.getQuantity()).addName(item.getName()).setLores(item.getLore()).addLore("Price: " + item.getPrice() + " points").addDurability(item.getDurability()).addEnchants(item.getEnchants()).addTags(item.getTags()).getItem();
+        ItemStack i = ItemMaker.newItem(item.getMaterial(), NamespacedKey.minecraft(KEMS_SHOP_ITEM)).addQuantity(item.getQuantity()).addName(item.getName()).setLores(item.getLore()).addLore("Price: " + item.getPrice() + " points").addDurability(item.getDurability()).addEnchants(item.getEnchants()).addTags(item.getTags()).getItem();
 
         if (item.getOptions() != null) {
             processItemEffects(i, item.getOptions());
@@ -228,7 +228,7 @@ public class Shop {
     }
 
     private ItemStack createEffect(ShopEffect effect) {
-        ItemStack potion = new ItemMaker(Material.POTION, NamespacedKey.minecraft(KEMS_SHOP_ITEM)).addQuantity(1).addName(effect.getName()).setLores(effect.getLore()).addLore("Price: " + effect.getPrice() + " points").getItem();
+        ItemStack potion = ItemMaker.newItem(Material.POTION, NamespacedKey.minecraft(KEMS_SHOP_ITEM)).addQuantity(1).addName(effect.getName()).setLores(effect.getLore()).addLore("Price: " + effect.getPrice() + " points").getItem();
         PotionMeta potionMeta = (PotionMeta) potion.getItemMeta();
 
         Objects.requireNonNull(potionMeta).addCustomEffect(new PotionEffect(effect.getEffect(), effect.getDuration(), effect.getLevel(), false, true, true), true);

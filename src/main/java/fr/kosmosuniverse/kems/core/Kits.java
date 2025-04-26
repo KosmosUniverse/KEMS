@@ -22,7 +22,7 @@ public class Kits {
     @Getter
     private static final String invName = "K.E.M.S Kits";
     private static final NamespacedKey KEMS_KIT_ITEM = NamespacedKey.minecraft("kemskititem");
-    private static final ItemStack limePane = new ItemMaker(Material.LIME_STAINED_GLASS_PANE, NamespacedKey.minecraft("kemsshoplimepane")).addQuantity(1).addName(" ").getItem();
+    private static final ItemStack limePane = ItemMaker.newItem(Material.LIME_STAINED_GLASS_PANE, NamespacedKey.minecraft("kemsshoplimepane")).addQuantity(1).addName(" ").getItem();
     private static Kits instance;
     private final Map<String, Kit> kits;
     @Getter
@@ -84,9 +84,9 @@ public class Kits {
                 Material material = Material.getMaterial(kitItem.getString("type").toUpperCase());
 
                 if (kitItem.has("amount")) {
-                    kit.addContent(new ItemMaker(material, KEMS_KIT_ITEM).addQuantity(kitItem.getInt("amount")).getItem());
+                    kit.addContent(ItemMaker.newItem(material, KEMS_KIT_ITEM).addQuantity(kitItem.getInt("amount")).getItem());
                 } else {
-                    kit.addContent(new ItemMaker(material, KEMS_KIT_ITEM).getItem());
+                    kit.addContent(ItemMaker.newItem(material, KEMS_KIT_ITEM).getItem());
                 }
             }
 

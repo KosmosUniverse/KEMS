@@ -17,7 +17,7 @@ import java.util.stream.Collectors;
  */
 public class PlayersList {
     private static PlayersList instance = null;
-    private List<PlayerGame> players = null;
+    private List<PlayerGame> players = new ArrayList<>();
 
     /**
      * Get PlayersList instance
@@ -56,6 +56,10 @@ public class PlayersList {
         return players.stream().anyMatch(p -> p.isConnected() && p.getPlayer().getName().equals(playerName));
     }
 
+    public PlayerGame getPlayer(String playerName) {
+        return players.stream().filter(p -> p.isConnected() && p.getPlayer().getName().equals(playerName)).findAny().orElse(null);
+    }
+
     public boolean add(Player sender, String p) {
         if (players == null) {
             players = new ArrayList<>();
@@ -63,7 +67,7 @@ public class PlayersList {
 
         if ("@a".equals(p)) {
             Bukkit.getOnlinePlayers().forEach(player -> this.players.add(new PlayerGame(player)));
-            sender.sendMessage(Langs.getInstance().getMessage("playersAddedToList").replace("%i", "" + Bukkit.getOnlinePlayers().size()));
+            sender.sendMessage(Langs.getInstance().getMessage("playersAddedToList").replace("%i", String.valueOf(Bukkit.getOnlinePlayers().size())));
         } else {
             players.add(new PlayerGame(searchPlayerByName(p)));
             sender.sendMessage(Langs.getInstance().getMessage("playerAddedToList").replace("%s", p));
@@ -203,8 +207,8 @@ public class PlayersList {
         players.stream().filter(PlayerGame::isConnected).forEach(PlayerGame::triggerSpecialMob);
     }
 
-    public void reportKill(Player player, EntityType type) {
-        players.stream().filter(p -> p.isConnected() && p.getPlayer().equals(player)).findFirst().ifPresent(p -> p.addKill(type));
+    public void reportKill(Player player, Entity entity) {
+        players.stream().filter(p -> p.isConnected() && p.getPlayer().equals(player)).findFirst().ifPresent(p -> p.addKill(entity));
     }
 
     public void reportSpecialKill(Player player, Entity entity) {
@@ -231,7 +235,7 @@ public class PlayersList {
         players.stream().filter(p -> p.isConnected() && p.getPlayer().getName().equals(playerName)).findFirst().ifPresent(p -> {
             p.addPoints(points);
             if (needAck) {
-                p.getPlayer().sendMessage(Langs.getInstance().getMessage("givePointsToPlayer").replace("%s", p.getPlayerName()).replace("%i", "" + points));
+                p.getPlayer().sendMessage(Langs.getInstance().getMessage("givePointsToPlayer").replace("%s", p.getPlayerName()).replace("%i", String.valueOf(points)));
             }
         });
 
@@ -242,7 +246,7 @@ public class PlayersList {
         players.stream().filter(p -> p.isConnected() && p.getPlayer().getName().equals(playerName)).findFirst().ifPresent(p -> {
             p.removePoints(points);
             if (needAck) {
-                p.getPlayer().sendMessage(Langs.getInstance().getMessage("takePointsFromPlayer").replace("%s", p.getPlayerName()).replace("%i", "" + points));
+                p.getPlayer().sendMessage(Langs.getInstance().getMessage("takePointsFromPlayer").replace("%s", p.getPlayerName()).replace("%i", String.valueOf(points)));
             }
         });
 
@@ -253,7 +257,7 @@ public class PlayersList {
         players.stream().filter(p -> p.isConnected() && p.getPlayer().getName().equals(playerName)).findFirst().ifPresent(p -> {
             p.setPoints(points);
             if (needAck) {
-                p.getPlayer().sendMessage(Langs.getInstance().getMessage("setPlayerPoints").replace("%s", p.getPlayerName()).replace("%i", "" + points));
+                p.getPlayer().sendMessage(Langs.getInstance().getMessage("setPlayerPoints").replace("%s", p.getPlayerName()).replace("%i", String.valueOf(points)));
             }
         });
 
@@ -283,6 +287,8 @@ public class PlayersList {
             comp = Comparator.comparingInt(PlayerGame::getCurrentPoints);
         }
 
+        comp = comp.reversed();
+
         players.sort(comp);
 
         String ranking = buildRanking();
@@ -297,7 +303,8 @@ public class PlayersList {
 
         int i = 0;
         for (PlayerGame p : players) {
-            sb.append(Langs.getInstance().getMessage("rankingPlayer").replace("%rank", "" + (i + 1)).replace("%name", p.getPlayerName()).replace("%points", "" + (Config.getInstance().getConfigValues().getMode() == Mode.FIRST_TO_RANK ? p.getTotalPoints() : p.getCurrentPoints())));
+            i++;
+            sb.append(Langs.getInstance().getMessage("rankingPlayer").replace("%rank", String.valueOf(i)).replace("%name", p.getPlayerName()).replace("%points", String.valueOf(Config.getInstance().getConfigValues().getMode() == Mode.FIRST_TO_RANK ? p.getTotalPoints() : p.getCurrentPoints())));
         }
 
         return sb.toString();

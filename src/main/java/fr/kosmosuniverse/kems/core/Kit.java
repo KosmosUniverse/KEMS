@@ -31,7 +31,7 @@ public class Kit {
     }
 
     public void generateItem(NamespacedKey key) {
-        ItemMaker tmpItem = new ItemMaker(Material.SHULKER_BOX, key).addName(name).addLore(lore).addLore("Content :");
+        ItemMaker tmpItem = ItemMaker.newItem(Material.SHULKER_BOX, key).addName(name).addLore(lore).addLore("Content :");
 
         content.forEach(item -> tmpItem.addLore(" - " + item.getType().toString().toLowerCase().replace("_", " ") + " x" + item.getAmount()));
         this.item = tmpItem.getItem();

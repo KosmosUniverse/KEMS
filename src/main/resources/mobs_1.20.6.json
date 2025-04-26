@@ -4,12 +4,93 @@
 		"points" : "2"
 	},
 	{
+		"type" : "chicken",
+		"attribute" : "BABY",
+		"points" : "10"
+	},
+	{
 		"type" : "salmon",
 		"points" : "3"
 	},
 	{
 		"type" : "sheep",
+		"attribute" : "BLACK",
+		"points" : "6"
+	},
+	{
+		"type" : "sheep",
+		"attribute" : "BLUE",
+		"points" : "6"
+	},
+	{
+		"type" : "sheep",
+		"attribute" : "BROWN",
+		"points" : "12"
+	},
+	{
+		"type" : "sheep",
+		"attribute" : "CYAN",
+		"points" : "20"
+	},
+	{
+		"type" : "sheep",
+		"attribute" : "GRAY",
+		"points" : "12"
+	},
+	{
+		"type" : "sheep",
+		"attribute" : "GREEN",
+		"points" : "20"
+	},
+	{
+		"type" : "sheep",
+		"attribute" : "LIGHT_BLUE",
+		"points" : "6"
+	},
+	{
+		"type" : "sheep",
+		"attribute" : "LIGHT_GRAY",
+		"points" : "12"
+	},
+	{
+		"type" : "sheep",
+		"attribute" : "LIME",
+		"points" : "12"
+	},
+	{
+		"type" : "sheep",
+		"attribute" : "MAGENTA",
+		"points" : "6"
+	},
+	{
+		"type" : "sheep",
+		"attribute" : "ORANGE",
+		"points" : "6"
+	},
+	{
+		"type" : "sheep",
+		"attribute" : "PINK",
+		"points" : "24"
+	},
+	{
+		"type" : "sheep",
+		"attribute" : "PURPLE",
+		"points" : "6"
+	},
+	{
+		"type" : "sheep",
+		"attribute" : "RED",
+		"points" : "6"
+	},
+	{
+		"type" : "sheep",
+		"attribute" : "WHITE",
 		"points" : "4"
+	},
+	{
+		"type" : "sheep",
+		"attribute" : "YELLOW",
+		"points" : "6"
 	},
 	{
 		"type" : "cod",
@@ -20,8 +101,18 @@
 		"points" : "5"
 	},
 	{
+		"type" : "cow",
+		"attribute" : "BABY",
+		"points" : "15"
+	},
+	{
 		"type" : "pig",
 		"points" : "5"
+	},
+	{
+		"type" : "pig",
+		"attribute" : "BABY",
+		"points" : "15"
 	},
 	{
 		"type" : "snow_golem",
@@ -33,7 +124,12 @@
 	},
 	{
 		"type" : "rabbit",
-		"points" : "9"
+		"points" : "15"
+	},
+	{
+		"type" : "rabbit",
+		"attribute" : "BABY",
+		"points" : "15"
 	},
 	{
 		"type" : "pufferfish",
@@ -72,6 +168,11 @@
 		"points" : "24"
 	},
 	{
+		"type" : "armadillo",
+		"attribute" : "BABY",
+		"points" : "36"
+	},
+	{
 		"type" : "frog",
 		"points" : "25"
 	},
@@ -88,12 +189,22 @@
 		"points" : "30"
 	},
 	{
+		"type" : "villager",
+		"attribute" : "BABY",
+		"points" : "40"
+	},
+	{
 		"type" : "strider",
 		"points" : "30"
 	},
 	{
 		"type" : "horse",
-		"points" : "30"
+		"points" : "23"
+	},
+	{
+		"type" : "horse",
+		"attribute" : "BABY",
+		"points" : "34"
 	},
 	{
 		"type" : "zombified_piglin",
@@ -118,6 +229,11 @@
 	{
 		"type" : "zombie",
 		"points" : "43"
+	},
+	{
+		"type" : "zombie",
+		"attribute" : "BABY",
+		"points" : "83"
 	},
 	{
 		"type" : "ghast",
