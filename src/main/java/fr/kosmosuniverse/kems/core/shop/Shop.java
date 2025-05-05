@@ -206,7 +206,7 @@ public class Shop {
     }
 
     private ItemStack createItem(ShopItem item) {
-        ItemStack i = ItemMaker.newItem(item.getMaterial(), NamespacedKey.minecraft(KEMS_SHOP_ITEM)).addQuantity(item.getQuantity()).addName(item.getName()).setLores(item.getLore()).addLore("Price: " + item.getPrice() + " points").addDurability(item.getDurability()).addEnchants(item.getEnchants()).addTags(item.getTags()).getItem();
+        ItemStack i = ItemMaker.newItem(item.getMaterial(), NamespacedKey.minecraft(KEMS_SHOP_ITEM)).addQuantity(item.getQuantity()).addName(item.getName()).setLores(item.getLore()).addLore("Price: " + item.getPrice() + " points").addDurability(item.getDurability()).addEnchants(item.getEnchants()).addShopTags(item.getTags()).getItem();
 
         if (item.getOptions() != null) {
             processItemEffects(i, item.getOptions());

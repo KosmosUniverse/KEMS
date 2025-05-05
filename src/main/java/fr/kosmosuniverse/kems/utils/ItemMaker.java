@@ -9,9 +9,7 @@ import org.bukkit.inventory.meta.Damageable;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 /**
  * @author KosmosUniverse
@@ -111,7 +109,7 @@ public class ItemMaker {
             return this;
         }
 
-        enchants.forEach(e -> item.addUnsafeEnchantment(e.getEnchant(), e.getLevel()));
+        enchants.forEach(e -> item.addUnsafeEnchantment(e.enchant(), e.level()));
 
         return this;
     }
@@ -128,7 +126,7 @@ public class ItemMaker {
         return this;
     }
 
-    public ItemMaker addTags(List<ShopItemTags> tags) {
+    public ItemMaker addShopTags(List<ShopItemTags> tags) {
         if (tags == null || tags.isEmpty()) {
             return this;
         }
@@ -137,16 +135,36 @@ public class ItemMaker {
 
         tags.forEach(tag -> {
             if ("INTEGER".equals(tag.getType())) {
-                assert itM != null;
-                itM.getPersistentDataContainer().set(tag.getKey(), PersistentDataType.INTEGER, (Integer) tag.getValue());
+                Objects.requireNonNull(itM).getPersistentDataContainer().set(tag.getKey(), PersistentDataType.INTEGER, (Integer) tag.getValue());
             } else if ("BOOLEAN".equals(tag.getType())) {
-                assert itM != null;
-                itM.getPersistentDataContainer().set(tag.getKey(), PersistentDataType.BOOLEAN, (Boolean) tag.getValue());
+                Objects.requireNonNull(itM).getPersistentDataContainer().set(tag.getKey(), PersistentDataType.BOOLEAN, (Boolean) tag.getValue());
             }
         });
 
         item.setItemMeta(itM);
 
         return this;
+    }
+
+    public ItemMaker addStringTag(NamespacedKey key, String tag) {
+        if (tag == null) {
+            return this;
+        }
+
+        ItemMeta itM = item.getItemMeta();
+
+        Objects.requireNonNull(itM).getPersistentDataContainer().set(key, PersistentDataType.STRING, tag);
+
+        item.setItemMeta(itM);
+
+        return this;
+    }
+
+    public ItemMeta getItemMeta() {
+        return item.getItemMeta();
+    }
+
+    public void setItemMeta(ItemMeta itM) {
+        item.setItemMeta(itM);
     }
 }

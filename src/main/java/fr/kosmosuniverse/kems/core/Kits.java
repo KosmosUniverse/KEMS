@@ -2,27 +2,34 @@ package fr.kosmosuniverse.kems.core;
 
 import fr.kosmosuniverse.kems.Kems;
 import fr.kosmosuniverse.kems.utils.FileUtils;
+import fr.kosmosuniverse.kems.utils.ItemEnchant;
 import fr.kosmosuniverse.kems.utils.ItemMaker;
 import lombok.Getter;
-import org.bukkit.Material;
 import org.bukkit.Bukkit;
+import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
+import org.bukkit.Registry;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.PotionMeta;
+import org.bukkit.potion.PotionEffect;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.json.JSONTokener;
 
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 public class Kits {
     @Getter
     private static final String invName = "K.E.M.S Kits";
+    @Getter
     private static final NamespacedKey KEMS_KIT_ITEM = NamespacedKey.minecraft("kemskititem");
-    private static final ItemStack limePane = ItemMaker.newItem(Material.LIME_STAINED_GLASS_PANE, NamespacedKey.minecraft("kemsshoplimepane")).addQuantity(1).addName(" ").getItem();
+    @Getter
+    private static final NamespacedKey KEMS_KIT_POTION = NamespacedKey.minecraft("kemskitpotion");
+    @Getter
+    private static final NamespacedKey KEMS_KIT_ENCHANT = NamespacedKey.minecraft("kemskitenchant");
+    private static final ItemStack limePane = ItemMaker.newItem(Material.LIME_STAINED_GLASS_PANE, NamespacedKey.minecraft("kemskitlimepane")).addQuantity(1).addName(" ").getItem();
     private static Kits instance;
     private final Map<String, Kit> kits;
     @Getter
@@ -81,18 +88,40 @@ public class Kits {
             for (Object kitRawItem : kitContent) {
                 JSONObject kitItem = (JSONObject) kitRawItem;
 
-                Material material = Material.getMaterial(kitItem.getString("type").toUpperCase());
-
-                if (kitItem.has("amount")) {
-                    kit.addContent(ItemMaker.newItem(material, KEMS_KIT_ITEM).addQuantity(kitItem.getInt("amount")).getItem());
-                } else {
-                    kit.addContent(ItemMaker.newItem(material, KEMS_KIT_ITEM).getItem());
-                }
+                kit.addContent(processKitItem(kitItem));
             }
 
             kit.generateItem(KEMS_KIT_ITEM);
             kits.put(kitName, kit);
         }
+    }
+
+    private ItemStack processKitItem(JSONObject kitItemObj) {
+        Material material = Material.getMaterial(kitItemObj.getString("type").toUpperCase());
+        ItemMaker kitItem = ItemMaker.newItem(material, KEMS_KIT_ITEM);
+
+        if (kitItemObj.has("amount")) {
+            kitItem.addQuantity(kitItemObj.getInt("amount"));
+        }
+
+        if (kitItemObj.has("enchant") && kitItemObj.has("enchantLevel")) {
+            kitItem.addEnchants(Collections.singletonList(new ItemEnchant(Registry.ENCHANTMENT.match("minecraft:" + kitItemObj.getString("enchant")), kitItemObj.getInt("enchantLevel"))));
+            kitItem.addStringTag(KEMS_KIT_ENCHANT, kitItemObj.getString("enchant") + (kitItemObj.getInt("enchantLevel") > 1 ? " " + kitItemObj.getInt("enchantLevel") + " " : " ") + kitItemObj.getString("type").replace("_", " "));
+        }
+
+        if ((material == Material.POTION || material == Material.SPLASH_POTION) && kitItemObj.has("potionType") &&
+                kitItemObj.has("potionPower") && kitItemObj.has("potionDuration")) {
+            PotionMeta itM = (PotionMeta) kitItem.getItemMeta();
+
+            itM.addCustomEffect(
+                    new PotionEffect(Objects.requireNonNull(Registry.EFFECT.match("minecraft:" + kitItemObj.getString("potionType"))),
+                    kitItemObj.getInt("potionDuration") * 20, kitItemObj.getInt("potionPower")), true);
+
+            kitItem.setItemMeta(itM);
+            kitItem.addStringTag(KEMS_KIT_POTION, kitItemObj.getString("potionType") + " potion level " + kitItemObj.getInt("potionPower") + " duration " + kitItemObj.getInt("potionDuration") + " seconds");
+        }
+
+        return kitItem.getItem();
     }
 
     private void createKitsInventory() {
