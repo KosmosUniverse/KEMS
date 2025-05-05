@@ -30,9 +30,7 @@ public class InventoryListener implements Listener {
         Inventory current = event.getClickedInventory();
         String invName = event.getView().getTitle();
 
-        if (currentItem == null ||
-                (!Shop.getInstance().hasInv(invName) &&
-                !Kits.getInvName().equals(invName))) {
+        if (currentItem == null || !Shop.getInstance().hasInv(invName)) {
             return ;
         }
 

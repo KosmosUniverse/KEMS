@@ -1,48 +1,75 @@
 {
   "worker": [
-      {
-       "type": "wooden_axe"
-      },
-      {
-        "type": "wooden_shovel"
-      },
-      {
-        "type": "wooden_pickaxe"
-      },
-      {
-        "type": "wooden_hoe"
-      }
+    {
+     "type": "iron_axe"
+    },
+    {
+      "type": "iron_shovel"
+    },
+    {
+      "type": "iron_pickaxe"
+    },
+    {
+      "type": "iron_hoe"
+    },
+    {
+      "type": "diamond_helmet"
+    },
+    {
+      "type": "diamond_boots"
+    },
+    {
+      "type": "enchanted_golden_apple"
+    }
   ],
   "guard": [
-      {
-        "type": "stone_sword"
-      },
-      {
-        "type": "leather_helmet"
-      },
-      {
-        "type": "leather_chestplate"
-      },
-      {
-        "type": "leather_leggings"
-      },
-      {
-        "type": "leather_boots"
-      }
+    {
+      "type": "stone_sword"
+    },
+    {
+      "type": "chainmail_helmet"
+    },
+    {
+      "type": "chainmail_chestplate"
+    },
+    {
+      "type": "chainmail_leggings"
+    },
+    {
+      "type": "chainmail_boots"
+    },
+    {
+      "type": "shield"
+    },
+    {
+      "type": "splash_potion",
+      "amount" : 3,
+      "potionType" : "weakness",
+      "potionPower" : 1,
+      "potionDuration" : 90
+    }
   ],
   "sniper": [
-      {
-        "type": "bow"
-      },
-      {
-        "type": "arrow",
-        "amount": 32
-      }
+    {
+      "type": "bow",
+      "enchant" : "infinity",
+      "enchantLevel" : 1
+    },
+    {
+      "type": "arrow",
+      "amount": 1
+    },
+    {
+      "type": "potion",
+      "potionType" : "speed",
+      "potionPower" : 1,
+      "potionDuration" : 480
+    }
   ],
   "miner": [
     {
       "type": "iron_ore",
-      "amount": 8
+      "amount": 6
     },
     {
       "type": "coal",
@@ -51,6 +78,12 @@
     {
       "type": "diamond_ore",
       "amount": 2
+    },
+    {
+      "type": "potion",
+      "potionType" : "night_vision",
+      "potionPower" : 1,
+      "potionDuration" : 480
     }
   ]
 }
