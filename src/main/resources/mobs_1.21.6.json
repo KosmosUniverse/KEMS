@@ -418,5 +418,21 @@
 	{
 		"type" : "warden",
 		"points" : "8040"
+	},
+	{
+		"type" : "bogged",
+		"points" : "107"
+	},
+	{
+		"type" : "breeze",
+		"points" : "301"
+	},
+	{
+		"type" : "creaking",
+		"points" : "3003"
+	},
+	{
+		"type" : "happy_ghast",
+		"points" : "1000"
 	}
 ]
