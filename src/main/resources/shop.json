@@ -70,6 +70,22 @@
               "durability": 100,
               "name": "Vorpale",
               "lore": "This sword drink the enemy's soul-100 use"
+            },
+            "wooden_sword": {
+              "price": 500,
+              "type": "Item",
+              "quantity": 1,
+              "enchants": "",
+              "durability": 1,
+              "name": "Almighty Sword of Thunder of Bolt of God",
+              "lore": "This is oneshot sword to oneshot the non oneshotable",
+              "customs": [
+                {
+                  "key": "kemsitemoneshot",
+                  "type": "BOOLEAN",
+                  "value": true
+                }
+              ]
             }
           }
         },
