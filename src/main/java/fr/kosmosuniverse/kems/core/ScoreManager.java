@@ -1,6 +1,7 @@
 package fr.kosmosuniverse.kems.core;
 
 import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
 import org.bukkit.scoreboard.Criteria;
 import org.bukkit.scoreboard.DisplaySlot;
 import org.bukkit.scoreboard.Objective;
@@ -49,5 +50,11 @@ public class ScoreManager {
 
     public void setPlayerPoints(String playerName, int playerPoints) {
         points.getScore(playerName).setScore(playerPoints);
+    }
+
+    public void setupPlayer(Player player) {
+        points = scoreboard.getObjective("points");
+        points.getScore(player.getName()).setScore(PlayersList.getInstance().getPlayerPoints(player.getName()));
+        player.setScoreboard(scoreboard);
     }
 }

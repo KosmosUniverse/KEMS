@@ -282,6 +282,7 @@ public class PlayerGame {
     public void reconnect() {
         Bukkit.getOnlinePlayers().stream().filter(p -> Objects.requireNonNull(p.getPlayer()).getName().equals(playerName)).findFirst().ifPresent(p -> player = p);
         progress.addPlayer(player);
+        ScoreManager.getInstance().setupPlayer(player);
         connected = true;
     }
 

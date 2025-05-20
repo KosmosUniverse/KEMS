@@ -59,6 +59,7 @@ public class PlayerKill implements Listener {
 
             if (isSpecial) {
                 PlayersList.getInstance().reportSpecialKill(player, entity);
+                event.getDrops().clear();
             } else {
                 PlayersList.getInstance().reportKill(player, entity);
             }
