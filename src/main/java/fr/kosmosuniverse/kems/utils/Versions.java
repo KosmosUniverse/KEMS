@@ -13,6 +13,9 @@ public class Versions {
     public Versions() {
         versions = new ArrayList<>();
         versions.add("1.20.6");
+        versions.add("1.21");
+        versions.add("1.21.4");
+        versions.add("1.21.6");
     }
 
     public String getClosestVersion(String currentVersion) {

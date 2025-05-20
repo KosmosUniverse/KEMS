@@ -19,6 +19,7 @@ import org.json.JSONTokener;
 
 import java.io.IOException;
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class Kits {
     @Getter
@@ -105,8 +106,8 @@ public class Kits {
         }
 
         if (kitItemObj.has("enchant") && kitItemObj.has("enchantLevel")) {
-            kitItem.addEnchants(Collections.singletonList(new ItemEnchant(Registry.ENCHANTMENT.match("minecraft:" + kitItemObj.getString("enchant")), kitItemObj.getInt("enchantLevel"))));
-            kitItem.addStringTag(KEMS_KIT_ENCHANT, kitItemObj.getString("enchant") + (kitItemObj.getInt("enchantLevel") > 1 ? " " + kitItemObj.getInt("enchantLevel") + " " : " ") + kitItemObj.getString("type").replace("_", " "));
+            kitItem.addEnchants(Arrays.stream(kitItemObj.getString("enchant").split(",")).map(s -> new ItemEnchant(Registry.ENCHANTMENT.match("minecraft:" + s), kitItemObj.getInt("enchantLevel"))).collect(Collectors.toList()));
+            kitItem.addStringTag(KEMS_KIT_ENCHANT, String.join(", ", kitItemObj.getString("enchant").split(",")) + (kitItemObj.getInt("enchantLevel") > 1 ? " " + kitItemObj.getInt("enchantLevel") + " " : " ") + kitItemObj.getString("type").replace("_", " "));
         }
 
         if ((material == Material.POTION || material == Material.SPLASH_POTION) && kitItemObj.has("potionType") &&

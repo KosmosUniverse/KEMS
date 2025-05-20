@@ -52,7 +52,7 @@
   "sniper": [
     {
       "type": "bow",
-      "enchant" : "infinity",
+      "enchant" : "infinity,unbreaking",
       "enchantLevel" : 1
     },
     {
@@ -69,7 +69,7 @@
   "miner": [
     {
       "type": "iron_ore",
-      "amount": 6
+      "amount": 7
     },
     {
       "type": "coal",

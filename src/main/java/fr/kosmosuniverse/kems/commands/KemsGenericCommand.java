@@ -213,17 +213,17 @@ public class KemsGenericCommand implements CommandExecutor {
             return true;
         }
 
-        if (!PlayersList.getInstance().hasPlayer(args[0])) {
-
-            return true;
-        }
-
         if (args.length == 1) {
             player.sendMessage(Langs.getInstance().getMessage("playerPoints").replace("%s", args[0]).replace("%i", String.valueOf(PlayersList.getInstance().getPlayerPoints(args[0]))));
 
             return true;
         } else if (args.length != 3) {
             return false;
+        }
+
+        if (!PlayersList.getInstance().hasPlayer(args[0])) {
+
+            return true;
         }
 
         int points = Integer.parseInt(args[2]);

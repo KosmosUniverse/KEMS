@@ -21,4 +21,5 @@ public class ConfigHolder {
     private long specialSpawnDelay;
     private Level level;
     private String lang;
+    private boolean killPlayer;
 }

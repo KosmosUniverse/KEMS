@@ -13,8 +13,10 @@ import org.bukkit.boss.BarStyle;
 import org.bukkit.boss.BossBar;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
+import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.CreatureSpawnEvent;
+import org.bukkit.inventory.EntityEquipment;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.BlockStateMeta;
@@ -121,6 +123,23 @@ public class PlayerGame {
         int points = Mobs.getInstance().getMob(entity).getPoints();
 
         addPointsAndRank(points + (points / 2));
+
+        LivingEntity living = (LivingEntity) entity;
+        EntityEquipment equip = living.getEquipment();
+
+        for (ItemStack item : Objects.requireNonNull(equip).getArmorContents()) {
+            if (item != null) {
+                futureReward.add(item);
+            }
+        }
+
+        if (equip.getItemInMainHand() != null) {
+            futureReward.add(equip.getItemInMainHand());
+        }
+
+        if (equip.getItemInOffHand() != null) {
+            futureReward.add(equip.getItemInOffHand());
+        }
     }
 
     private int totalMobStat() {
@@ -135,6 +154,10 @@ public class PlayerGame {
 
     public void addKill(Entity entity) {
         Mob mob = Mobs.getInstance().getMob(entity);
+
+        if (entity.getType() == EntityType.PLAYER && !Config.getInstance().getConfigValues().isKillPlayer()) {
+            return ;
+        }
 
         if (mobStats.containsKey(mob)) {
             mobStats.put(mob, mobStats.get(mob) + 1);
@@ -259,6 +282,7 @@ public class PlayerGame {
     public void reconnect() {
         Bukkit.getOnlinePlayers().stream().filter(p -> Objects.requireNonNull(p.getPlayer()).getName().equals(playerName)).findFirst().ifPresent(p -> player = p);
         progress.addPlayer(player);
+        ScoreManager.getInstance().setupPlayer(player);
         connected = true;
     }
 

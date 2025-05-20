@@ -23,6 +23,7 @@ public class Config {
     private static final String RANK_LIMIT = "game_settings.rank_limit_mode.rank_limit";
     private static final String MODE = "game_settings.mode";
     private static final String LEVEL = "game_settings.level";
+    private static final String KILL_PLAYER = "game_settings.kill_player";
     private static final String LANG = "other_settings.lang";
     private static Config instance;
     private ConfigHolder configValues;
@@ -79,6 +80,7 @@ public class Config {
         configElems.put("RANK_LIMIT", this::setRankLimit);
         configElems.put("MODE", this::setMode);
         configElems.put("LEVEL", this::setLevel);
+        configElems.put("KILL_PLAYER", (String b) -> setKillPlayer(Boolean.parseBoolean(b)));
 
         if (configFile != null) {
             checkAndSetConfig(configFile);
@@ -145,6 +147,10 @@ public class Config {
             configFile.set(LANG, "en");
         }
 
+        if (!configFile.contains(KILL_PLAYER)) {
+            configFile.set(KILL_PLAYER, false);
+        }
+
         setValues(configFile);
     }
 
@@ -166,6 +172,7 @@ public class Config {
         configValues.setMode(Mode.valueOf(configFile.getString(MODE)));
         configValues.setLevel(Level.valueOf(configFile.getString(LEVEL)));
         configValues.setLang(configFile.getString(LANG));
+        configValues.setKillPlayer(configFile.getBoolean(KILL_PLAYER));
     }
 
     /**
@@ -307,5 +314,9 @@ public class Config {
         } catch (IllegalArgumentException e) {
             Bukkit.getLogger().severe(Langs.getInstance().getMessage("levelNotExist").replace("%s", level));
         }
+    }
+
+    private void setKillPlayer(boolean killPlayer) {
+        configValues.setKillPlayer(killPlayer);
     }
 }

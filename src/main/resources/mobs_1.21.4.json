@@ -4,6 +4,10 @@
 		"points" : "2"
 	},
 	{
+		"type" : "player",
+		"points" : "261"
+	},
+	{
 		"type" : "salmon",
 		"points" : "3"
 	},
@@ -284,7 +288,7 @@
 	},
 	{
 		"type" : "allay",
-		"points" : "80"
+		"points" : "600"
 	},
 	{
 		"type" : "zombie",
@@ -349,11 +353,11 @@
 	},
 	{
 		"type" : "hoglin",
-		"points" : "243"
+		"points" : "403"
 	},
 	{
 		"type" : "guardian",
-		"points" : "248"
+		"points" : "308"
 	},
 	{
 		"type" : "witch",
@@ -373,11 +377,11 @@
 	},
 	{
 		"type" : "wither_skeleton",
-		"points" : "330"
+		"points" : "410"
 	},
 	{
 		"type" : "pillager",
-		"points" : "343"
+		"points" : "103"
 	},
 	{
 		"type" : "shulker",
@@ -385,7 +389,7 @@
 	},
 	{
 		"type" : "piglin_brute",
-		"points" : "420"
+		"points" : "520"
 	},
 	{
 		"type" : "evoker",
@@ -421,7 +425,7 @@
 	},
 	{
 		"type" : "bogged",
-		"points" : "107"
+		"points" : "171"
 	},
 	{
 		"type" : "breeze",
@@ -429,6 +433,6 @@
 	},
 	{
 		"type" : "creaking",
-		"points" : "3003"
+		"points" : "1003"
 	}
 ]
