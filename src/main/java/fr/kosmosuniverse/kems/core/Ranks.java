@@ -1,5 +1,6 @@
 package fr.kosmosuniverse.kems.core;
 
+import lombok.Getter;
 import org.bukkit.Material;
 import org.bukkit.entity.*;
 import org.bukkit.inventory.EquipmentSlot;
@@ -68,9 +69,13 @@ public enum Ranks {
             {EquipmentSlot.HEAD.toString(), Material.LEATHER_HELMET.toString()},
     }).collect(Collectors.toMap(data -> EquipmentSlot.valueOf(data[0]), data -> new ItemStack(Objects.requireNonNull(Material.getMaterial(data[1]))))));
 
+    @Getter
     private final int points;
+    @Getter
     private final Ranks next;
+    @Getter
     private final String displayString;
+    @Getter
     private final Class<? extends LivingEntity> mobClass;
     private final Map<EquipmentSlot, ItemStack> specialMobInv;
     private final List<PotionEffectType> specialMobEffects;
@@ -84,40 +89,18 @@ public enum Ranks {
         this.specialMobEffects = specialMobEffects == null ? null : Arrays.asList(specialMobEffects);
     }
 
-    public int getPoints() {
-        return points;
-    }
-
-    public Ranks getNext() {
-        return next;
-    }
-
-    public String getDisplayString() {
-        return displayString;
-    }
-
-    public Class<? extends LivingEntity> getMobClass() {
-        return mobClass;
-    }
-
     public void applyEntityStats(Entity e) {
         e.setGlowing(true);
 
-        if (e instanceof LivingEntity) {
-            LivingEntity le = (LivingEntity) e;
-
+        if (e instanceof LivingEntity le) {
             le.setRemoveWhenFarAway(false);
         }
 
-        if (specialMobInv != null && e instanceof LivingEntity) {
-            LivingEntity le = (LivingEntity) e;
-
+        if (specialMobInv != null && e instanceof LivingEntity le) {
             specialMobInv.forEach((k, v) -> Objects.requireNonNull(le.getEquipment()).setItem(k, v));
         }
 
-        if (specialMobEffects != null && e instanceof LivingEntity) {
-            LivingEntity le = (LivingEntity) e;
-
+        if (specialMobEffects != null && e instanceof LivingEntity le) {
             specialMobEffects.forEach(pe -> le.addPotionEffect(new PotionEffect(pe, PotionEffect.INFINITE_DURATION, 1, true, true)));
         }
     }

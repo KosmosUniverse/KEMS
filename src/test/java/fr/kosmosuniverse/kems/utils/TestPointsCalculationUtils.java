@@ -25,8 +25,6 @@ public class TestPointsCalculationUtils {
     public void test() {
         int mob1KillCount = 0;
         int mob2KillCount = 0;
-        int mob1Points = 43;
-        int mob2Points = 5;
         int mob1Step = -1;
         int mob2Step = -1;
         Random rand = new Random();

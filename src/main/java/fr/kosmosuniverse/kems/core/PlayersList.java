@@ -1,6 +1,7 @@
 package fr.kosmosuniverse.kems.core;
 
 import fr.kosmosuniverse.kems.Kems;
+import lombok.Getter;
 import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.ComponentBuilder;
@@ -15,6 +16,7 @@ import java.util.stream.Collectors;
 /**
  * @author KosmosUniverse
  */
+@Getter
 public class PlayersList {
     private static PlayersList instance = null;
     private List<PlayerGame> players = new ArrayList<>();
@@ -30,15 +32,6 @@ public class PlayersList {
         }
 
         return instance;
-    }
-
-    /**
-     * Get the players list
-     *
-     * @return The list of all players
-     */
-    public List<PlayerGame> getPlayers() {
-        return players;
     }
 
     public int getPlayerQuantity() {

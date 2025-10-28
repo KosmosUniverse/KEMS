@@ -70,14 +70,12 @@ public class KemsGenericCommand implements CommandExecutor {
         return true;
     }
 
-    private boolean checkAndSetConfigValue(Player player, String key, String value) {
+    private void checkAndSetConfigValue(Player player, String key, String value) {
         if (Config.getInstance().setConfigValue(key, value)) {
             player.sendMessage(Langs.getInstance().getMessage("configValueSet").replace("%s", key));
         } else {
             player.sendMessage(Langs.getInstance().getMessage("configValueNotSet").replace("%s", key));
         }
-
-        return true;
     }
 
     private boolean executeList(Player player, String[] args) {

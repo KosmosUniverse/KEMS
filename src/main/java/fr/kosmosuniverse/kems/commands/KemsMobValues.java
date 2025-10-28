@@ -81,7 +81,7 @@ public class KemsMobValues {
             calculatedPoints.clear();
         }
 
-        return invs.isEmpty() ? null : invs.get(0);
+        return invs.isEmpty() ? null : invs.getFirst();
     }
 
     public Inventory getNextInv(Player player) {

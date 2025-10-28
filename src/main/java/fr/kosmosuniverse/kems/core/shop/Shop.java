@@ -56,10 +56,6 @@ public class Shop {
         setupMenuInvs((ShopMenu) shop, null);
     }
 
-    public IShop getShop() {
-        return shop;
-    }
-
     public boolean hasInv(String invName) {
         return invs.keySet().stream().anyMatch(key -> key.endsWith(invName));
     }
@@ -136,7 +132,7 @@ public class Shop {
 
                 if ("INTEGER".equals(tag.getString("type")) ||
                         "BOOLEAN".equals(tag.getString("type"))) {
-                    tags.add(new ShopItemTags(tag.getString("key"), tag.getString("type"), tag.get("value")));
+                    tags.add(new ShopItemTags(NamespacedKey.minecraft(tag.getString("key")), tag.getString("type"), tag.get("value")));
                 }
             });
         }
@@ -158,7 +154,7 @@ public class Shop {
         int level = effectObject.has("level") ? effectObject.getInt("level") : 1;
         int duration = effectObject.has("duration") ? effectObject.getInt("duration") : 1;
 
-        return new ShopEffect(effect, name, lore, price, level, duration);
+        return new ShopEffect(Registry.EFFECT.match(effect), name, (lore == null || lore.isEmpty()) ? null : Arrays.asList(lore.split("-")), price, level, duration);
     }
 
     private void setupMenuInvs(ShopMenu menu, String prevInv) {
@@ -228,10 +224,10 @@ public class Shop {
     }
 
     private ItemStack createEffect(ShopEffect effect) {
-        ItemStack potion = ItemMaker.newItem(Material.POTION, NamespacedKey.minecraft(KEMS_SHOP_ITEM)).addQuantity(1).addName(effect.getName()).setLores(effect.getLore()).addLore("Price: " + effect.getPrice() + " points").getItem();
+        ItemStack potion = ItemMaker.newItem(Material.POTION, NamespacedKey.minecraft(KEMS_SHOP_ITEM)).addQuantity(1).addName(effect.name()).setLores(effect.lore()).addLore("Price: " + effect.price() + " points").getItem();
         PotionMeta potionMeta = (PotionMeta) potion.getItemMeta();
 
-        Objects.requireNonNull(potionMeta).addCustomEffect(new PotionEffect(effect.getEffect(), effect.getDuration(), effect.getLevel(), false, true, true), true);
+        Objects.requireNonNull(potionMeta).addCustomEffect(new PotionEffect(effect.effect(), effect.duration(), effect.level(), false, true, true), true);
         potion.setItemMeta(potionMeta);
 
         return potion;

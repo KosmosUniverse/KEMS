@@ -29,15 +29,15 @@ public class ShopItem implements IShop {
 
     public ShopItem(Material material, String name, String lore, int price, int quantity, int durability, String enchants, String[] options, List<ShopItemTags> tags) {
         this.material = material;
-        this.name = (name == null || name.equals("")) ? null : name;
-        this.lore = (lore == null || lore.equals("")) ? null : Arrays.asList(lore.split("-"));
+        this.name = (name == null || name.isEmpty()) ? null : name;
+        this.lore = (lore == null || lore.isEmpty()) ? null : Arrays.asList(lore.split("-"));
         this.price = price;
         this.quantity = quantity;
         this.durability = durability;
         this.options = options;
         this.tags = tags.isEmpty() ? null : tags;
 
-        if (enchants != null && !enchants.equals("")) {
+        if (enchants != null && !enchants.isEmpty()) {
             processEnchants(enchants);
         }
     }

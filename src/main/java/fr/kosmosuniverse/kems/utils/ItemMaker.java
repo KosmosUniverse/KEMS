@@ -134,10 +134,10 @@ public class ItemMaker {
         ItemMeta itM = item.getItemMeta();
 
         tags.forEach(tag -> {
-            if ("INTEGER".equals(tag.getType())) {
-                Objects.requireNonNull(itM).getPersistentDataContainer().set(tag.getKey(), PersistentDataType.INTEGER, (Integer) tag.getValue());
-            } else if ("BOOLEAN".equals(tag.getType())) {
-                Objects.requireNonNull(itM).getPersistentDataContainer().set(tag.getKey(), PersistentDataType.BOOLEAN, (Boolean) tag.getValue());
+            if ("INTEGER".equals(tag.type())) {
+                Objects.requireNonNull(itM).getPersistentDataContainer().set(tag.key(), PersistentDataType.INTEGER, (Integer) tag.value());
+            } else if ("BOOLEAN".equals(tag.type())) {
+                Objects.requireNonNull(itM).getPersistentDataContainer().set(tag.key(), PersistentDataType.BOOLEAN, (Boolean) tag.value());
             }
         });
 
