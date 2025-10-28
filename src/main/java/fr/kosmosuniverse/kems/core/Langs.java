@@ -10,6 +10,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * @author KosmosUniverse
@@ -23,7 +24,7 @@ public class Langs {
         String filename = lang == null ? "lang.yml" : "lang-" + lang + ".yml";
         filename = "langs/" + filename;
 
-        try (Reader reader = new InputStreamReader(Kems.getInstance().getResource(filename), StandardCharsets.UTF_8)) {
+        try (Reader reader = new InputStreamReader(Objects.requireNonNull(Kems.getInstance().getResource(filename)), StandardCharsets.UTF_8)) {
             YamlConfiguration langConf = YamlConfiguration.loadConfiguration(reader);
             langConf.getKeys(true).forEach(key -> langs.put(key, langConf.getString(key)));
         } catch (Exception e) {

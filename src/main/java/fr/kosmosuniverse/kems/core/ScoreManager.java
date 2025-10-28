@@ -54,7 +54,7 @@ public class ScoreManager {
 
     public void setupPlayer(Player player) {
         points = scoreboard.getObjective("points");
-        points.getScore(player.getName()).setScore(PlayersList.getInstance().getPlayerPoints(player.getName()));
+        Objects.requireNonNull(points).getScore(player.getName()).setScore(PlayersList.getInstance().getPlayerPoints(player.getName()));
         player.setScoreboard(scoreboard);
     }
 }

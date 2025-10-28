@@ -1,5 +1,6 @@
 package fr.kosmosuniverse.kems.core;
 
+import lombok.Getter;
 import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -26,6 +27,7 @@ public class Config {
     private static final String KILL_PLAYER = "game_settings.kill_player";
     private static final String LANG = "other_settings.lang";
     private static Config instance;
+    @Getter
     private ConfigHolder configValues;
     private Map<String, Consumer<String>> configElems = null;
 
@@ -49,15 +51,6 @@ public class Config {
         if (configElems != null) {
             configElems.clear();
         }
-    }
-
-    /**
-     * Get config values
-     *
-     * @return config values
-     */
-    public ConfigHolder getConfigValues() {
-        return configValues;
     }
 
     /**

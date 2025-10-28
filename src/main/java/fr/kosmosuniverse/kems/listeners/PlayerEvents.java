@@ -32,7 +32,7 @@ public class PlayerEvents implements Listener {
 
         event.setKeepInventory(true);
 
-        if (event.getDrops().size() > 0) {
+        if (!event.getDrops().isEmpty()) {
             event.getDrops().clear();
         }
 

@@ -35,6 +35,7 @@ public class Logger {
         File file = new File(folder);
 
         if (!file.isDirectory()) {
+            //noinspection ResultOfMethodCallIgnored
             file.mkdirs();
         }
     }

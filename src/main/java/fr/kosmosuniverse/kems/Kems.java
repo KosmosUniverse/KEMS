@@ -18,7 +18,6 @@ import java.util.Objects;
 
 /**-
  * @author KosmosUniverse
- *
  * K.E.M.S plugin main class
  * Kosmos Encounter Mobs Survival
  */

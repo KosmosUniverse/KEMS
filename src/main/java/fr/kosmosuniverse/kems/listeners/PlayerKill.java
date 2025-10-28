@@ -38,7 +38,7 @@ public class PlayerKill implements Listener {
             boolean isSpecial = false;
 
             if (!metadatas.isEmpty()) {
-                isSpecial = metadatas.get(0).asBoolean();
+                isSpecial = metadatas.getFirst().asBoolean();
             }
 
             ItemStack item = player.getInventory().getItemInMainHand();

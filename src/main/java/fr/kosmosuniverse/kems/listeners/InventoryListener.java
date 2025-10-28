@@ -51,7 +51,7 @@ public class InventoryListener implements Listener {
             player.openInventory(Shop.getInstance().getInventory(itemName));
         } else if (kemsBackItem) {
             ItemMeta itM = item.getItemMeta();
-            String prevInvName = Objects.requireNonNull(itM.getLore()).get(0);
+            String prevInvName = Objects.requireNonNull(itM.getLore()).getFirst();
 
             if (Shop.getInstance().hasInv(prevInvName)) {
                 player.openInventory(Shop.getInstance().getInventory(prevInvName));
@@ -67,7 +67,7 @@ public class InventoryListener implements Listener {
 
             if (PlayersList.getInstance().canPlayerBuy(player, price)) {
                 if (item.getType() == Material.POTION) {
-                    player.addPotionEffect(((PotionMeta) item.getItemMeta()).getCustomEffects().get(0));
+                    player.addPotionEffect(((PotionMeta) item.getItemMeta()).getCustomEffects().getFirst());
                 } else {
                     LinkedList<String> lores = getLore(itM);
 

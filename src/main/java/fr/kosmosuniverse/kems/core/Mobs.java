@@ -82,10 +82,10 @@ public class Mobs {
         List<Mob> mobs = mobList.stream().filter(p -> p.getType() == entity.getType()).toList();
 
         if (mobs.size() == 1) {
-            return mobs.get(0);
+            return mobs.getFirst();
         }
 
-        Attribute attribute = mobs.stream().filter(Mob::hasAttribute).toList().get(0).getAttribute();
+        Attribute attribute = mobs.stream().filter(Mob::hasAttribute).toList().getFirst().getAttribute();
 
         if (attribute.getType() == Attribute.AttributeType.BABY) {
             if (entity instanceof Ageable entityAge) {
